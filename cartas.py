@@ -79,13 +79,18 @@ class Cartas:
     def printerMaoJogador(maoPlayer):
         for i,carta in enumerate(maoPlayer):
             print(f"[carta {i + 1}] classe: {carta.ordemDeValor:<5} | naipe: {carta.naipe}")
+        print()
 
 
     @staticmethod
     def printerCartasJogadas():
         print()
-        for i in Cartas.temCartasBaralho:
+        printNaipes = ["paus","ouros","espadas","copas"]
+        for index,i in enumerate(Cartas.temCartasBaralho):
+            print(printNaipes[index] + "\t",end="")
             print(*i)
+        print()
+
 
     @staticmethod
     def colocarCartas(tamanhoMao, qtdJogadas):
@@ -108,23 +113,60 @@ class Cartas:
     def __str__(self):
         return f"{self}"
 
-lengthMao = 8
-maoJogador = Cartas.colocarCartas(lengthMao, 0)
+def jogarCartas():
+    print("para jogar as cartas digite o numero das cartas que você quer jogar")
+    jogada = list(map(int, input().split()))
+    for i in range(len(jogada)):
+        jogada[i] -= 1
+    return jogada
 
-Cartas.printerMaoJogador(maoJogador)
-Cartas.printerCartasJogadas()
+def verificarOrdenacao(maoJogador):
+    print("caso queira ordenar a mão digite <ordenar>")
+    if input().lower() == "ordenar":
+        print("digite <ordemValor> para ordenar pelo valor das cartas ou digite <naipe> para ordenar por naipe")
+        ordenar = input()
+        ordenar.lower()
 
-ordenar = int(input())
+        if ordenar == "ordemValor":
+            Cartas.organizarPorOrdemDeValor(maoJogador)
+            Cartas.printerMaoJogador(maoJogador)
+        elif ordenar == "naipe":
+            Cartas.organizarPorNaipe(maoJogador)
+            Cartas.printerMaoJogador(maoJogador)
+        else:
+            Cartas.printerMaoJogador(maoJogador)
+    else:
+        Cartas.printerMaoJogador(maoJogador)
 
-if ordenar == 1:
+
+def iniciar():
+    print("digite <jogar> para começar a jogar")
+    lengthMao = 8
+    maoJogador = Cartas.colocarCartas(lengthMao, 0)
     Cartas.organizarPorOrdemDeValor(maoJogador)
-elif ordenar == 2:
-    Cartas.organizarPorNaipe(maoJogador)
+    inicio = input().lower()
+    print("você jogará como <user> ou <moderador>")
+    usuario = input().lower()
+    return inicio,usuario,maoJogador
 
-Cartas.printerMaoJogador(maoJogador)
+def main():
+    inicio,usuario,maoJogador = iniciar()
+    while inicio == "jogar":
 
-jogada = [1,2]
-maoJogada = Cartas.jogarMao(jogada,maoJogador)
-Cartas.printerMaoJogador(maoJogador)
-maoJogador.extend(maoJogada)
-Cartas.printerMaoJogador(maoJogador)
+        if usuario == "moderador":
+            Cartas.printerCartasJogadas()
+
+        Cartas.printerMaoJogador(maoJogador)
+        verificarOrdenacao(maoJogador)
+        cartasEscolhidas = jogarCartas()
+
+
+        maoJogada = Cartas.jogarMao(cartasEscolhidas,maoJogador)
+        Cartas.printerMaoJogador(maoJogador)
+        Cartas.printerMaoJogador(maoJogada)
+        #lógica de colocarCartas está errado ajeitar isso outra hora
+        maoJogador = Cartas.colocarCartas(len(maoJogador),len(maoJogada))
+        Cartas.printerMaoJogador(maoJogador)
+
+if __name__ == "__main__":
+     main()
