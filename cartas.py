@@ -88,20 +88,28 @@ class Cartas:
             print(*i)
 
     @staticmethod
-    def colocarCartasInicio(tamanhoMao):
+    def colocarCartas(tamanhoMao, qtdJogadas):
         maoPlayer = []
-        for _ in range(tamanhoMao):
+        for _ in range(tamanhoMao - qtdJogadas):
             novaCarta = Cartas(random.randint(1, 13), random.randint(1, 4))
             maoPlayer.append(novaCarta)
         return maoPlayer
 
+    @staticmethod
+    def jogarMao(posicaoJogadas,maoPlayer):
+        auxMaoJogada = [maoPlayer[i] for i in posicaoJogadas]
+        posicaoJogadas.sort()
+        for i in range(len(posicaoJogadas)-1,-1,-1):
+            del maoPlayer[posicaoJogadas[i]]
+
+        return auxMaoJogada
 
     # Impressão formatada do objeto 
     def __str__(self):
         return f"{self}"
 
 lengthMao = 8
-maoJogador = Cartas.colocarCartasInicio(lengthMao)
+maoJogador = Cartas.colocarCartas(lengthMao, 0)
 
 Cartas.printerMaoJogador(maoJogador)
 Cartas.printerCartasJogadas()
@@ -113,4 +121,10 @@ if ordenar == 1:
 elif ordenar == 2:
     Cartas.organizarPorNaipe(maoJogador)
 
+Cartas.printerMaoJogador(maoJogador)
+
+jogada = [1,2]
+maoJogada = Cartas.jogarMao(jogada,maoJogador)
+Cartas.printerMaoJogador(maoJogador)
+maoJogador.extend(maoJogada)
 Cartas.printerMaoJogador(maoJogador)
