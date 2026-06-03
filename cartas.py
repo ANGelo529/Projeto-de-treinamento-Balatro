@@ -161,6 +161,7 @@ def main():
         cartasEscolhidas = jogarCartas()
 
 
+
         maoJogada = Cartas.jogarMao(cartasEscolhidas,maoJogador)
         Cartas.printerMaoJogador(maoJogador)
         Cartas.printerMaoJogador(maoJogada)
