@@ -1,0 +1,59 @@
+from Cartas import Cartas
+
+
+def receberCartas():
+    print("para jogar as cartas digite o numero das cartas que você deseja jogar")
+    jogada = list(map(int, input().split()))
+    for i in range(len(jogada)):
+        jogada[i] -= 1
+    return jogada
+
+def jogarCartas(maoJogador,cartasEscolhidas,lengthMao):
+    maoJogada = Cartas.jogarMao(cartasEscolhidas, maoJogador)
+    maoJogador.extend(Cartas.colocarCartas(len(maoJogador), lengthMao))
+    Cartas.printerMaoJogador(maoJogada)
+
+def verificarOrdenacao(maoJogador):
+    print("caso queira ordenar a mão digite <ordenar>")
+    vaiOrdenar = input().lower()
+    if  vaiOrdenar == "ordenar":
+        print("digite <classe> para ordenar pelo valor das cartas ou digite <naipe> para ordenar por naipe")
+        ordenar = input()
+        ordenar.lower()
+
+        if ordenar == "classe":
+            Cartas.organizarPorOrdemDeValor(maoJogador)
+            Cartas.printerMaoJogador(maoJogador)
+        elif ordenar == "naipe":
+            Cartas.organizarPorNaipe(maoJogador)
+            Cartas.printerMaoJogador(maoJogador)
+        else:
+            Cartas.printerMaoJogador(maoJogador)
+    else:
+        Cartas.printerMaoJogador(maoJogador)
+
+
+def iniciar():
+    print("digite <jogar> para começar a jogar")
+    lengthMao = 8
+    maoJogador = Cartas.colocarCartas(0, lengthMao)
+    Cartas.organizarPorOrdemDeValor(maoJogador)
+    inicio = input().lower()
+    print("você jogará como <user> ou <moderador>")
+    usuario = input().lower()
+    return inicio,usuario,lengthMao,maoJogador
+
+def main():
+    inicio,usuario,lengthMao,maoJogador = iniciar()
+    while inicio == "jogar":
+
+        if usuario == "moderador":
+            Cartas.printerCartasJogadas()
+
+        Cartas.printerMaoJogador(maoJogador)
+        verificarOrdenacao(maoJogador)
+        cartasEscolhidas = receberCartas()
+        jogarCartas(maoJogador,cartasEscolhidas,lengthMao)
+
+if __name__ == "__main__":
+     main()
