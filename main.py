@@ -1,9 +1,26 @@
+from sympy.physics.units import length
+
 from Cartas import Cartas
 
 
-def receberCartas():
-    print("para jogar as cartas digite o numero das cartas que você deseja jogar")
-    jogada = list(map(int, input().split()))
+def receberCartas(lengthMao):
+    funcionouJogada = True
+    while funcionouJogada:
+        print("para jogar as cartas digite o numero das cartas que você deseja jogar")
+        jogada = list(map(int, input().split()))
+        if len(jogada) > 5:
+            print("Voce só pode jogar 5 cartas")
+            print("Jogue novamente")
+            continue
+        for i in jogada:
+            if i > lengthMao:
+                print("Voce não possui essa quantidade de cartas")
+                print("Jogue novamente")
+                deuErro = False
+                break
+        if deuErro:
+            funcionouJogada = False
+
     for i in range(len(jogada)):
         jogada[i] -= 1
     return jogada
@@ -52,7 +69,7 @@ def main():
 
         Cartas.printerMaoJogador(maoJogador)
         verificarOrdenacao(maoJogador)
-        cartasEscolhidas = receberCartas()
+        cartasEscolhidas = receberCartas(lengthMao)
         jogarCartas(maoJogador,cartasEscolhidas,lengthMao)
 
 if __name__ == "__main__":
