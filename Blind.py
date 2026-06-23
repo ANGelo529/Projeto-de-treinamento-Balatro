@@ -84,6 +84,7 @@ class Blind:
 
     def verificarMaoPoker(self,qtdNaipes,qtdOrdemDeValor,maoJogada):
         # INCOMPLETO
+        qtdMaosPoker = 10
         validadores = (self.validarStraightFlush(maoJogada),
                        self.validarQuadra(),
                        self.validarFullHouse(),
@@ -95,7 +96,7 @@ class Blind:
                        self.validarCartaAlta())
         for index,i in enumerate(validadores):
             if i:
-                self.colocarValorMaoPoker(-index + 10)
+                self.colocarValorMaoPoker(qtdMaosPoker - index)
 
     def validarStraightFlush(self,qtdNaipes,qtdOrdemDeValor):
         # INCOMPLETO
@@ -110,21 +111,38 @@ class Blind:
         a=0
 
     def validarSequencia(self,qtdNaipes,qtdOrdemDeValor):
-        # INCOMPLETO
+        # sequenciaValida = True
+        # qtdValidos = 0
+        # for i in range(len(qtdOrdemDeValor) - 1):
+        #     if qtdOrdemDeValor[i] == 1 and qtdOrdemDeValor[i + 1] == 1 and sequenciaValida:
+        #         qtdValidos+=1
+        #
+        # return False
         a=0
 
     def validarTrinca(self,qtdNaipes,qtdOrdemDeValor):
-        # INCOMPLETO
-        a=0
+        for i in range(len(qtdOrdemDeValor)):
+            if qtdOrdemDeValor[i] == 3:
+                return True
+        return False
 
     def validarDoisPares(self,qtdNaipes,qtdOrdemDeValor):
-        # INCOMPLETO
-        a=0
+        qtdPares =0
+        for i in range(len(qtdOrdemDeValor)):
+            if qtdOrdemDeValor[i] == 2:
+                qtdPares+= 1
+        if qtdPares >= 2:
+            return True
+        return False
 
     def validarPar(self,qtdNaipes,qtdOrdemDeValor):
-        # INCOMPLETO
-        a=0
+        for i in range(len(qtdOrdemDeValor)):
+            if qtdOrdemDeValor[i] == 2:
+                return True
+        return False
 
     def validarCartaAlta(self,qtdNaipes,qtdOrdemDeValor):
-        #INCOMPLETO
-        A=0
+        for i in range(len(qtdOrdemDeValor)):
+            if qtdOrdemDeValor[i] == 1:
+                return True
+        return False
