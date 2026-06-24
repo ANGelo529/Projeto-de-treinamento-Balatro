@@ -6,7 +6,7 @@ class Blind:
 
     fichas = 0;
     multiplicador = 0;
-    valorMao = [[0 for _ in range(9)] for _ in range(2)]
+    valorMao = [[0 for _ in range(2)] for _ in range(9)]
     def __init__(self):
         self.colocarValorMaoPoker(-1)
 
@@ -89,11 +89,11 @@ class Blind:
                        self.validarQuadra(),
                        self.validarFullHouse(),
                        self.validarFlush(),
-                       self.validarSequencia(),
-                       self.validarTrinca(),
-                       self.validarDoisPares(),
-                       self.validarPar(),
-                       self.validarCartaAlta())
+                       self.validarSequencia(qtdOrdemDeValor),
+                       self.validarTrinca(qtdOrdemDeValor),
+                       self.validarDoisPares(qtdOrdemDeValor),
+                       self.validarPar(qtdOrdemDeValor),
+                       self.validarCartaAlta(qtdOrdemDeValor))
         for index,i in enumerate(validadores):
             if i:
                 self.colocarValorMaoPoker(qtdMaosPoker - index)
@@ -110,23 +110,29 @@ class Blind:
         # INCOMPLETO
         a=0
 
-    def validarSequencia(self,qtdNaipes,qtdOrdemDeValor):
-        # sequenciaValida = True
-        # qtdValidos = 0
-        # for i in range(len(qtdOrdemDeValor) - 1):
-        #     if qtdOrdemDeValor[i] == 1 and qtdOrdemDeValor[i + 1] == 1 and sequenciaValida:
-        #         qtdValidos+=1
-        #
-        # return False
-        a=0
+    def validarSequencia(self,qtdOrdemDeValor):
+        sequenciaValida = True
+        qtdValidos = 0
+        
+        for i in range(len(qtdOrdemDeValor) - 1):
+            if qtdOrdemDeValor[i] == 1 and qtdOrdemDeValor[i + 1] == 1:
+                qtdValidos+=1
+                sequenciaValida = True
+            else:
+                sequenciaValida = False
+                qtdValidos = 0
+            if qtdValidos ==  4 and sequenciaValida:
+                return True
+        return False
 
-    def validarTrinca(self,qtdNaipes,qtdOrdemDeValor):
+
+    def validarTrinca(self,qtdOrdemDeValor):
         for i in range(len(qtdOrdemDeValor)):
             if qtdOrdemDeValor[i] == 3:
                 return True
         return False
 
-    def validarDoisPares(self,qtdNaipes,qtdOrdemDeValor):
+    def validarDoisPares(self,qtdOrdemDeValor):
         qtdPares =0
         for i in range(len(qtdOrdemDeValor)):
             if qtdOrdemDeValor[i] == 2:
@@ -135,13 +141,13 @@ class Blind:
             return True
         return False
 
-    def validarPar(self,qtdNaipes,qtdOrdemDeValor):
+    def validarPar(self,qtdOrdemDeValor):
         for i in range(len(qtdOrdemDeValor)):
             if qtdOrdemDeValor[i] == 2:
                 return True
         return False
 
-    def validarCartaAlta(self,qtdNaipes,qtdOrdemDeValor):
+    def validarCartaAlta(self,qtdOrdemDeValor):
         for i in range(len(qtdOrdemDeValor)):
             if qtdOrdemDeValor[i] == 1:
                 return True

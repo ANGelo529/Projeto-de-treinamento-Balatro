@@ -1,5 +1,4 @@
 import random
-from colorama import Fore
 
 class Cartas:
     # Documentação do código
