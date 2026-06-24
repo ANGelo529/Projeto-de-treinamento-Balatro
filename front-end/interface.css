@@ -33,3 +33,37 @@
      color: black;             /* Altera a cor da fonte e do símbolo para preto */
      border-color: black;      /* Altera a cor da borda da carta para preta */
 }
+
+#botaoJogar{
+    background-color: #228B22;
+    color: white;
+    cursor: pointer;
+}
+
+#botaoJogar:hover{
+    background-color: #008000;
+    color: white;
+    
+}
+
+#botaoRegras{
+    background-color: #228B22;
+    color: white;
+    cursor: pointer;
+}
+
+#botaoRegras:hover{
+    background-color: #008000;
+    color: white;
+}
+
+#botaocreditos{
+    background-color: #228B22;
+    color: white;
+    cursor: pointer;
+}
+
+#botaocreditos:hover{
+    background-color: #008000;
+    color: white;
+}
