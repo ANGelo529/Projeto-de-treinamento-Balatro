@@ -3,5 +3,5 @@ class Coringa:
     def __init__(self):
         a =0
 
-    def validacaoCoringas(self,maoCuringa):
+    def validacaoCoringas(self,maoCoringa = list):
         a =0

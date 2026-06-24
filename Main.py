@@ -1,4 +1,3 @@
-from sympy.physics.units import length
 from Blind import Blind
 from Cartas import Cartas
 
