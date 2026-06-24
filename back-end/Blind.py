@@ -5,6 +5,7 @@ class Blind:
 
     fichas = 0;
     multiplicador = 0;
+    maoPokerJogada = ""
     valorFicha = {
         "straightFlush": 0,
         "quadra": 0,
@@ -44,38 +45,47 @@ class Blind:
                 self.valorFicha["straightFlush"], self.valorMulti["straightFlush"] = 100, 8  # Straight flush (Straight flush)
 
             case "cartaAlta": # Carta alta
+                self.maoPokerJogada = "carta alta"
                 self.fichas = self.valorFicha["cartaAlta"]
                 self.multiplicador = self.valorMulti["cartaAlta"]
 
             case "par": # Par
+                self.maoPokerJogada = "par"
                 self.fichas = self.valorFicha["par"]
                 self.multiplicador = self.valorMulti["par"]
 
             case "doisPares": # Dois pares
+                self.maoPokerJogada = "dois pares"
                 self.fichas = self.valorFicha["doisPares"]
                 self.multiplicador = self.valorMulti["doisPares"]
 
             case "trinca": # Trinca
+                self.maoPokerJogada = "trinca"
                 self.fichas = self.valorFicha["trinca"]
                 self.multiplicador = self.valorMulti["trinca"]
 
             case "sequencia": # Sequência
+                self.maoPokerJogada = "sequência"
                 self.fichas = self.valorFicha["sequencia"]
                 self.multiplicador = self.valorMulti["sequencia"]
 
             case "flush": # Flush
+                self.maoPokerJogada = "flush"
                 self.fichas = self.valorFicha["flush"]
                 self.multiplicador = self.valorMulti["flush"]
 
             case "fullHouse": # Full house
+                self.maoPokerJogada = "full house"
                 self.fichas = self.valorFicha["fullHouse"]
                 self.multiplicador = self.valorMulti["fullHouse"]
 
             case "quadra": # Quadra
+                self.maoPokerJogada = "quadra"
                 self.fichas = self.valorFicha["quadra"]
                 self.multiplicador = self.valorMulti["quadra"]
 
             case "straightFlush": # Straight flush
+                self.maoPokerJogada = "straight flush"
                 self.fichas = self.valorFicha["straightFlush"]
                 self.multiplicador = self.valorMulti["straightFlush"]
 
@@ -94,14 +104,26 @@ class Blind:
     def verificarJogada(self,maoJogada):
         qtdNaipes = [0 for _ in range(4)]
         qtdOrdemDeValor = [0 for _ in range(13)]
-        for index,i in enumerate(maoJogada):
-            qtdNaipes[maoJogada.naipe]+= 1
-            qtdOrdemDeValor[maoJogada.ordemDeValor] += 1
+        for i in maoJogada:
+            qtdNaipes[i.naipe - 1] += 1
+            qtdOrdemDeValor[i.ordemDeValor - 1] += 1
             #Coringa.validacaoCoringas()
 
-        self.verificarMaoPoker(qtdNaipes,qtdOrdemDeValor,maoJogada)
+        self.verificarMaoPoker(qtdNaipes,qtdOrdemDeValor)
+        self.colocarFichasMao(maoJogada)
 
-    def verificarMaoPoker(self,qtdNaipes,qtdOrdemDeValor,maoJogada):
+    def colocarFichasMao(self,maoJogada):
+        for i in maoJogada:
+            valor = i.ordemDeValor
+
+            if valor == 1:
+                self.fichas += 11
+            elif valor > 10:
+                self.fichas += 10
+            else:
+                self.fichas += valor
+
+    def verificarMaoPoker(self, qtdNaipes:list, qtdOrdemDeValor:list):
         qtdMaosPoker = 10
         validadores = {
             "straightFlush": self.validarStraightFlush(qtdNaipes,qtdOrdemDeValor),
@@ -115,26 +137,29 @@ class Blind:
             "cartaAlta": self.validarCartaAlta(qtdOrdemDeValor)
         }
 
-        for (nomeMao,ehValido) in enumerate(validadores.items()):
+        for nomeMao,ehValido in validadores.items():
             if ehValido:
                 self.colocarValorMaoPoker(nomeMao)
 
-    def validarStraightFlush(self,qtdNaipes,qtdOrdemDeValor,limiteFlush=5,limiteSequencia=5,):
-        temFlush = self.validarFlush(qtdNaipes,limiteFlush)
-        temSequencia = self.validarSequencia(qtdOrdemDeValor,limiteSequencia)
+    @staticmethod
+    def validarStraightFlush(qtdNaipes:list,qtdOrdemDeValor:list,limiteFlush=5,limiteSequencia=5,):
+        temFlush = Blind.validarFlush(qtdNaipes,limiteFlush)
+        temSequencia = Blind.validarSequencia(qtdOrdemDeValor,limiteSequencia)
         if temFlush and temSequencia:
             return True
 
         return False
 
-    def validarQuadra(self,qtdOrdemDeValor):
+    @staticmethod
+    def validarQuadra(qtdOrdemDeValor):
         for i in range(len(qtdOrdemDeValor)):
             if qtdOrdemDeValor[i] == 4:
                 return True
 
         return False
 
-    def validarFullHouse(self,qtdOrdemDeValor):
+    @staticmethod
+    def validarFullHouse(qtdOrdemDeValor):
         temTrinca = False
         temPar = False
         for i in range(len(qtdOrdemDeValor)):
@@ -148,19 +173,21 @@ class Blind:
 
         return False
 
-    def validarFlush(self,qtdNaipes,limiteFlush = 5):
+    @staticmethod
+    def validarFlush(qtdNaipes,limiteFlush = 5):
         for i in range(len(qtdNaipes)):
             if qtdNaipes[i] >= limiteFlush:
                 return True
 
         return False
 
-    def validarSequencia(self,qtdOrdemDeValor,limiteSequencia = 5):
+    @staticmethod
+    def validarSequencia(qtdOrdemDeValor,limiteSequencia = 5):
         sequenciaValida = True
         qtdValidos = 1
-        
-        for i in range(len(qtdOrdemDeValor) - 1):
-            if qtdOrdemDeValor[i] == 1 and qtdOrdemDeValor[i + 1] == 1:
+        auxQtdOrdemDeValor = qtdOrdemDeValor.copy() + [qtdOrdemDeValor[0]]
+        for i in range(len(auxQtdOrdemDeValor) - 1):
+            if auxQtdOrdemDeValor[i] == 1 and auxQtdOrdemDeValor[i + 1] == 1:
                 qtdValidos+=1
                 sequenciaValida = True
             else:
@@ -172,15 +199,16 @@ class Blind:
 
         return False
 
-
-    def validarTrinca(self,qtdOrdemDeValor):
+    @staticmethod
+    def validarTrinca(qtdOrdemDeValor):
         for i in range(len(qtdOrdemDeValor)):
             if qtdOrdemDeValor[i] == 3:
                 return True
 
         return False
 
-    def validarDoisPares(self,qtdOrdemDeValor):
+    @staticmethod
+    def validarDoisPares(qtdOrdemDeValor):
         qtdPares =0
         for i in range(len(qtdOrdemDeValor)):
             if qtdOrdemDeValor[i] == 2:
@@ -191,14 +219,16 @@ class Blind:
 
         return False
 
-    def validarPar(self,qtdOrdemDeValor):
+    @staticmethod
+    def validarPar(qtdOrdemDeValor):
         for i in range(len(qtdOrdemDeValor)):
             if qtdOrdemDeValor[i] == 2:
                 return True
 
         return False
 
-    def validarCartaAlta(self,qtdOrdemDeValor):
+    @staticmethod
+    def validarCartaAlta(qtdOrdemDeValor):
         for i in range(len(qtdOrdemDeValor)):
             if qtdOrdemDeValor[i] == 1:
                 return True

@@ -108,7 +108,10 @@ class Cartas:
 
     @staticmethod
     def jogarMao(posicaoJogadas,maoPlayer):
-        auxMaoJogada = [maoPlayer[i] for i in posicaoJogadas]
+        auxMaoJogada = []
+        for i in posicaoJogadas:
+            auxMaoJogada.append(maoPlayer[i])
+
         posicaoJogadas.sort()
         for i in range(len(posicaoJogadas)-1,-1,-1):
             del maoPlayer[posicaoJogadas[i]]
