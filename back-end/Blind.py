@@ -128,7 +128,7 @@ class Blind:
         validadores = {
             "straightFlush": self.validarStraightFlush(qtdNaipes,qtdOrdemDeValor),
             "quadra": self.validarQuadra(qtdOrdemDeValor),
-            "fullHouse": self.validarFullHouse(qtdOrdemDeValor),
+            "fullHouse": self.validarFullHouse(qtdNaipes),
             "flush": self.validarFlush(qtdNaipes),
             "sequencia": self.validarSequencia(qtdOrdemDeValor),
             "trinca": self.validarTrinca(qtdOrdemDeValor),
@@ -140,6 +140,7 @@ class Blind:
         for nomeMao,ehValido in validadores.items():
             if ehValido:
                 self.colocarValorMaoPoker(nomeMao)
+                break
 
     @staticmethod
     def validarStraightFlush(qtdNaipes:list,qtdOrdemDeValor:list,limiteFlush=5,limiteSequencia=5,):
@@ -159,13 +160,13 @@ class Blind:
         return False
 
     @staticmethod
-    def validarFullHouse(qtdOrdemDeValor):
+    def validarFullHouse(qtdNaipes):
         temTrinca = False
         temPar = False
-        for i in range(len(qtdOrdemDeValor)):
-            if qtdOrdemDeValor[i] == 3:
+        for i in range(len(qtdNaipes)):
+            if qtdNaipes[i] == 3:
                 temTrinca = True
-            if qtdOrdemDeValor[i] == 2:
+            if qtdNaipes[i] == 2:
                 temPar = True
 
             if temPar and temTrinca:

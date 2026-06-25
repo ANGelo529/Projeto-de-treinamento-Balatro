@@ -38,7 +38,9 @@ def mostrarPontos(maoJogada,pontos):
     pontos.verificarJogada(maoJogada)
     print(pontos.maoPokerJogada, end=" ")
     print("\033[1;34mFicha:" + str(pontos.fichas), end=" ")
-    print("\033[0;31mMulti:" + str(pontos.multiplicador), end="\n\033[0m")
+    print("\033[0;31mMulti:" + str(pontos.multiplicador), end="\n")
+    pontosTotais = pontos.fichas * pontos.multiplicador
+    print("Pontos finais",pontosTotais)
 
 
 def verificarOrdenacao(maoJogador):

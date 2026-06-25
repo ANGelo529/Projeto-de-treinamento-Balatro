@@ -112,3 +112,4 @@ const QEspadas = new carta("Q", "espadas", "comun");
 const KEspadas = new carta("K", "espadas", "comun");
 const AEspadas = new carta("A", "espadas", "comun");
 
+redenrizarCarta(ACopas)
