@@ -93,13 +93,17 @@ class Blind:
     def verificarBlind(self, rodada):
         valorBase = [300,800,2000,5000,11000,20000,35000,50000]
         if rodada % 3 == 0:
-            return valorBase[int(rodada / 3)] * 2 # Boss blind
-        elif rodada % 3 == 2:
-            return valorBase[int(rodada / 3 )] * 1.5 # Big blind
+            return valorBase[int(rodada / 3)]  # Small blind
         elif rodada % 3 == 1:
-            return valorBase[int(rodada / 3)] # Small blind
+            return valorBase[int(rodada / 3 )] * 1.5 # Big blind
+        elif rodada % 3 == 2:
+            return valorBase[int(rodada / 3)] * 2  # Boss blind
 
         return None
+    def atualizarBlinds(self,rodada,ante):
+        if rodada % 1 == 0:
+            for i,blinds in enumerate(ante.keys()):
+                ante[blinds] = self.verificarBlind(rodada + i)
 
     def verificarJogada(self,maoJogada):
         qtdNaipes = [0 for _ in range(4)]
