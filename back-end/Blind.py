@@ -1,5 +1,5 @@
 from  Coringa import Coringa
-
+from Dados import Dados
 # noinspection SpellCheckingInspection
 class Blind:
 
@@ -111,7 +111,7 @@ class Blind:
         for i in maoJogada:
             qtdNaipes[i.naipe - 1] += 1
             qtdOrdemDeValor[i.ordemDeValor - 1] += 1
-            #Coringa.validacaoCoringas()
+            #Coringa.validacaoCoringas(maoCoringa,maoJogada)
 
         self.verificarMaoPoker(qtdNaipes,qtdOrdemDeValor)
         self.colocarFichasMao(maoJogada)
