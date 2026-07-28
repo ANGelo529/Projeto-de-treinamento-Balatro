@@ -112,4 +112,17 @@ const QEspadas = new carta("Q", "espadas", "comun");
 const KEspadas = new carta("K", "espadas", "comun");
 const AEspadas = new carta("A", "espadas", "comun");
 
-redenrizarCarta(ACopas)
+document.getElementById("botaoJogar").onclick = function(){
+    document.getElementById("telaInicial").style.display = "none"
+    document.getElementById("jogando").style.display = "block"
+}
+
+document.getElementById("botaocreditos").onclick = function(){
+    document.getElementById("telaInicial").style.display = "none"
+    document.getElementById("creditos").style.display = "block"
+}
+
+document.getElementById("botaoinstrucoes").onclick = function(){
+    document.getElementById("telaInicial").style.display = "none"
+    document.getElementById("instrucoes").style.display = "block"
+}

@@ -1,5 +1,18 @@
+#telainicial{
+    display: block;
+    min-height: 100vh;         
+    background-color: #1a752e;
+}
+#instrucoes{
+    display: none;
+}
+#creditos{
+    display: none;
+}
+
 #jogando {
-    display: flex;             /* Transforma a mesa em Flexbox para alinhar cartas em linha */
+    display: none;
+    /* display: flex;             Transforma a mesa em Flexbox para alinhar cartas em linha */
     padding: 20px;             /* Cria um espaçamento interno de 20px nas bordas da mesa */
     background-color: #1a472a; 
     min-height: 100vh;         /* Garante que a mesa ocupe toda a altura da tela do navegador */
@@ -41,19 +54,19 @@
 }
 
 #botaoJogar:hover{
-    background-color: #008000;
+    background-color: #1d311d;
     color: white;
     
 }
 
-#botaoRegras{
+#botaoinstrucoes{
     background-color: #228B22;
     color: white;
     cursor: pointer;
 }
 
-#botaoRegras:hover{
-    background-color: #008000;
+#botaoinstrucoes:hover{
+    background-color: #1d311d;
     color: white;
 }
 
@@ -64,6 +77,6 @@
 }
 
 #botaocreditos:hover{
-    background-color: #008000;
+    background-color: #1d311d;
     color: white;
 }
