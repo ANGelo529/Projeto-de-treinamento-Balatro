@@ -19,7 +19,7 @@ function redenrizarCarta(objetoCarta) {
     }
 
     
-     if (objetoCarta.naipe == "espadas") {
+    if (objetoCarta.naipe == "espadas") {
         visualCarta.classList.add('preto')
           visualCarta.innerHTML = `
             <span>${objetoCarta.numero}</span>
@@ -112,9 +112,21 @@ const QEspadas = new carta("Q", "espadas", "comun");
 const KEspadas = new carta("K", "espadas", "comun");
 const AEspadas = new carta("A", "espadas", "comun");
 
+const baralho = [
+    // Paus
+    DoisPaus, TresPaus, QuatroPaus, CincoPaus, SeisPaus, SetePaus, OitoPaus, NovePaus, DezPaus, JPaus, QPaus, KPaus, APaus,
+    // Ouros
+    DoisOuros, TresOuros, QuatroOuros, CincoOuros, SeisOuros, SeteOuros, OitoOuros, NoveOuros, DezOuros, JOuros, QOuros, KOuros, AOuros,
+    // Copas
+    DoisCopas, TresCopas, QuatroCopas, CincoCopas, SeisCopas, SeteCopas, OitoCopas, NoveCopas, DezCopas, JCopas, QCopas, KCopas, ACopas,
+    // Espadas
+    DoisEspadas, TresEspadas, QuatroEspadas, CincoEspadas, SeisEspadas, SeteEspadas, OitoEspadas, NoveEspadas, DezEspadas, JEspadas, QEspadas, KEspadas, AEspadas
+];
+
 document.getElementById("botaoJogar").onclick = function(){
     document.getElementById("telaInicial").style.display = "none"
     document.getElementById("jogando").style.display = "block"
+    document.getElementById("infoBlind").style.display = "block"
 }
 
 document.getElementById("botaocreditos").onclick = function(){
@@ -126,3 +138,23 @@ document.getElementById("botaoinstrucoes").onclick = function(){
     document.getElementById("telaInicial").style.display = "none"
     document.getElementById("instrucoes").style.display = "block"
 }
+document.getElementById("botaoVoltarI").onclick = function(){
+    document.getElementById("instrucoes").style.display = "none"
+    document.getElementById("telaInicial").style.display = "block"
+}
+
+document.getElementById("botaoVoltarC").onclick = function(){
+    document.getElementById("creditos").style.display = "none"
+    document.getElementById("telaInicial").style.display = "block"
+}
+
+document.getElementById("botaoVoltarJ").onclick = function(){
+    document.getElementById("jogando").style.display = "none"
+    document.getElementById("infoBlind").style.display = "none"
+    document.getElementById("telaInicial").style.display = "block"
+}
+
+// for (let key of baralho) {
+//     redenrizarCarta(key)    
+// }
+
