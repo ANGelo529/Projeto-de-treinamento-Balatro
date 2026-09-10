@@ -2,8 +2,8 @@ package backEnd.codigojava;
 
 @FunctionalInterface
 public interface EfeitoCoringa {
-    public record ContextoJogo(int fichas, int multi) {
+    public record ContextoCoringa(int fichas, int multi) {
     }
 
-    ContextoJogo aplicarEfeito(ContextoMao contextoMao);
+    ContextoCoringa aplicarEfeito(ContextoMao contextoMao);
 }

@@ -1,6 +1,7 @@
 package backEnd.codigojava;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MaoCarta {
     /* ------------------ VARIÁVEIS ------------------ */
@@ -10,7 +11,7 @@ public class MaoCarta {
     private int qtdMao = 3;
     private int qtdMaoDescarte = 3;
     private String tipoDeOrganizacao = "OrdemDeValor";
-    private ArrayList<ArrayList<Carta>> baralho;
+    private HashMap<String,ArrayList<Carta>> baralho;
 
     /* ------------------ CONSTRUTOR ------------------ */
 
@@ -63,8 +64,8 @@ public class MaoCarta {
     public static void resetarPreJogo() {
     }
 
-    public static ArrayList<ArrayList<Carta>> criarBaralho() {
-        return new ArrayList<ArrayList<Carta>>();
+    public static HashMap<String,ArrayList<Carta>> criarBaralho() {
+        return new HashMap<String,ArrayList<Carta>>();
     }
 
     /* ------------------ GETTERS & SETTERS ------------------ */
@@ -109,11 +110,11 @@ public class MaoCarta {
         this.tipoDeOrganizacao = tipoDeOrganizacao;
     }
 
-    public ArrayList<ArrayList<Carta>> getBaralho() {
+    public HashMap<String,ArrayList<Carta>> getBaralho() {
         return baralho;
     }
 
-    public void setBaralho(ArrayList<ArrayList<Carta>> baralho) {
+    public void setBaralho(HashMap<String,ArrayList<Carta>> baralho) {
         this.baralho = baralho;
     }
 
