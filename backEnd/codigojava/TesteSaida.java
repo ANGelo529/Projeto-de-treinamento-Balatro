@@ -1,5 +1,8 @@
 package backEnd.codigojava;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class TesteSaida {
     public static void printReceberCartas() {
     }
@@ -17,5 +20,38 @@ public class TesteSaida {
     }
 
     public static void printJogar() {
+    }
+
+    public static void printMaoJogador(ArrayList<Carta> maoJogador) {
+        System.out.println("Verificação MaoJogador");
+        for (int i = 0; i < maoJogador.size(); i++) {
+            String naipe = maoJogador.get(i).getNaipe();
+            String ordemDeValor = maoJogador.get(i).getOrdemDeValor();
+            System.out.printf("Naipe: %s OrdemDeValor: %s %d\n", naipe, ordemDeValor, i);
+        }
+    }
+
+    public static void printTesteJogo() {
+        DeckCarta teste = new DeckCarta("Naipe");
+        Integer[] vet = new Integer[5];
+        Scanner LER = new Scanner(System.in);
+        ArrayList<Carta> cartasJogadas = new ArrayList<>();
+        System.out.println("CARTAS ORIGINAIS ");
+        TesteSaida.printMaoJogador(teste.getMaoJogador());
+        System.out.println("\n\n\n\n\n\n");
+
+        for (int i = 0; i < vet.length; i++) {
+            vet[i] = LER.nextInt();
+        }
+
+        cartasJogadas = teste.retirarCartas(vet);
+        System.out.println("CARTAS RETIRADAS");
+        TesteSaida.printMaoJogador(cartasJogadas);
+        System.out.println("\n\n\n\n\n\n");
+        Validador.calcularJogada(cartasJogadas,new ArrayList<Coringa>());
+        teste.adicionarCartas(teste.getMaoJogador());
+        TesteSaida.printMaoJogador(teste.getMaoJogador());
+        
+        LER.close();
     }
 }
