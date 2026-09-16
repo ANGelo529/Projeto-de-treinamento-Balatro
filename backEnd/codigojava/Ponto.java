@@ -1,26 +1,28 @@
 package backEnd.codigojava;
 
-public class Pontos {
+public class Ponto {
     /* ------------------ VARIÁVEIS ------------------ */
 
     private int ficha;
     private int multi;
     private int nivel = 1;
+    private String nomeMaoJogada;
 
     /* ------------------ CONSTRUTOR ------------------ */
 
-    public Pontos(int ficha, int multi, int nivel) {
+    public Ponto(int ficha, int multi, int nivel) {
         this.ficha = ficha;
         this.multi = multi;
         this.nivel = nivel;
     }
 
-    public Pontos(int ficha, int multi) {
+    public Ponto(int ficha, int multi, String nomeMaoJogada) {
         this.ficha = ficha;
         this.multi = multi;
+        this.nomeMaoJogada = nomeMaoJogada;
     }
 
-    public Pontos() {
+    public Ponto() {
     }
 
     /* ------------------ MéTODOS ------------------ */
@@ -56,4 +58,11 @@ public class Pontos {
         this.nivel = nivel;
     }
 
+    public String getNomeMaoJogada() {
+        return nomeMaoJogada;
+    }
+
+    public void setNomeMaoJogada(String nomeMaoJogada) {
+        this.nomeMaoJogada = nomeMaoJogada;
+    }
 }

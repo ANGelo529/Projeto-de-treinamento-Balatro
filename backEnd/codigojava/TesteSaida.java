@@ -31,6 +31,18 @@ public class TesteSaida {
         }
     }
 
+    public static void printAnte() {
+        for (int i = 0; i <= 8; i++) {
+            System.out.printf("ANTE %d\n", i);
+            Ante.setBlindsAtuais(Ante.atualizarBlind(i));
+            for (int j = 0; j < 3; j++) {
+                String nome = Ante.getBlindsAtuais()[j].getNome();
+                long valorBlind = Ante.getBlindsAtuais()[j].getValorBlind();
+                System.out.printf("%s: %d\n", nome, valorBlind);
+            }
+        }
+    }
+
     public static void printTesteJogo() {
         DeckCarta teste = new DeckCarta("Naipe");
         Integer[] vet = new Integer[5];
@@ -48,10 +60,10 @@ public class TesteSaida {
         System.out.println("CARTAS RETIRADAS");
         TesteSaida.printMaoJogador(cartasJogadas);
         System.out.println("\n\n\n\n\n\n");
-        Validador.calcularJogada(cartasJogadas,new ArrayList<Coringa>());
+        Validador.calcularJogada(cartasJogadas, new ArrayList<Coringa>());
         teste.adicionarCartas(teste.getMaoJogador());
         TesteSaida.printMaoJogador(teste.getMaoJogador());
-        
+
         LER.close();
     }
 }

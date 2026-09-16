@@ -6,8 +6,12 @@ public class DeckCoringa {
     private ArrayList<Coringa> maoCoringa = new ArrayList<>();
 
     public static void verificarCoringa(ContextoMao contextoMao, ArrayList<Coringa> maoCoringa) {
+        
         for (int i = 0; i < maoCoringa.size(); i++) {
-            maoCoringa.get(i).getEfeitoCoringa().aplicarEfeito(contextoMao);
+            if(maoCoringa.get(i) != null){
+                contextoMao = maoCoringa.get(i).getEfeitoCoringa().aplicarEfeito(contextoMao);
+            }
+            
         }
     }
 

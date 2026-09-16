@@ -6,27 +6,27 @@ import java.util.HashMap;
 public class Validador {
     /* ------------------ VARIÁVEIS ------------------ */
 
-    private static HashMap<String, Pontos> listaMaosPoker = setListaMaosPoker();
+    private static HashMap<String, Ponto> listaMaosPoker = setListaMaosPoker();
 
     /* ------------------ MéTODOS ------------------ */
 
-    public static void calcularJogada(ArrayList<Carta> maoJogador,ArrayList<Coringa> maoCoringa) {
+    public static void calcularJogada(ArrayList<Carta> maoJogada, ArrayList<Coringa> maoCoringa) {
         int[] qtdNaipes = new int[4];
         int[] qtdOrdemDeValor = new int[13];
 
-        for (int i = 0; i < maoJogador.size(); i++) {
-            int naipe = DeckCarta.getListanaipes().indexOf(maoJogador.get(i).getNaipe());
-            int ordemDeValor = Carta.getValorOrdemDeValor(maoJogador.get(i).getOrdemDeValor());
+        for (int i = 0; i < maoJogada.size(); i++) {
+            int naipe = DeckCarta.getListanaipes().indexOf(maoJogada.get(i).getNaipe());
+            int ordemDeValor = Carta.getValorOrdemDeValor(maoJogada.get(i).getOrdemDeValor());
             qtdNaipes[naipe]++;
             qtdOrdemDeValor[ordemDeValor]++;
         }
-        
-        ContextoMao contextoMao = new ContextoMao();
-        verificarJogada(qtdOrdemDeValor, qtdNaipes);
+
+        Ponto pontosMaoJogada = verificarJogada(qtdOrdemDeValor, qtdNaipes);
+        ContextoMao contextoMao = new ContextoMao(maoJogada, pontosMaoJogada);
         DeckCoringa.verificarCoringa(contextoMao, maoCoringa);
     }
 
-    public static Pontos verificarJogada(int[] qtdOrdemDeValor, int[] qtdNaipe) {
+    public static Ponto verificarJogada(int[] qtdOrdemDeValor, int[] qtdNaipe) {
         boolean[] jogadasVerificadas = {
                 validarStraightFlush(qtdOrdemDeValor, qtdNaipe),
                 validarQuadra(qtdOrdemDeValor),
@@ -54,13 +54,14 @@ public class Validador {
         for (int i = 0; i < jogadasVerificadas.length; i++) {
             if (jogadasVerificadas[i]) {
                 System.out.println(nomesMaospoker[i]);
+                String nomeMaoJogada = nomesMaospoker[i];
                 int ficha = listaMaosPoker.get(nomesMaospoker[i]).getFicha();
                 int multi = listaMaosPoker.get(nomesMaospoker[i]).getMulti();
-                return new Pontos(ficha, multi);
+                return new Ponto(ficha, multi, nomeMaoJogada);
             }
         }
 
-        return new Pontos();
+        return new Ponto();
     }
 
     public static boolean validarStraightFlush(int[] qtdOrdemDeValor, int[] qtdNaipe) {
@@ -178,23 +179,25 @@ public class Validador {
         return false;
     }
 
-    public static HashMap<String, Pontos> getListaMaosPoker() {
+    public static HashMap<String, Ponto> getListaMaosPoker() {
         return listaMaosPoker;
     }
 
-    public static void setListaMaosPoker(HashMap<String, Pontos> listaMaosPoker) {
+    public static void setListaMaosPoker(HashMap<String, Ponto> listaMaosPoker) {
         Validador.listaMaosPoker = listaMaosPoker;
     }
 
-    public static HashMap<String, Pontos> setListaMaosPoker() {
-        HashMap<String, Pontos> aux = new HashMap<>();
-        String[] nomesMaospoker = { "StraightFlush", "Quadra", "FullHouse", "Flush", "Sequencia", "Trinca", "DoisPares",
-                "Par", "CartaAlta" };
+    public static HashMap<String, Ponto> setListaMaosPoker() {
+        HashMap<String, Ponto> aux = new HashMap<>();
+        // String[] nomesMaospoker = { "StraightFlush", "Quadra", "FullHouse", "Flush", "Sequencia", "Trinca", "DoisPares",
+        //         "Par", "CartaAlta" };
+        String[] nomesMaospoker = { "CartaAlta", "Par", "DoisPares", "Trinca", "Sequencia", "Flush", "FullHouse",
+                "Quadra", "StraightFlush" };
         int[] fichas = { 5, 10, 20, 30, 30, 35, 40, 60, 100 };
         int[] multi = { 1, 2, 2, 3, 4, 4, 4, 7, 8 };
 
         for (int i = 0; i < 9; i++) {
-            aux.put(nomesMaospoker[i], new Pontos(fichas[i], multi[i], 1));
+            aux.put(nomesMaospoker[i], new Ponto(fichas[i], multi[i], 1));
         }
 
         return aux;

@@ -4,25 +4,55 @@ public class Blind {
     /* ------------------ VARIÁVEIS ------------------ */
 
     private String nome;
-    private int dinheiroAoGanhar;
-    private int valorBlind;
-    private float multiplicadorValorBase;
+    private int dinheiroAoGanhar = 3;
+    private long valorBlind;
+    private double multiplicadorValorBase;
     private int anteMinimoAparicao = 0;
-    private EfeitoBlind EfeitoBlind;
+    private EfeitoBlind efeitoBlind;
 
     /* ------------------ CONSTRUTOR ------------------ */
 
-    public Blind(String nome, int dinheiroAoGanhar, float multiplicadorValorBase) {
+    public Blind(String nome, int dinheiroAoGanhar, long valorBlind, int multiplicadorValorBase,
+            int anteMinimoAparicao) {
+        this.nome = nome;
+        this.dinheiroAoGanhar = dinheiroAoGanhar;
+        this.valorBlind = valorBlind;
+        this.multiplicadorValorBase = multiplicadorValorBase;
+        this.anteMinimoAparicao = anteMinimoAparicao;
+    }
+
+    public Blind(String nome, int dinheiroAoGanhar, double multiplicadorValorBase, long valorBlind) {
         this.nome = nome;
         this.dinheiroAoGanhar = dinheiroAoGanhar;
         this.multiplicadorValorBase = multiplicadorValorBase;
+        this.valorBlind = valorBlind;
+    }
+
+    public Blind(String nome, double multiplicadorValorBase, long valorBlind) {
+        this.nome = nome;
+        this.multiplicadorValorBase = multiplicadorValorBase;
+        this.valorBlind = valorBlind;
+    }
+
+    public Blind(String nome, int dinheiroAoGanhar, int anteMinimoAparicao, EfeitoBlind efeitoBlind) {
+        this.nome = nome;
+        this.dinheiroAoGanhar = dinheiroAoGanhar;
+        this.anteMinimoAparicao = anteMinimoAparicao;
+        this.efeitoBlind = efeitoBlind;
     }
 
     public Blind() {
     }
 
-    public static Blind gerarBlindAleatorio() {
-        return new Blind();
+    public static Blind gerarBlindAleatorio(int[] valoresBase, int anteAtual) {
+        // BlindFactory conjuntoBLind = BlindFactory.getTodosOsBlinds();
+        // Blind blind = conjuntoBLind.sortearBlind();
+        Blind blind = new Blind();
+        blind.setDinheiroAoGanhar(5);
+        blind.setMultiplicadorValorBase(2);
+        blind.setNome("Boss Blind");
+        blind.setValorBlind(valoresBase[anteAtual]);
+        return blind;
     }
 
     /* ------------------ GETTERS & SETTERS ------------------ */
@@ -43,19 +73,19 @@ public class Blind {
         this.dinheiroAoGanhar = dinheiroAoGanhar;
     }
 
-    public int getValorBlind() {
+    public long getValorBlind() {
         return valorBlind;
     }
 
-    public void setValorBlind(int valorBlind) {
+    public void setValorBlind(long valorBlind) {
         this.valorBlind = valorBlind;
     }
 
-    public float getMultiplicadorValorBase() {
+    public double getMultiplicadorValorBase() {
         return multiplicadorValorBase;
     }
 
-    public void setMultiplicadorValorBase(float multiplicadorValorBase) {
+    public void setMultiplicadorValorBase(double multiplicadorValorBase) {
         this.multiplicadorValorBase = multiplicadorValorBase;
     }
 
@@ -68,11 +98,11 @@ public class Blind {
     }
 
     public EfeitoBlind getEfeitoBlind() {
-        return EfeitoBlind;
+        return efeitoBlind;
     }
 
     public void setEfeitoBlind(EfeitoBlind efeitoBlind) {
-        EfeitoBlind = efeitoBlind;
+        this.efeitoBlind = efeitoBlind;
     }
 
 }
