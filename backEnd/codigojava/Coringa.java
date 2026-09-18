@@ -2,8 +2,6 @@ package backEnd.codigojava;
 
 import java.util.ArrayList;
 
-import backEnd.codigojava.EfeitoCoringa.ContextoCoringa;
-
 public class Coringa {
     /* ------------------ VARIÁVEIS ------------------ */
 
@@ -11,17 +9,18 @@ public class Coringa {
     private String nome;
     private String raridade;
     private String modificador = "Base";
+    private String tempoDeAtivicao = "Agora";
     private float preco;
     private EfeitoCoringa efeitoCoringa;
 
     /* ------------------ CONSTRUTOR ------------------ */
 
-    public Coringa(int idJoker, String nome, String raridade, String modificador, float preco,
+    public Coringa(int idJoker, String nome, String raridade, String tempoDeAtivicao, float preco,
             EfeitoCoringa efeitoCoringa) {
         this.idJoker = idJoker;
         this.nome = nome;
         this.raridade = raridade;
-        this.modificador = modificador;
+        this.tempoDeAtivicao = tempoDeAtivicao;
         this.preco = preco;
         this.efeitoCoringa = efeitoCoringa;
     }
@@ -35,10 +34,36 @@ public class Coringa {
         this.efeitoCoringa = efeitoCoringa;
     }
 
+    public Coringa(String modificador, Coringa outroCoringa) {
+        this.idJoker = outroCoringa.idJoker;
+        this.nome = outroCoringa.nome;
+        this.raridade = outroCoringa.raridade;
+        this.modificador = modificador;
+        this.preco = outroCoringa.preco;
+        this.efeitoCoringa = outroCoringa.efeitoCoringa;
+    }
+
+    public Coringa(Coringa outroCoringa) {
+        this.idJoker = outroCoringa.idJoker;
+        this.nome = outroCoringa.nome;
+        this.raridade = outroCoringa.raridade;
+        this.preco = outroCoringa.preco;
+        this.efeitoCoringa = outroCoringa.efeitoCoringa;
+    }
+
+    public Coringa(int idCoringa) {
+        Coringa auxCoringa = CoringaFactory.getCoringaPorId(idCoringa);
+        this.idJoker = auxCoringa.idJoker;
+        this.nome = auxCoringa.nome;
+        this.raridade = auxCoringa.raridade;
+        this.preco = auxCoringa.preco;
+        this.efeitoCoringa = auxCoringa.efeitoCoringa;
+    }
+
     /* ------------------ MéTODOS ------------------ */
 
-    public ContextoCoringa realizarEfeitoCoringa(ContextoMao maoCarta){
-        return efeitoCoringa.aplicarEfeito(maoCarta);
+    public ContextoMao realizarEfeitoCoringa(ContextoMao maoCarta) {
+        return this.efeitoCoringa.aplicarEfeito(maoCarta);
     }
 
     /* ------------------ GETTERS & SETTERS ------------------ */
@@ -73,6 +98,14 @@ public class Coringa {
 
     public void setModificador(String modificador) {
         this.modificador = modificador;
+    }
+
+    public String getTempoDeAtivicao() {
+        return tempoDeAtivicao;
+    }
+
+    public void setTempoDeAtivicao(String tempoDeAtivicao) {
+        this.tempoDeAtivicao = tempoDeAtivicao;
     }
 
     public float getPreco() {

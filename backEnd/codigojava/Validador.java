@@ -16,7 +16,7 @@ public class Validador {
 
         for (int i = 0; i < maoJogada.size(); i++) {
             int naipe = DeckCarta.getListanaipes().indexOf(maoJogada.get(i).getNaipe());
-            int ordemDeValor = Carta.getValorOrdemDeValor(maoJogada.get(i).getOrdemDeValor());
+            int ordemDeValor = Carta.descobrirPosOrdemDeValor(maoJogada.get(i).getOrdemDeValor());
             qtdNaipes[naipe]++;
             qtdOrdemDeValor[ordemDeValor]++;
         }

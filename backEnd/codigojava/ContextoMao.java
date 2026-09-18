@@ -3,13 +3,18 @@ package backEnd.codigojava;
 import java.util.ArrayList;
 
 public class ContextoMao {
+        /* ------------------ VARIÁVEIS ------------------ */
+
         private String tipoMao;
         private ArrayList<Carta> cartasJogadas;
+        private Carta cartaAuxiliar;
         private Ponto pontos = new Ponto();
         private int fichasAtuais;
         private int multAtual;
 
-        public ContextoMao( ArrayList<Carta> cartasJogadas, Ponto pontos) {
+        /* ------------------ CONSTRUTOR ------------------ */
+
+        public ContextoMao(ArrayList<Carta> cartasJogadas, Ponto pontos) {
                 this.tipoMao = pontos.getNomeMaoJogada();
                 this.cartasJogadas = cartasJogadas;
                 this.pontos = pontos;
@@ -21,6 +26,11 @@ public class ContextoMao {
                 this.fichasAtuais = fichasAtuais;
                 this.multAtual = multAtual;
         }
+
+        public ContextoMao() {
+        }
+
+        /* ------------------ GETTERS & SETTERS ------------------ */
 
         public String getTipoMao() {
                 return tipoMao;
@@ -36,6 +46,14 @@ public class ContextoMao {
 
         public void setCartasJogadas(ArrayList<Carta> cartasJogadas) {
                 this.cartasJogadas = cartasJogadas;
+        }
+
+        public Carta getCartaAuxiliar() {
+                return cartaAuxiliar;
+        }
+
+        public void setCartaAuxiliar(Carta cartaAuxiliar) {
+                this.cartaAuxiliar = cartaAuxiliar;
         }
 
         public Ponto getPontos() {

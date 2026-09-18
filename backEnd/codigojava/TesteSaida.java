@@ -60,7 +60,9 @@ public class TesteSaida {
         System.out.println("CARTAS RETIRADAS");
         TesteSaida.printMaoJogador(cartasJogadas);
         System.out.println("\n\n\n\n\n\n");
-        Validador.calcularJogada(cartasJogadas, new ArrayList<Coringa>());
+        ArrayList<Coringa> maoCoringa = new ArrayList<>();
+        maoCoringa.add(new Coringa(1));
+        Validador.calcularJogada(cartasJogadas, maoCoringa);
         teste.adicionarCartas(teste.getMaoJogador());
         TesteSaida.printMaoJogador(teste.getMaoJogador());
 
