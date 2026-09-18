@@ -1,4 +1,4 @@
-package backEnd.codigojava;
+package backEnd.codigojava.src.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;

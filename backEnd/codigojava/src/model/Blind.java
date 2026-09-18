@@ -1,5 +1,5 @@
-package backEnd.codigojava;
-
+package backEnd.codigojava.src.model;
+import backEnd.codigojava.src.Factory.EfeitoBlind;
 public class Blind {
     /* ------------------ VARIÁVEIS ------------------ */
 

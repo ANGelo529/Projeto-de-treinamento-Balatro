@@ -1,6 +1,5 @@
-package backEnd.codigojava;
+package backEnd.codigojava.src.model;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Carta {

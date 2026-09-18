@@ -1,5 +1,5 @@
-package backEnd.codigojava;
-
+package backEnd.codigojava.src.model;
+import backEnd.codigojava.src.Factory.ContextoMao;
 import java.util.ArrayList;
 
 public class DeckCoringa {

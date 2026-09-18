@@ -1,4 +1,4 @@
-package backEnd.codigojava;
+package backEnd.codigojava.src.Factory;
 
 @FunctionalInterface
 public interface EfeitoCoringa {

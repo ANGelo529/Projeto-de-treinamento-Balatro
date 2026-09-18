@@ -1,7 +1,10 @@
-package backEnd.codigojava;
+package backEnd.codigojava.test;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import backEnd.codigojava.src.model.*;
+import backEnd.codigojava.src.service.*;
+import backEnd.codigojava.src.Factory.*;
 
 public class TesteSaida {
     public static void printReceberCartas() {
