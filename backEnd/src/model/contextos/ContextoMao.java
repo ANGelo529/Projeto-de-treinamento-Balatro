@@ -1,9 +1,8 @@
-package backEnd.codigojava.src.Factory;
+package backEnd.src.model.contextos;
 
 import java.util.ArrayList;
 
-import backEnd.codigojava.src.model.Carta;
-import backEnd.codigojava.src.model.Ponto;
+import backEnd.src.model.cartas.Carta;
 
 public class ContextoMao {
         /* ------------------ VARIÁVEIS ------------------ */

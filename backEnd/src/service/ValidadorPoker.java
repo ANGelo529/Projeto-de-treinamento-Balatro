@@ -1,13 +1,14 @@
-package backEnd.codigojava.src.service;
+package backEnd.src.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import backEnd.codigojava.src.Factory.ContextoMao;
-import backEnd.codigojava.src.model.*;
+import backEnd.src.model.cartas.*;
+import backEnd.src.model.contextos.*;
+import backEnd.src.model.coringas.*;
 
 
-public class Validador {
+public class ValidadorPoker {
     /* ------------------ VARIÁVEIS ------------------ */
 
     private static HashMap<String, Ponto> listaMaosPoker = setListaMaosPoker();
@@ -188,7 +189,7 @@ public class Validador {
     }
 
     public static void setListaMaosPoker(HashMap<String, Ponto> listaMaosPoker) {
-        Validador.listaMaosPoker = listaMaosPoker;
+        ValidadorPoker.listaMaosPoker = listaMaosPoker;
     }
 
     public static HashMap<String, Ponto> setListaMaosPoker() {

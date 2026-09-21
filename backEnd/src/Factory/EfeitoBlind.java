@@ -1,5 +1,6 @@
-package backEnd.codigojava.src.Factory;
+package backEnd.src.Factory;
 
+import backEnd.src.model.contextos.ContextoMao;
 
 @FunctionalInterface
 public interface EfeitoBlind {

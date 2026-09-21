@@ -1,4 +1,4 @@
-package backEnd.codigojava.src.model;
+package backEnd.src.model.contextos;
 
 public class Ponto {
     /* ------------------ VARIÁVEIS ------------------ */

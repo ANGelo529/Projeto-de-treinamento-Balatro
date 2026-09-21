@@ -1,6 +1,6 @@
-package backEnd.codigojava.src;
+package backEnd.src;
 
-import backEnd.codigojava.test.TesteSaida;
+import backEnd.test.TesteSaida;
 
 public class Main {
     public static void main(String[] args) {

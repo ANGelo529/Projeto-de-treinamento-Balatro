@@ -1,10 +1,13 @@
-package backEnd.codigojava.test;
+package backEnd.test;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import backEnd.codigojava.src.model.*;
-import backEnd.codigojava.src.service.*;
-import backEnd.codigojava.src.Factory.*;
+import backEnd.src.model.*;
+import backEnd.src.model.blinds.*;
+import backEnd.src.model.cartas.*;
+import backEnd.src.model.coringas.*;
+import backEnd.src.service.*;
+import backEnd.src.Factory.*;
 
 public class TesteSaida {
     public static void printReceberCartas() {
@@ -64,8 +67,11 @@ public class TesteSaida {
         TesteSaida.printMaoJogador(cartasJogadas);
         System.out.println("\n\n\n\n\n\n");
         ArrayList<Coringa> maoCoringa = new ArrayList<>();
-        maoCoringa.add(new Coringa(1));
-        Validador.calcularJogada(cartasJogadas, maoCoringa);
+        for (int i = 1; i <= 4; i++) {
+            maoCoringa.add(CoringaFactory.getCoringaPorId(i));
+        }
+        
+        ValidadorPoker.calcularJogada(cartasJogadas, maoCoringa);
         teste.adicionarCartas(teste.getMaoJogador());
         TesteSaida.printMaoJogador(teste.getMaoJogador());
 

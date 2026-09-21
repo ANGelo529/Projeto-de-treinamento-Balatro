@@ -1,4 +1,4 @@
-package backEnd.codigojava.src.model;
+package backEnd.src.model.cartas;
 
 import java.util.ArrayList;
 import java.util.Arrays;

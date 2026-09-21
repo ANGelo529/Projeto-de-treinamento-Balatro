@@ -1,0 +1,22 @@
+comuns
+bobo 7
+irritado 8 
+maluco 9
+engraçado 10
+
+incomuns
+Quatro Dedos 18
+adaga cerimonial 21
+carta de lealdade 25
+fibonnaci 31
+hack 36
+pareidolia 37
+coringa espacial 45
+quadro negro 48
+ladrão 47
+caminhante 56
+carta afiada 62
+insanidade 64
+foguete 74
+para a lua 84
+touro 93

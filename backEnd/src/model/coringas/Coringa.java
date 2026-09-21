@@ -1,6 +1,7 @@
-package backEnd.codigojava.src.model;
+package backEnd.src.model.coringas;
 
-import backEnd.codigojava.src.Factory.*;
+import backEnd.src.Factory.*;
+import backEnd.src.model.contextos.ContextoMao;
 
 public class Coringa {
     /* ------------------ VARIÁVEIS ------------------ */
@@ -34,35 +35,12 @@ public class Coringa {
         this.efeitoCoringa = efeitoCoringa;
     }
 
-    public Coringa(String modificador, Coringa outroCoringa) {
-        this.idJoker = outroCoringa.idJoker;
-        this.nome = outroCoringa.nome;
-        this.raridade = outroCoringa.raridade;
-        this.modificador = modificador;
-        this.preco = outroCoringa.preco;
-        this.efeitoCoringa = outroCoringa.efeitoCoringa;
+    public Coringa() {
     }
 
-    public Coringa(Coringa outroCoringa) {
-        this.idJoker = outroCoringa.idJoker;
-        this.nome = outroCoringa.nome;
-        this.raridade = outroCoringa.raridade;
-        this.preco = outroCoringa.preco;
-        this.efeitoCoringa = outroCoringa.efeitoCoringa;
-    }
+    // /* ------------------ MéTODOS ------------------ */
 
-    public Coringa(int idCoringa) {
-        Coringa auxCoringa = CoringaFactory.getCoringaPorId(idCoringa);
-        this.idJoker = auxCoringa.idJoker;
-        this.nome = auxCoringa.nome;
-        this.raridade = auxCoringa.raridade;
-        this.preco = auxCoringa.preco;
-        this.efeitoCoringa = auxCoringa.efeitoCoringa;
-    }
-
-    /* ------------------ MéTODOS ------------------ */
-
-    public ContextoMao realizarEfeitoCoringa(ContextoMao maoCarta) {
+    public ContextoMao efeitoCoringa(ContextoMao maoCarta) {
         return this.efeitoCoringa.aplicarEfeito(maoCarta);
     }
 
