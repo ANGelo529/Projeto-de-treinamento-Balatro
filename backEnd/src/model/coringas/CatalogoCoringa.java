@@ -1,85 +1,96 @@
 package backEnd.src.model.coringas;
 
-import backEnd.src.Factory.EfeitoCoringa;
+import backEnd.src.model.Efeitos.EfeitoCoringa;
+import backEnd.src.model.enums.*;
 
 public enum CatalogoCoringa {
+    /* ------------------ VARIÁVEIS CONSTANTES------------------ */
+
+    GANANCIOSO(1,
+        "Coringa Ganancioso",
+        Raridade.COMUM,
+        5,
+        EfeitoCoringa.addMultSeNaipe("Ouros")),
+
+    VIGOROSO(2,
+        "Coringa Robusto",
+        Raridade.COMUM,
+        5,
+        EfeitoCoringa.addMultSeNaipe("Copas")),
+
+    FURIOSO(3,
+        "Coringa Irritado",
+        Raridade.COMUM,
+        5,
+        EfeitoCoringa.addMultSeNaipe("Espadas")),
+
+    GULOSO(4,
+        "Coringa Guloso",
+        Raridade.COMUM,
+        5,
+        EfeitoCoringa.addMultSeNaipe("Paus")),
+
+    CORINGA(5,
+        "Coringa",
+        Raridade.COMUM,
+        Gatilho.FINALMAO,
+        5,
+        EfeitoCoringa.addMult(4)),
+
+    ALEGRE(6,
+        "Coringa Guloso",
+        Raridade.COMUM,
+        Gatilho.FINALMAO,
+        5,
+        EfeitoCoringa.addMultSeMaoPoker(4, "Par")),
+
+    BOBO(7,
+        "Coringa Guloso",
+        Raridade.COMUM,
+        Gatilho.FINALMAO,
+        5.0f,
+        EfeitoCoringa.addMultSeMaoPoker(4, "Trinca")),
+
+    IRRITADO(8,
+        "Coringa Guloso",
+        Raridade.COMUM,
+        Gatilho.FINALMAO,
+        5,
+        EfeitoCoringa.addMultSeMaoPoker(4, "DoisPares")),
+
+    MALUCO(9,
+        "Coringa Guloso",
+        Raridade.COMUM,
+        Gatilho.FINALMAO,
+        5,
+        EfeitoCoringa.addMultSeMaoPoker(4, "Sequência")),
+
+    ENGRACADO(10,
+        "Coringa Guloso",
+        Raridade.COMUM,
+        Gatilho.FINALMAO,
+        5,
+        EfeitoCoringa.addMultSeMaoPoker(4, "Flush")),
+
+    QUATRODEDOS(11,
+        "Quatro Dedos",
+        Raridade.INCOMUM,
+        Gatilho.PASSIVO,
+        7,
+        EfeitoCoringa.addMultSeMaoPoker(4, "DoisPares"));
+
     /* ------------------ VARIÁVEIS ------------------ */
-
-    GANANCIOSO(1, "Coringa Ganancioso", "Comum", 5, ctx -> {
-        if ("Ouros".equals(ctx.getCartaAuxiliar().getNaipe())) {
-            ctx.setMultAtual(ctx.getMultAtual() + 4);
-        }
-        return ctx;
-    }),
-    VIGOROSO(2, "Coringa Robusto", "Comum", 5, ctx -> {
-        if ("Copas".equals(ctx.getCartaAuxiliar().getNaipe())) {
-            ctx.setMultAtual(ctx.getMultAtual() + 4);
-        }
-        return ctx;
-    }),
-    FURIOSO(3, "Coringa Irritado", "Comum", 5, ctx -> {
-        if ("Espadas".equals(ctx.getCartaAuxiliar().getNaipe())) {
-            ctx.setMultAtual(ctx.getMultAtual() + 4);
-        }
-        return ctx;
-    }),
-    GULOSO(4, "Coringa Guloso", "Comum", 5, ctx -> {
-        if ("Paus".equals(ctx.getCartaAuxiliar().getNaipe())) {
-            ctx.setMultAtual(ctx.getMultAtual() + 4);
-        }
-        return ctx;
-    }),
-    CORINGA(5, "Coringa", "Comum", "FinalMao", 5, ctx -> {
-        ctx.setMultAtual(ctx.getMultAtual() + 4);
-        return ctx;
-    }),
-    ALEGRE(6, "Coringa Guloso", "Comum", "FinalMao", 5, ctx -> {
-        if (ctx.getCartaAuxiliar().getTipoDeCarta().equals("DoisPares")) {
-            ctx.setMultAtual(ctx.getMultAtual() + 2);
-        }
-        return ctx;
-    }),
-    BOBO(6, "Coringa Guloso", "Comum", "FinalMao", 5, ctx -> {
-        if (ctx.getCartaAuxiliar().getTipoDeCarta().equals("DoisPares")) {
-            ctx.setMultAtual(ctx.getMultAtual() + 2);
-        }
-        return ctx;
-    }),
-    IRRITADO(6, "Coringa Guloso", "Comum", "FinalMao", 5, ctx -> {
-        if (ctx.getCartaAuxiliar().getTipoDeCarta().equals("DoisPares")) {
-            ctx.setMultAtual(ctx.getMultAtual() + 2);
-        }
-        return ctx;
-    }),
-    MALUCO(6, "Coringa Guloso", "Comum", "FinalMao", 5, ctx -> {
-        if (ctx.getCartaAuxiliar().getTipoDeCarta().equals("DoisPares")) {
-            ctx.setMultAtual(ctx.getMultAtual() + 2);
-        }
-        return ctx;
-    }),
-    ENGRACADO(6, "Coringa Guloso", "Comum", "FinalMao", 5, ctx -> {
-        if (ctx.getCartaAuxiliar().getTipoDeCarta().equals("DoisPares")) {
-            ctx.setMultAtual(ctx.getMultAtual() + 2);
-        }
-        return ctx;
-    }),
-    QUATRODEDOS(7, "Quatro Dedos", "Incomun", "Passivo", 7, ctx -> {
-        if (ctx.getCartaAuxiliar().getTipoDeCarta().equals("DoisPares")) {
-            ctx.setMultAtual(ctx.getMultAtual() + 2);
-        }
-        return ctx;
-    });
-
+    
     private final int idJoker;
     private final String nome;
-    private final String raridade;
-    private final String tempoDeAtivicao;
+    private final Raridade raridade;
+    private final Gatilho tempoDeAtivicao;
     private final float preco;
     private final EfeitoCoringa efeitoCoringa;
 
     /* ------------------ CONSTRUTOR ------------------ */
 
-    private CatalogoCoringa(int idJoker, String nome, String raridade, String tempoDeAtivicao, float preco,
+    private CatalogoCoringa(int idJoker, String nome, Raridade raridade, Gatilho tempoDeAtivicao, float preco,
             EfeitoCoringa efeitoCoringa) {
         this.idJoker = idJoker;
         this.nome = nome;
@@ -89,12 +100,12 @@ public enum CatalogoCoringa {
         this.efeitoCoringa = efeitoCoringa;
     }
 
-    private CatalogoCoringa(int idJoker, String nome, String raridade, float preco,
+    private CatalogoCoringa(int idJoker, String nome, Raridade raridade, float preco,
             EfeitoCoringa efeitoCoringa) {
         this.idJoker = idJoker;
         this.nome = nome;
         this.raridade = raridade;
-        this.tempoDeAtivicao = "PorCarta";
+        this.tempoDeAtivicao = Gatilho.PORCARTA;
         this.preco = preco;
         this.efeitoCoringa = efeitoCoringa;
     }
@@ -109,11 +120,11 @@ public enum CatalogoCoringa {
         return nome;
     }
 
-    public String getRaridade() {
+    public Raridade getRaridade() {
         return raridade;
     }
 
-    public String getTempoDeAtivicao() {
+    public Gatilho getTempoDeAtivicao() {
         return tempoDeAtivicao;
     }
 

@@ -1,36 +1,41 @@
 package backEnd.src.model.coringas;
 
 import backEnd.src.Factory.*;
+import backEnd.src.model.Efeitos.EfeitoCoringa;
 import backEnd.src.model.contextos.ContextoMao;
+import backEnd.src.model.enums.*;
 
 public class Coringa {
     /* ------------------ VARIÁVEIS ------------------ */
 
     private int idJoker;
     private String nome;
-    private String raridade;
-    private String modificador = "Base";
-    private String tempoDeAtivicao = "Agora";
+    private Raridade raridade;
+    private Modificador modificador;
+    private Gatilho tempoDeAtivicao;
     private float preco;
     private EfeitoCoringa efeitoCoringa;
 
     /* ------------------ CONSTRUTOR ------------------ */
 
-    public Coringa(int idJoker, String nome, String raridade, String tempoDeAtivicao, float preco,
+    public Coringa(int idJoker, String nome, Raridade raridade, Gatilho tempoDeAtivicao, float preco,
             EfeitoCoringa efeitoCoringa) {
         this.idJoker = idJoker;
         this.nome = nome;
         this.raridade = raridade;
         this.tempoDeAtivicao = tempoDeAtivicao;
+        this.modificador = Modificador.CORG_BASE;
         this.preco = preco;
         this.efeitoCoringa = efeitoCoringa;
     }
 
-    public Coringa(int idJoker, String nome, String raridade, float preco,
+    public Coringa(int idJoker, String nome, Raridade raridade, float preco,
             EfeitoCoringa efeitoCoringa) {
         this.idJoker = idJoker;
         this.nome = nome;
         this.raridade = raridade;
+        this.modificador = Modificador.CORG_BASE;
+        this.tempoDeAtivicao = Gatilho.PORCARTA;
         this.preco = preco;
         this.efeitoCoringa = efeitoCoringa;
     }
@@ -38,7 +43,7 @@ public class Coringa {
     public Coringa() {
     }
 
-    // /* ------------------ MéTODOS ------------------ */
+    /* ------------------ MéTODOS ------------------ */
 
     public ContextoMao efeitoCoringa(ContextoMao maoCarta) {
         return this.efeitoCoringa.aplicarEfeito(maoCarta);
@@ -62,27 +67,27 @@ public class Coringa {
         this.nome = nome;
     }
 
-    public String getRaridade() {
+    public Raridade getRaridade() {
         return raridade;
     }
 
-    public void setRaridade(String raridade) {
+    public void setRaridade(Raridade raridade) {
         this.raridade = raridade;
     }
 
-    public String getModificador() {
+    public Modificador getModificador() {
         return modificador;
     }
 
-    public void setModificador(String modificador) {
+    public void setModificador(Modificador modificador) {
         this.modificador = modificador;
     }
 
-    public String getTempoDeAtivicao() {
+    public Gatilho getTempoDeAtivicao() {
         return tempoDeAtivicao;
     }
 
-    public void setTempoDeAtivicao(String tempoDeAtivicao) {
+    public void setTempoDeAtivicao(Gatilho tempoDeAtivicao) {
         this.tempoDeAtivicao = tempoDeAtivicao;
     }
 

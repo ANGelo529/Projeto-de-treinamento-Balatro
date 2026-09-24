@@ -158,7 +158,7 @@ public class DeckCarta {
 
         return baralhoAuxiliar;
     }
-
+    
     /* ------------------ GETTERS & SETTERS ------------------ */
 
     public ArrayList<Carta> getMaoJogador() {

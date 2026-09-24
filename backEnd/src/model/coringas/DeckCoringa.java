@@ -2,12 +2,14 @@ package backEnd.src.model.coringas;
 
 import backEnd.src.Factory.CoringaFactory;
 import backEnd.src.model.cartas.Carta;
-import backEnd.src.model.contextos.ContextoMao;
+import backEnd.src.model.contextos.*;
+import backEnd.src.model.enums.Gatilho;
 
 import java.util.ArrayList;
 
 public class DeckCoringa {
     private ArrayList<Coringa> maoCoringa = new ArrayList<>();
+
 
     public static void verificarCoringa(ContextoMao contextoMao, ArrayList<Coringa> maoCoringa) {
         ArrayList<Carta> cartasJogadas = contextoMao.getCartasJogadas();
@@ -19,7 +21,7 @@ public class DeckCoringa {
 
     private static void verificarCoringasPorCarta(ContextoMao contextoMao, ArrayList<Carta> cartasJogadas,
             ArrayList<Coringa> maoCoringa) {
-        String tempoDeAtivicao;
+        Gatilho tempoDeAtivicao;
         for (int i = 0; i < cartasJogadas.size(); i++) {
             for (int j = 0; j < maoCoringa.size(); j++) {
                 tempoDeAtivicao = maoCoringa.get(j).getTempoDeAtivicao();
@@ -33,7 +35,7 @@ public class DeckCoringa {
 
     private static void verificarCoringasFinalRound(ContextoMao contextoMao,
             ArrayList<Coringa> maoCoringa) {
-        String tempoDeAtivicao;
+        Gatilho tempoDeAtivicao;
         for (int i = 0; i < maoCoringa.size(); i++) {
             tempoDeAtivicao = maoCoringa.get(i).getTempoDeAtivicao();
             if (maoCoringa.get(i) != null && tempoDeAtivicao.equals("Final")) {

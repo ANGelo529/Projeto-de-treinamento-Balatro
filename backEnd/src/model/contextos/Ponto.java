@@ -1,12 +1,14 @@
 package backEnd.src.model.contextos;
 
+import backEnd.src.model.enums.MaoPoker;
+
 public class Ponto {
     /* ------------------ VARIÁVEIS ------------------ */
 
     private int ficha;
     private int multi;
     private int nivel = 1;
-    private String nomeMaoJogada;
+    private MaoPoker nomeMaoJogada;
 
     /* ------------------ CONSTRUTOR ------------------ */
 
@@ -16,7 +18,7 @@ public class Ponto {
         this.nivel = nivel;
     }
 
-    public Ponto(int ficha, int multi, String nomeMaoJogada) {
+    public Ponto(int ficha, int multi, MaoPoker nomeMaoJogada) {
         this.ficha = ficha;
         this.multi = multi;
         this.nomeMaoJogada = nomeMaoJogada;
@@ -58,11 +60,11 @@ public class Ponto {
         this.nivel = nivel;
     }
 
-    public String getNomeMaoJogada() {
+    public MaoPoker getNomeMaoJogada() {
         return nomeMaoJogada;
     }
 
-    public void setNomeMaoJogada(String nomeMaoJogada) {
+    public void setNomeMaoJogada(MaoPoker nomeMaoJogada) {
         this.nomeMaoJogada = nomeMaoJogada;
     }
 }

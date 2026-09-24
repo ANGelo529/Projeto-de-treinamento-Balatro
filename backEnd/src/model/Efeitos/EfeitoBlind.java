@@ -1,4 +1,4 @@
-package backEnd.src.Factory;
+package backEnd.src.model.Efeitos;
 
 import backEnd.src.model.contextos.ContextoMao;
 

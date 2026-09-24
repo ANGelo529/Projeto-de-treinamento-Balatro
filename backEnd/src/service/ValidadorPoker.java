@@ -6,12 +6,13 @@ import java.util.HashMap;
 import backEnd.src.model.cartas.*;
 import backEnd.src.model.contextos.*;
 import backEnd.src.model.coringas.*;
+import backEnd.src.model.enums.MaoPoker;
 
 
 public class ValidadorPoker {
     /* ------------------ VARIÁVEIS ------------------ */
 
-    private static HashMap<String, Ponto> listaMaosPoker = setListaMaosPoker();
+    private static HashMap<MaoPoker, Ponto> listaMaosPoker = setListaMaosPoker();
 
     /* ------------------ MéTODOS ------------------ */
 
@@ -44,24 +45,14 @@ public class ValidadorPoker {
                 validarCartaAlta(qtdOrdemDeValor)
         };
 
-        String[] nomesMaospoker = {
-                "StraightFlush",
-                "Quadra",
-                "FullHouse",
-                "Flush",
-                "Sequencia",
-                "Trinca",
-                "DoisPares",
-                "Par",
-                "CartaAlta"
-        };
+
 
         for (int i = 0; i < jogadasVerificadas.length; i++) {
             if (jogadasVerificadas[i]) {
-                System.out.println(nomesMaospoker[i]);
-                String nomeMaoJogada = nomesMaospoker[i];
-                int ficha = listaMaosPoker.get(nomesMaospoker[i]).getFicha();
-                int multi = listaMaosPoker.get(nomesMaospoker[i]).getMulti();
+                MaoPoker nomeMaoJogada = MaoPoker.values()[i];
+                System.out.println(nomeMaoJogada.getNomeExibicao());
+                int ficha = listaMaosPoker.get(nomeMaoJogada).getFicha();
+                int multi = listaMaosPoker.get(nomeMaoJogada).getMulti();
                 return new Ponto(ficha, multi, nomeMaoJogada);
             }
         }
@@ -184,25 +175,23 @@ public class ValidadorPoker {
         return false;
     }
 
-    public static HashMap<String, Ponto> getListaMaosPoker() {
+    public static HashMap<MaoPoker, Ponto> getListaMaosPoker() {
         return listaMaosPoker;
     }
 
-    public static void setListaMaosPoker(HashMap<String, Ponto> listaMaosPoker) {
+    public static void setListaMaosPoker(HashMap<MaoPoker, Ponto> listaMaosPoker) {
         ValidadorPoker.listaMaosPoker = listaMaosPoker;
     }
 
-    public static HashMap<String, Ponto> setListaMaosPoker() {
-        HashMap<String, Ponto> aux = new HashMap<>();
+    public static HashMap<MaoPoker, Ponto> setListaMaosPoker() {
+        HashMap<MaoPoker, Ponto> aux = new HashMap<>();
         // String[] nomesMaospoker = { "StraightFlush", "Quadra", "FullHouse", "Flush", "Sequencia", "Trinca", "DoisPares",
         //         "Par", "CartaAlta" };
-        String[] nomesMaospoker = { "CartaAlta", "Par", "DoisPares", "Trinca", "Sequencia", "Flush", "FullHouse",
-                "Quadra", "StraightFlush" };
         int[] fichas = { 5, 10, 20, 30, 30, 35, 40, 60, 100 };
         int[] multi = { 1, 2, 2, 3, 4, 4, 4, 7, 8 };
 
         for (int i = 0; i < 9; i++) {
-            aux.put(nomesMaospoker[i], new Ponto(fichas[i], multi[i], 1));
+            aux.put(MaoPoker.values()[i], new Ponto(fichas[i], multi[i], 1));
         }
 
         return aux;

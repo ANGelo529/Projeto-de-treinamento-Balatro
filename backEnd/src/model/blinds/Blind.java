@@ -1,6 +1,6 @@
 package backEnd.src.model.blinds;
 
-import backEnd.src.Factory.EfeitoBlind;
+import backEnd.src.model.Efeitos.EfeitoBlind;
 
 public class Blind {
     /* ------------------ VARIÁVEIS ------------------ */

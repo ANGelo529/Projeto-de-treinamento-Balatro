@@ -3,11 +3,12 @@ package backEnd.src.model.contextos;
 import java.util.ArrayList;
 
 import backEnd.src.model.cartas.Carta;
+import backEnd.src.model.enums.MaoPoker;
 
 public class ContextoMao {
         /* ------------------ VARIÁVEIS ------------------ */
 
-        private String tipoMao;
+        private MaoPoker tipoMao;
         private ArrayList<Carta> cartasJogadas;
         private Carta cartaAuxiliar;
         private Ponto pontos = new Ponto();
@@ -32,13 +33,22 @@ public class ContextoMao {
         public ContextoMao() {
         }
 
+        /* ------------------ MéTODOS ------------------ */
+        public void adicionarMult(int valor) {
+                this.multAtual += valor;
+        }
+
+        public void adicionarMult() {
+                this.multAtual += 4;
+        }
+
         /* ------------------ GETTERS & SETTERS ------------------ */
 
-        public String getTipoMao() {
+        public MaoPoker getTipoMao() {
                 return tipoMao;
         }
 
-        public void setTipoMao(String tipoMao) {
+        public void setTipoMao(MaoPoker tipoMao) {
                 this.tipoMao = tipoMao;
         }
 
