@@ -1,12 +1,13 @@
 package backEnd.src.model.Efeitos;
 
 import backEnd.src.model.contextos.ContextoMao;
+import backEnd.src.model.enums.Naipe;
 
 @FunctionalInterface
 public interface EfeitoCoringa {
     ContextoMao aplicarEfeito(ContextoMao contextoMao);
 
-    static EfeitoCoringa addMultSeNaipe(String naipe, int valor) {
+    static EfeitoCoringa addMultSeNaipe(Naipe naipe, int valor) {
         return ctx -> {
             if (ctx.getCartaAuxiliar().getNaipe().equals(naipe)) {
                 ctx.adicionarMult(valor);
@@ -15,7 +16,7 @@ public interface EfeitoCoringa {
         };
     }
 
-    static EfeitoCoringa addMultSeNaipe(String naipe) {
+    static EfeitoCoringa addMultSeNaipe(Naipe naipe) {
         return ctx -> {
             if (ctx.getCartaAuxiliar().getNaipe().equals(naipe)) {
                 ctx.adicionarMult();

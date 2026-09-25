@@ -10,25 +10,25 @@ public enum CatalogoCoringa {
         "Coringa Ganancioso",
         Raridade.COMUM,
         5,
-        EfeitoCoringa.addMultSeNaipe("Ouros")),
+        EfeitoCoringa.addMultSeNaipe(Naipe.OUROS)),
 
     VIGOROSO(2,
         "Coringa Robusto",
         Raridade.COMUM,
         5,
-        EfeitoCoringa.addMultSeNaipe("Copas")),
+        EfeitoCoringa.addMultSeNaipe(Naipe.COPAS)),
 
     FURIOSO(3,
         "Coringa Irritado",
         Raridade.COMUM,
         5,
-        EfeitoCoringa.addMultSeNaipe("Espadas")),
+        EfeitoCoringa.addMultSeNaipe(Naipe.ESPADAS)),
 
     GULOSO(4,
         "Coringa Guloso",
         Raridade.COMUM,
         5,
-        EfeitoCoringa.addMultSeNaipe("Paus")),
+        EfeitoCoringa.addMultSeNaipe(Naipe.PAUS)),
 
     CORINGA(5,
         "Coringa",
@@ -48,7 +48,7 @@ public enum CatalogoCoringa {
         "Coringa Guloso",
         Raridade.COMUM,
         Gatilho.FINALMAO,
-        5.0f,
+        5,
         EfeitoCoringa.addMultSeMaoPoker(4, "Trinca")),
 
     IRRITADO(8,
@@ -85,12 +85,12 @@ public enum CatalogoCoringa {
     private final String nome;
     private final Raridade raridade;
     private final Gatilho tempoDeAtivicao;
-    private final float preco;
+    private final int preco;
     private final EfeitoCoringa efeitoCoringa;
 
     /* ------------------ CONSTRUTOR ------------------ */
 
-    private CatalogoCoringa(int idJoker, String nome, Raridade raridade, Gatilho tempoDeAtivicao, float preco,
+    private CatalogoCoringa(int idJoker, String nome, Raridade raridade, Gatilho tempoDeAtivicao, int preco,
             EfeitoCoringa efeitoCoringa) {
         this.idJoker = idJoker;
         this.nome = nome;
@@ -100,7 +100,7 @@ public enum CatalogoCoringa {
         this.efeitoCoringa = efeitoCoringa;
     }
 
-    private CatalogoCoringa(int idJoker, String nome, Raridade raridade, float preco,
+    private CatalogoCoringa(int idJoker, String nome, Raridade raridade, int preco,
             EfeitoCoringa efeitoCoringa) {
         this.idJoker = idJoker;
         this.nome = nome;

@@ -2,6 +2,7 @@ package backEnd.src.Factory;
 
 import backEnd.src.model.coringas.CatalogoCoringa;
 import backEnd.src.model.coringas.Coringa;
+import backEnd.src.model.enums.Gatilho;
 
 public class CoringaFactory {
 
@@ -18,7 +19,7 @@ public class CoringaFactory {
         
         for (CatalogoCoringa coringa : CatalogoCoringa.values()) {
             if (coringa.getIdJoker() == id) {
-                if ("Agora".equals(coringa.getTempoDeAtivicao())) {
+                if (coringa.getTempoDeAtivicao().equals(Gatilho.PORCARTA)) {
                     return criarCoringa(coringa);
                 } else {
                     return criarCoringaTempoDeAtivacao(coringa);

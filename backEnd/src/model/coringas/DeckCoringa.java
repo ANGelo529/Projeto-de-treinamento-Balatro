@@ -1,6 +1,6 @@
 package backEnd.src.model.coringas;
 
-import backEnd.src.Factory.CoringaFactory;
+
 import backEnd.src.model.cartas.Carta;
 import backEnd.src.model.contextos.*;
 import backEnd.src.model.enums.Gatilho;
@@ -25,11 +25,12 @@ public class DeckCoringa {
         for (int i = 0; i < cartasJogadas.size(); i++) {
             for (int j = 0; j < maoCoringa.size(); j++) {
                 tempoDeAtivicao = maoCoringa.get(j).getTempoDeAtivicao();
-                if (maoCoringa.get(j) != null && tempoDeAtivicao.equals("Agora")) {
+                if (maoCoringa.get(j) != null && tempoDeAtivicao.equals(Gatilho.PORCARTA)) {
                     contextoMao.setCartaAuxiliar(cartasJogadas.get(i));
                     contextoMao = maoCoringa.get(j).efeitoCoringa(contextoMao);
                 }
             }
+
         }
     }
 
@@ -38,7 +39,7 @@ public class DeckCoringa {
         Gatilho tempoDeAtivicao;
         for (int i = 0; i < maoCoringa.size(); i++) {
             tempoDeAtivicao = maoCoringa.get(i).getTempoDeAtivicao();
-            if (maoCoringa.get(i) != null && tempoDeAtivicao.equals("Final")) {
+            if (maoCoringa.get(i) != null && tempoDeAtivicao.equals(Gatilho.FINALMAO)) {
                 contextoMao = maoCoringa.get(i).efeitoCoringa(contextoMao);
             }
         }

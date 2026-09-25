@@ -2,7 +2,6 @@ package backEnd.test;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import backEnd.src.model.*;
 import backEnd.src.model.blinds.*;
 import backEnd.src.model.cartas.*;
 import backEnd.src.model.coringas.*;
@@ -31,7 +30,7 @@ public class TesteSaida {
     public static void printMaoJogador(ArrayList<Carta> maoJogador) {
         System.out.println("Verificação MaoJogador");
         for (int i = 0; i < maoJogador.size(); i++) {
-            String naipe = maoJogador.get(i).getNaipe();
+            String naipe = maoJogador.get(i).getNaipe().getNomeExibicao();
             String ordemDeValor = maoJogador.get(i).getOrdemDeValor();
             System.out.printf("Naipe: %s OrdemDeValor: %s %d\n", naipe, ordemDeValor, i);
         }

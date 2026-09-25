@@ -21,12 +21,13 @@ public class ValidadorPoker {
         int[] qtdOrdemDeValor = new int[13];
 
         for (int i = 0; i < maoJogada.size(); i++) {
-            int naipe = DeckCarta.getListanaipes().indexOf(maoJogada.get(i).getNaipe());
+            int naipe = maoJogada.get(i).getNaipe().ordinal();
             int ordemDeValor = Carta.descobrirPosOrdemDeValor(maoJogada.get(i).getOrdemDeValor());
             qtdNaipes[naipe]++;
             qtdOrdemDeValor[ordemDeValor]++;
         }
-
+        
+        //HashMap<MaoPoker, Ponto> teste = setListaMaosPoker();
         Ponto pontosMaoJogada = verificarJogada(qtdOrdemDeValor, qtdNaipes);
         ContextoMao contextoMao = new ContextoMao(maoJogada, pontosMaoJogada);
         DeckCoringa.verificarCoringa(contextoMao, maoCoringa);
@@ -44,8 +45,6 @@ public class ValidadorPoker {
                 validarPar(qtdOrdemDeValor),
                 validarCartaAlta(qtdOrdemDeValor)
         };
-
-
 
         for (int i = 0; i < jogadasVerificadas.length; i++) {
             if (jogadasVerificadas[i]) {
@@ -111,13 +110,12 @@ public class ValidadorPoker {
 
     public static boolean validarSequencia(int[] qtdOrdemDeValor) {
 
-        int qtdValidos = 1;
+        int qtdValidos = 0;
 
-        for (int i = 0; i < qtdOrdemDeValor.length + 4; i++) {
+        for (int i = 0; i < qtdOrdemDeValor.length; i++) {
 
-            if (qtdOrdemDeValor[i % qtdOrdemDeValor.length] > 0) {
+            if (qtdOrdemDeValor[i] > 0) {
                 qtdValidos++;
-
                 if (qtdValidos == 5) {
                     return true;
                 }
@@ -125,6 +123,11 @@ public class ValidadorPoker {
             } else {
                 qtdValidos = 0;
             }
+        }
+
+        if (qtdOrdemDeValor[12] > 0 && qtdOrdemDeValor[0] > 0 && qtdOrdemDeValor[1] > 0 && qtdOrdemDeValor[2] > 0
+                && qtdOrdemDeValor[3] > 0) {
+            return true;
         }
 
         return false;
@@ -185,13 +188,14 @@ public class ValidadorPoker {
 
     public static HashMap<MaoPoker, Ponto> setListaMaosPoker() {
         HashMap<MaoPoker, Ponto> aux = new HashMap<>();
-        // String[] nomesMaospoker = { "StraightFlush", "Quadra", "FullHouse", "Flush", "Sequencia", "Trinca", "DoisPares",
-        //         "Par", "CartaAlta" };
+        // String[] nomesMaospoker = { "StraightFlush", "Quadra", "FullHouse", "Flush",
+        // "Sequencia", "Trinca", "DoisPares",
+        // "Par", "CartaAlta" };
         int[] fichas = { 5, 10, 20, 30, 30, 35, 40, 60, 100 };
         int[] multi = { 1, 2, 2, 3, 4, 4, 4, 7, 8 };
 
-        for (int i = 0; i < 9; i++) {
-            aux.put(MaoPoker.values()[i], new Ponto(fichas[i], multi[i], 1));
+        for (int i = fichas.length - 1; i >= 0; i--) {
+            aux.put(MaoPoker.values()[fichas.length - 1 - i], new Ponto(fichas[i], multi[i], 1));
         }
 
         return aux;

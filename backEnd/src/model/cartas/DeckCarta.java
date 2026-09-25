@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import backEnd.src.model.enums.Naipe;
+
 
 public class DeckCarta {
     /* ------------------ VARIÁVEIS ------------------ */
@@ -16,12 +18,12 @@ public class DeckCarta {
     private int qtdMao = 3;
     private int qtdMaoDescarte = 3;
     private String tipoDeOrganizacao = "OrdemDeValor";
-    private final static ArrayList<String> listaNaipes = new ArrayList<>(List.of("Espadas", "Copas", "Paus", "Ouros"));
+    private final static Naipe[] listaNaipes = Naipe.values();
     private final static ArrayList<String> listaOrdemDeValor = new ArrayList<>(
             List.of("2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K",
                     "A"));
-    private static HashMap<String, ArrayList<Carta>> baralho = criarBaralho();
-    private static HashMap<String, ArrayList<Carta>> auxBaralho = baralho;
+    private static HashMap<Naipe, ArrayList<Carta>> baralho = criarBaralho();
+    private static HashMap<Naipe, ArrayList<Carta>> baralhoJogo = baralho;
     private final static Random random = new Random();
 
     /* ------------------ CONSTRUTOR ------------------ */
@@ -37,8 +39,8 @@ public class DeckCarta {
         DeckCarta.verificarOrdenacao(this.tipoDeOrganizacao, this.maoJogador);
     }
 
-    public DeckCarta(HashMap<String, ArrayList<Carta>> baralhoNovo) {
-        auxBaralho = baralhoNovo;
+    public DeckCarta(HashMap<Naipe, ArrayList<Carta>> baralhoNovo) {
+        baralhoJogo = baralhoNovo;
         this.maoJogador = colocarCartasInicial(tamanhoMao);
         DeckCarta.verificarOrdenacao(this.tipoDeOrganizacao, this.maoJogador);
     }
@@ -90,8 +92,8 @@ public class DeckCarta {
         for (int i = 0; i < maoJogador.size(); i++) {
             for (int j = 0; j < maoJogador.size() - 1 - i; j++) {
 
-                int ordemDeValorAtual = listaNaipes.indexOf(maoJogador.get(j).getNaipe());
-                int ordemDeValorPosterior = listaNaipes.indexOf(maoJogador.get(j + 1).getNaipe());
+                int ordemDeValorAtual = maoJogador.get(j).getNaipe().ordinal();
+                int ordemDeValorPosterior = maoJogador.get(j + 1).getNaipe().ordinal();
 
                 if (ordemDeValorAtual > ordemDeValorPosterior) {
                     Carta aux = maoJogador.get(j);
@@ -124,12 +126,12 @@ public class DeckCarta {
     }
 
     public static Carta gerarCartaAleatoria() {
-        String naipeSorteado = listaNaipes.get(random.nextInt(listaNaipes.size()));
-        ArrayList<Carta> cartasNaipeSorteado = auxBaralho.get(naipeSorteado);
+        Naipe naipeSorteado = listaNaipes[random.nextInt(listaNaipes.length)];
+        ArrayList<Carta> cartasNaipeSorteado = baralhoJogo.get(naipeSorteado);
 
         while (cartasNaipeSorteado.isEmpty()) {
-            naipeSorteado = listaNaipes.get(random.nextInt(listaNaipes.size()));
-            cartasNaipeSorteado = auxBaralho.get(naipeSorteado);
+            naipeSorteado = listaNaipes[random.nextInt(listaNaipes.length)];
+            cartasNaipeSorteado = baralhoJogo.get(naipeSorteado);
         }
 
         int indexSorteado = random.nextInt(cartasNaipeSorteado.size());
@@ -145,9 +147,9 @@ public class DeckCarta {
         this.qtdMaoDescarte = 3;
     }
 
-    public static HashMap<String, ArrayList<Carta>> criarBaralho() {
-        HashMap<String, ArrayList<Carta>> baralhoAuxiliar = new HashMap<>();
-        for (String str : listaNaipes) {
+    public static HashMap<Naipe, ArrayList<Carta>> criarBaralho() {
+        HashMap<Naipe, ArrayList<Carta>> baralhoAuxiliar = new HashMap<>();
+        for (Naipe str : Naipe.values()) {
             ArrayList<Carta> listaCarta = new ArrayList<>();
             for (int i = 0; i < listaOrdemDeValor.size(); i++) {
                 listaCarta.add(new Carta(listaOrdemDeValor.get(i), str));
@@ -201,7 +203,7 @@ public class DeckCarta {
         this.tipoDeOrganizacao = tipoDeOrganizacao;
     }
 
-    public static ArrayList<String> getListanaipes() {
+    public static Naipe[] getListanaipes() {
         return listaNaipes;
     }
 
@@ -209,20 +211,20 @@ public class DeckCarta {
         return listaOrdemDeValor;
     }
 
-    public HashMap<String, ArrayList<Carta>> getBaralho() {
+    public HashMap<Naipe, ArrayList<Carta>> getBaralho() {
         return baralho;
     }
 
-    public void setBaralho(HashMap<String, ArrayList<Carta>> baralho) {
+    public void setBaralho(HashMap<Naipe, ArrayList<Carta>> baralho) {
         DeckCarta.baralho = baralho;
     }
 
-    public static HashMap<String, ArrayList<Carta>> getAuxBaralho() {
-        return auxBaralho;
+    public static HashMap<Naipe, ArrayList<Carta>> getBaralhoJogo() {
+        return baralhoJogo;
     }
 
-    public static void setAuxBaralho(HashMap<String, ArrayList<Carta>> auxBaralho) {
-        DeckCarta.auxBaralho = auxBaralho;
+    public static void setBaralhoJogo(HashMap<Naipe, ArrayList<Carta>> baralhoJogo) {
+        DeckCarta.baralhoJogo = baralhoJogo;
     }
 
 }

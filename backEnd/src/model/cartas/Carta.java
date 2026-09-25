@@ -2,11 +2,13 @@ package backEnd.src.model.cartas;
 
 import java.util.ArrayList;
 
+import backEnd.src.model.enums.Naipe;
+
 public class Carta {
     /* ------------------ VARIÁVEIS ------------------ */
 
     private String ordemDeValor;
-    private String naipe;
+    private Naipe naipe;
     private String melhoria = "Sem valor";
     private String selo = "Sem valor";
     private String edicao = "Sem valor";
@@ -14,12 +16,12 @@ public class Carta {
 
     /* ------------------ CONSTRUTOR ------------------ */
 
-    public Carta(String ordemDeValor, String naipe) {
+    public Carta(String ordemDeValor, Naipe naipe) {
         this.ordemDeValor = ordemDeValor;
         this.naipe = naipe;
     }
 
-    public Carta(String ordemDeValor, String naipe, String tipoDeCarta) {
+    public Carta(String ordemDeValor, Naipe naipe, String tipoDeCarta) {
         this.ordemDeValor = ordemDeValor;
         this.naipe = naipe;
         this.tipoDeCarta = tipoDeCarta;
@@ -95,11 +97,11 @@ public class Carta {
         this.ordemDeValor = ordemDeValor;
     }
 
-    public String getNaipe() {
+    public Naipe getNaipe() {
         return naipe;
     }
 
-    public void setNaipe(String naipe) {
+    public void setNaipe(Naipe naipe) {
         this.naipe = naipe;
     }
 

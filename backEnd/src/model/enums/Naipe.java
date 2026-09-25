@@ -1,10 +1,10 @@
 package backEnd.src.model.enums;
 
 public enum Naipe {
-    OUROS("Ouros"),
     ESPADAS("Espadas"),
     COPAS("Copas"),
-    PAUS("Paus");
+    PAUS("Paus"),
+    OUROS("Ouros");
 
     private final String nomeExibicao;
 

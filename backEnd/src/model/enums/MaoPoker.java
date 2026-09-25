@@ -1,15 +1,15 @@
 package backEnd.src.model.enums;
 
 public enum MaoPoker {
-    CARTAALTA("Carta Alta"),
-    PAR("Par"),
-    DOISPARES("Dois pares"),
-    TRINCA("Trinca"),
-    SEQUENCIA("Sequência"),
-    FLUSH("Flush"),
-    FULLHOUSE("FullHouse"),
+    STRAIGHTFLUSH("Straight Flush"),
     QUADRA("Quadra"),
-    STRAIGHTFLUSH("Straight Flush");
+    FULLHOUSE("FullHouse"),
+    FLUSH("Flush"),
+    SEQUENCIA("Sequência"),
+    TRINCA("Trinca"),
+    DOISPARES("Dois pares"),
+    PAR("Par"),
+    CARTAALTA("Carta Alta");
 
     private final String nomeExibicao;
 

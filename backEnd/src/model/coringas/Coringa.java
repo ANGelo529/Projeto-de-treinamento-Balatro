@@ -1,6 +1,5 @@
 package backEnd.src.model.coringas;
 
-import backEnd.src.Factory.*;
 import backEnd.src.model.Efeitos.EfeitoCoringa;
 import backEnd.src.model.contextos.ContextoMao;
 import backEnd.src.model.enums.*;
