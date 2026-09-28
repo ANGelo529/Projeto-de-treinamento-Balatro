@@ -4,8 +4,12 @@ import model.Efeitos.EfeitoCoringa;
 import model.contextos.ContextoMao;
 import model.enums.*;
 
+/**
+ * Representa uma instância concreta de um Coringa em tempo de execução no jogo.
+ */
 public class Coringa {
-    /* ------------------ VARIÁVEIS ------------------ */
+
+    /* ------------------ ATRIBUTOS ------------------ */
 
     private int idJoker;
     private String nome;
@@ -13,10 +17,13 @@ public class Coringa {
     private Modificador modificador;
     private Gatilho tempoDeAtivicao;
     private float preco;
+
+    /** Comportamento executável (interface funcional/lambda) do efeito do Coringa */
     private EfeitoCoringa efeitoCoringa;
 
-    /* ------------------ CONSTRUTOR ------------------ */
+    /* ------------------ CONSTRUTORES ------------------ */
 
+    /** Construtor completo com definição explícita do gatilho de ativação. */
     public Coringa(int idJoker, String nome, Raridade raridade, Gatilho tempoDeAtivicao, float preco,
             EfeitoCoringa efeitoCoringa) {
         this.idJoker = idJoker;
@@ -28,6 +35,7 @@ public class Coringa {
         this.efeitoCoringa = efeitoCoringa;
     }
 
+    /** Construtor secundário. Assume automaticamente o gatilho PORCARTA. */
     public Coringa(int idJoker, String nome, Raridade raridade, float preco,
             EfeitoCoringa efeitoCoringa) {
         this.idJoker = idJoker;
@@ -39,11 +47,18 @@ public class Coringa {
         this.efeitoCoringa = efeitoCoringa;
     }
 
+    /** Construtor padrão sem argumentos. */
     public Coringa() {
     }
 
-    /* ------------------ MéTODOS ------------------ */
+    /* ------------------ MÉTODOS DE NEGÓCIO ------------------ */
 
+    /**
+     * Aplica a regra de negócio/efeito deste Coringa sobre o contexto da mão jogada.
+     * 
+     * @param maoCarta Contexto atual do cálculo de pontuação.
+     * @return O objeto ContextoMao modificado após a aplicação do efeito.
+     */
     public ContextoMao efeitoCoringa(ContextoMao maoCarta) {
         return this.efeitoCoringa.aplicarEfeito(maoCarta);
     }

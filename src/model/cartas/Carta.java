@@ -1,20 +1,23 @@
 package model.cartas;
 
 import java.util.ArrayList;
-
 import model.enums.Naipe;
 
+/**
+ * Representa uma Carta individual do baralho.
+ * Possui atributos de valor, naipe e modificadores de estilo de jogo (melhorias, selos, edições).
+ */
 public class Carta {
     /* ------------------ VARIÁVEIS ------------------ */
 
-    private String ordemDeValor;
-    private Naipe naipe;
+    private String ordemDeValor;       // Representação textual do valor ("2" até "10", "J", "Q", "K", "A")
+    private Naipe naipe;              // Enum do Naipe (Ouros, Copas, Espadas, Paus)
     private String melhoria = "Sem valor";
     private String selo = "Sem valor";
     private String edicao = "Sem valor";
     private String tipoDeCarta = "Numero";
 
-    /* ------------------ CONSTRUTOR ------------------ */
+    /* ------------------ CONSTRUTORES ------------------ */
 
     public Carta(String ordemDeValor, Naipe naipe) {
         this.ordemDeValor = ordemDeValor;
@@ -27,63 +30,57 @@ public class Carta {
         this.tipoDeCarta = tipoDeCarta;
     }
 
-    /* ------------------ MéTODOS ------------------ */
+    /* ------------------ MÉTODOS ------------------ */
 
+    /**
+     * Mapeia a representação textual do valor para a posição do índice numérico no vetor (0 a 12).
+     * 
+     * @param ordemDeValor Caractere/String representando o valor
+     * @return Índice inteiro correspondente (J=9, Q=10, K=11, A=12, ou o próprio número)
+     */
     public static int descobrirPosOrdemDeValor(String ordemDeValor) {
-        int aux = 0;
         switch (ordemDeValor) {
-            case "J":
-                aux = 9;
-                break;
-
-            case "Q":
-                aux = 10;
-                break;
-
-            case "K":
-                aux = 11;
-                break;
-
-            case "A":
-                aux = 12;
-                break;
-            default:
-                aux = Integer.valueOf(ordemDeValor);
-                break;
+            case "J": return 9;
+            case "Q": return 10;
+            case "K": return 11;
+            case "A": return 12;
+            default:  return Integer.parseInt(ordemDeValor);
         }
-        return aux;
     }
 
+    /**
+     * Retorna a quantidade numérica real de Fichas fornecida pelo valor nominal da carta.
+     * 
+     * @param ordemDeValor Caractere/String do valor
+     * @return Fichas base (Figuras J/Q/K = 10, Ás = 11, Números = valor nominal)
+     */
     public static int getValorOrdemDeValor(String ordemDeValor) {
-        int aux = 0;
-
         if (ordemDeValor.equals("J") || ordemDeValor.equals("Q") || ordemDeValor.equals("K")) {
-            aux = 10;
-
+            return 10;
         } else if (ordemDeValor.equals("A")) {
-            aux = 11;
-
+            return 11;
         } else {
-            aux = Integer.valueOf(ordemDeValor);
+            return Integer.parseInt(ordemDeValor);
         }
-
-        return aux;
     }
 
+    /**
+     * Retorna um array com o valor numérico em fichas de cada carta de uma lista.
+     * 
+     * @param maoJogador Lista de cartas a serem convertidas em valores numéricos
+     */
     public static int[] getValorOrdemDeValor(ArrayList<Carta> maoJogador) {
         int[] vetAux = new int[maoJogador.size()];
         for (int i = 0; i < vetAux.length; i++) {
-            if (maoJogador.get(i).getOrdemDeValor().equals("J") || maoJogador.get(i).getOrdemDeValor().equals("Q") || maoJogador.get(i).getOrdemDeValor().equals("K")) {
+            String val = maoJogador.get(i).getOrdemDeValor();
+            if (val.equals("J") || val.equals("Q") || val.equals("K")) {
                 vetAux[i] = 10;
-
-            } else if (maoJogador.get(i).getOrdemDeValor().equals("A")) {
+            } else if (val.equals("A")) {
                 vetAux[i] = 11;
-
             } else {
-                vetAux[i] = Integer.valueOf(maoJogador.get(i).getOrdemDeValor());
+                vetAux[i] = Integer.parseInt(val);
             }
         }
-
         return vetAux;
     }
 
@@ -136,5 +133,4 @@ public class Carta {
     public void setTipoDeCarta(String tipoDeCarta) {
         this.tipoDeCarta = tipoDeCarta;
     }
-
 }

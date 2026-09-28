@@ -3,84 +3,53 @@ package model.coringas;
 import model.Efeitos.EfeitoCoringa;
 import model.enums.*;
 
+/**
+ * Enumeração que funciona como o catálogo definitivo/banco de dados estático 
+ * dos Coringas disponíveis no jogo.
+ */
 public enum CatalogoCoringa {
-    /* ------------------ VARIÁVEIS CONSTANTES------------------ */
 
-    GANANCIOSO(1,
-        "Coringa Ganancioso",
-        Raridade.COMUM,
-        5,
-        EfeitoCoringa.addMultSeNaipe(Naipe.OUROS)),
+    /* ------------------ DEFINIÇÃO DOS CORINGAS (CONSTANTES) ------------------ */
 
-    VIGOROSO(2,
-        "Coringa Robusto",
-        Raridade.COMUM,
-        5,
-        EfeitoCoringa.addMultSeNaipe(Naipe.COPAS)),
+    /** Concede multiplicador bônus ao pontuar cartas de Ouros */
+    GANANCIOSO(1, "Coringa Ganancioso", Raridade.COMUM, 5, EfeitoCoringa.addMultSeNaipe(Naipe.OUROS)),
 
-    FURIOSO(3,
-        "Coringa Irritado",
-        Raridade.COMUM,
-        5,
-        EfeitoCoringa.addMultSeNaipe(Naipe.ESPADAS)),
+    /** Concede multiplicador bônus ao pontuar cartas de Copas */
+    VIGOROSO(2, "Coringa Robusto", Raridade.COMUM, 5, EfeitoCoringa.addMultSeNaipe(Naipe.COPAS)),
 
-    GULOSO(4,
-        "Coringa Guloso",
-        Raridade.COMUM,
-        5,
-        EfeitoCoringa.addMultSeNaipe(Naipe.PAUS)),
+    /** Concede multiplicador bônus ao pontuar cartas de Espadas */
+    FURIOSO(3, "Coringa Irritado", Raridade.COMUM, 5, EfeitoCoringa.addMultSeNaipe(Naipe.ESPADAS)),
 
-    CORINGA(5,
-        "Coringa",
-        Raridade.COMUM,
-        Gatilho.FINALMAO,
-        5,
-        EfeitoCoringa.addMult(4)),
+    /** Concede multiplicador bônus ao pontuar cartas de Paus */
+    GULOSO(4, "Coringa Guloso", Raridade.COMUM, 5, EfeitoCoringa.addMultSeNaipe(Naipe.PAUS)),
 
-    ALEGRE(6,
-        "Coringa Guloso",
-        Raridade.COMUM,
-        Gatilho.FINALMAO,
-        5,
-        EfeitoCoringa.addMultSeMaoPoker(4, "Par")),
+    /** Coringa genérico acionado ao final do cálculo da mão */
+    CORINGA(5, "Coringa", Raridade.COMUM, Gatilho.FINALMAO, 5, EfeitoCoringa.addMult(4)),
 
-    BOBO(7,
-        "Coringa Guloso",
-        Raridade.COMUM,
-        Gatilho.FINALMAO,
-        5,
-        EfeitoCoringa.addMultSeMaoPoker(4, "Trinca")),
+    /* 
+     * ALERTA DE BUGS NOS CORINGAS ABAIXO:
+     * 1. Nomes duplicados: "ALEGRE", "BOBO", "IRRITADO", "MALUCO" e "ENGRACADO" estão todos 
+     *    com o nome visível "Coringa Guloso" em vez de seus nomes próprios.
+     * 2. Tipo incompatível: Estão enviando Strings (ex: "Par", "Trinca") para 'addMultSeMaoPoker' 
+     *    em vez de utilizar diretamente o Enum 'MaoPoker'.
+     * 3. Configuração errada: QUATRODEDOS possui um efeito de bônus de multiplicador em "DoisPares"
+     *    em vez de ser uma regra de alteração de tamanho de mão (Gatilho PASSIVO).
+     */
 
-    IRRITADO(8,
-        "Coringa Guloso",
-        Raridade.COMUM,
-        Gatilho.FINALMAO,
-        5,
-        EfeitoCoringa.addMultSeMaoPoker(4, "DoisPares")),
+    ALEGRE(6, "Coringa Alegre", Raridade.COMUM, Gatilho.FINALMAO, 5, EfeitoCoringa.addMultSeMaoPoker(4, "Par")),
 
-    MALUCO(9,
-        "Coringa Guloso",
-        Raridade.COMUM,
-        Gatilho.FINALMAO,
-        5,
-        EfeitoCoringa.addMultSeMaoPoker(4, "Sequência")),
+    BOBO(7, "Coringa Bobo", Raridade.COMUM, Gatilho.FINALMAO, 5, EfeitoCoringa.addMultSeMaoPoker(4, "Trinca")),
 
-    ENGRACADO(10,
-        "Coringa Guloso",
-        Raridade.COMUM,
-        Gatilho.FINALMAO,
-        5,
-        EfeitoCoringa.addMultSeMaoPoker(4, "Flush")),
+    IRRITADO(8, "Coringa Irritado", Raridade.COMUM, Gatilho.FINALMAO, 5, EfeitoCoringa.addMultSeMaoPoker(4, "DoisPares")),
 
-    QUATRODEDOS(11,
-        "Quatro Dedos",
-        Raridade.INCOMUM,
-        Gatilho.PASSIVO,
-        7,
-        EfeitoCoringa.addMultSeMaoPoker(4, "DoisPares"));
+    MALUCO(9, "Coringa Maluco", Raridade.COMUM, Gatilho.FINALMAO, 5, EfeitoCoringa.addMultSeMaoPoker(4, "Sequência")),
 
-    /* ------------------ VARIÁVEIS ------------------ */
-    
+    ENGRACADO(10, "Coringa Engraçado", Raridade.COMUM, Gatilho.FINALMAO, 5, EfeitoCoringa.addMultSeMaoPoker(4, "Flush")),
+
+    QUATRODEDOS(11, "Quatro Dedos", Raridade.INCOMUM, Gatilho.PASSIVO, 7, EfeitoCoringa.addMultSeMaoPoker(4, "DoisPares"));
+
+    /* ------------------ ATRIBUTOS DO ENUM ------------------ */
+
     private final int idJoker;
     private final String nome;
     private final Raridade raridade;
@@ -88,8 +57,9 @@ public enum CatalogoCoringa {
     private final int preco;
     private final EfeitoCoringa efeitoCoringa;
 
-    /* ------------------ CONSTRUTOR ------------------ */
+    /* ------------------ CONSTRUTORES ------------------ */
 
+    /** Construtor para Coringas com tempo de ativação explicitado (ex: FINALMAO, PASSIVO). */
     private CatalogoCoringa(int idJoker, String nome, Raridade raridade, Gatilho tempoDeAtivicao, int preco,
             EfeitoCoringa efeitoCoringa) {
         this.idJoker = idJoker;
@@ -100,6 +70,7 @@ public enum CatalogoCoringa {
         this.efeitoCoringa = efeitoCoringa;
     }
 
+    /** Construtor simplificado. Assume o tempo de ativação padrão como PORCARTA. */
     private CatalogoCoringa(int idJoker, String nome, Raridade raridade, int preco,
             EfeitoCoringa efeitoCoringa) {
         this.idJoker = idJoker;

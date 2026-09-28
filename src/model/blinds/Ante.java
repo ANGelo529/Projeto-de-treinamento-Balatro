@@ -1,13 +1,22 @@
 package model.blinds;
 
+/**
+ * Gerenciador dos estágios de dificuldade do jogo (Ante).
+ * Controla os multiplicadores e escalas de pontuação para o Small, Big e Boss Blind.
+ */
 public class Ante {
     /* ------------------ VARIÁVEIS ------------------ */
 
+    /** Número do Ante/rodada atual */
     private static int numAnteAtual = 1;
+    
+    /** Array com as 3 metas de pontuação ativas (0 = Small, 1 = Big, 2 = Boss) */
     private static Blind[] blindsAtuais = new Blind[3];
+    
+    /** Tabela progressiva de pontuação base por nível de Ante */
     private static final int[] valoresBase = { 100, 300, 800, 2000, 5000, 11000, 20000, 35000, 50000 };
 
-    /* ------------------ CONSTRUTOR ------------------ */
+    /* ------------------ CONSTRUTORES ------------------ */
     
     public Ante() {
         blindsAtuais = atualizarBlind(numAnteAtual);
@@ -17,8 +26,11 @@ public class Ante {
         blindsAtuais = atualizarBlind(anteAtual);
     }
 
-    /* ------------------ MéTODOS ------------------ */
+    /* ------------------ MÉTODOS ------------------ */
 
+    /**
+     * Atualiza e retorna o trio de Blinds para o Ante atual.
+     */
     public static Blind[] atualizarBlind() {
         Blind[] blind = new Blind[3];
         blind[0] = getSmallBlind(numAnteAtual);
@@ -27,6 +39,11 @@ public class Ante {
         return blind;
     }
 
+    /**
+     * Atualiza e retorna o trio de Blinds para um Ante específico fornecido.
+     * 
+     * @param anteAtual Índice do estágio a ser configurado
+     */
     public static Blind[] atualizarBlind(int anteAtual) {
         Blind[] blind = new Blind[3];
         blind[0] = getSmallBlind(anteAtual);
@@ -35,6 +52,9 @@ public class Ante {
         return blind;
     }
 
+    /**
+     * Gera o Boss Blind sorteado validando o limite mínimo de aparição e aplicando multiplicadores.
+     */
     public static Blind getBossBlind(int anteAtual) {
         Blind blind = new Blind();
         while (true) {
@@ -47,6 +67,9 @@ public class Ante {
         }
     }
 
+    /**
+     * Gera e calcula o valor da meta para o Big Blind (Multiplicador base 1.5x).
+     */
     public static Blind getBigBlind(int anteAtual) {
         String nomeBlind = "Big Blind";
         double multiplicadorValorBase = 1.5;
@@ -55,6 +78,9 @@ public class Ante {
         return auxBlind;
     }
 
+    /**
+     * Gera e calcula o valor da meta para o Small Blind (Multiplicador base 1.0x).
+     */
     public static Blind getSmallBlind(int anteAtual) {
         String nomeBlind = "Small Blind";
         double multiplicadorValorBase = 1;
