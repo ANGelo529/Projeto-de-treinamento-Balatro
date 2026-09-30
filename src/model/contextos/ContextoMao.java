@@ -29,11 +29,6 @@ public class ContextoMao {
     /** Objeto que armazena os valores base de fichas, multiplicadores e nível da mão */
     private Ponto pontos = new Ponto();
 
-    /** Valor acumulado de fichas na jogada atual */
-    private int fichasAtuais;
-
-    /** Valor acumulado do multiplicador na jogada atual */
-    private int multAtual;
 
     /* ------------------ CONSTRUTORES ------------------ */
 
@@ -48,19 +43,6 @@ public class ContextoMao {
         this.tipoMao = pontos.getNomeMaoJogada();
         this.cartasJogadas = cartasJogadas;
         this.pontos = pontos;
-        this.fichasAtuais = pontos.getFicha();
-        this.multAtual = pontos.getMulti();
-    }
-
-    /**
-     * Construtor parcial para inicialização rápida de valores de pontuação.
-     * 
-     * @param fichasAtuais Quantidade inicial de fichas.
-     * @param multAtual Valor inicial do multiplicador.
-     */
-    public ContextoMao(int fichasAtuais, int multAtual) {
-        this.fichasAtuais = fichasAtuais;
-        this.multAtual = multAtual;
     }
 
     /** Construtor padrão sem argumentos. */
@@ -75,14 +57,15 @@ public class ContextoMao {
      * @param valor Quantidade a ser somada ao multiplicador.
      */
     public void adicionarMult(int valor) {
-        this.multAtual += valor;
+        this.pontos.setMulti(valor + pontos.getMulti());
     }
 
     /**
-     * Incrementa o multiplicador atual com o valor padrão fixo (+4).
+     * Incrementa as fichas com um valor específico.
+     * @param valor quantidade a ser somada as fichas
      */
-    public void adicionarMult() {
-        this.multAtual += 4;
+    public void adicionarFicha(int valor) {
+        this.pontos.setFicha(valor + pontos.getFicha());
     }
 
     /* ------------------ GETTERS & SETTERS ------------------ */
@@ -119,19 +102,4 @@ public class ContextoMao {
         this.pontos = pontos;
     }
 
-    public int getFichasAtuais() {
-        return fichasAtuais;
-    }
-
-    public void setFichasAtuais(int fichasAtuais) {
-        this.fichasAtuais = fichasAtuais;
-    }
-
-    public int getMultAtual() {
-        return multAtual;
-    }
-
-    public void setMultAtual(int multAtual) {
-        this.multAtual = multAtual;
-    }
 }
