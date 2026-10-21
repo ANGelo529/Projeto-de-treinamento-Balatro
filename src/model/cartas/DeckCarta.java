@@ -8,10 +8,12 @@ import java.util.List;
 import java.util.Random;
 
 import model.enums.Naipe;
+import model.enums.OrdemDeValor;
 
 /**
  * Gerenciador principal do baralho e da mão do jogador.
- * Responsável por inicializar o baralho de 52 cartas, sortear cartas aleatórias,
+ * Responsável por inicializar o baralho de 52 cartas, sortear cartas
+ * aleatórias,
  * reabastecer a mão, ordenar por Naipe ou Valor e gerenciar descartes.
  */
 public class DeckCarta {
@@ -19,14 +21,11 @@ public class DeckCarta {
 
     private ArrayList<Carta> maoJogador = new ArrayList<>();
     private int tamanhoMao = 8;
-    private int qtdMao = 3;             // Quantidade de jogadas restantes na rodada
-    private int qtdMaoDescarte = 3;      // Quantidade de descartes restantes na rodada
+    private int qtdMao = 3; // Quantidade de jogadas restantes na rodada
+    private int qtdMaoDescarte = 3; // Quantidade de descartes restantes na rodada
     private String tipoDeOrganizacao = "OrdemDeValor";
-    
     private final static Naipe[] listaNaipes = Naipe.values();
-    private final static ArrayList<String> listaOrdemDeValor = new ArrayList<>(
-            List.of("2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"));
-            
+    private final static ArrayList<OrdemDeValor> listaOrdemDeValor = new ArrayList<>(List.of(OrdemDeValor.values()));
     private static HashMap<Naipe, ArrayList<Carta>> baralho = criarBaralho();
     private static HashMap<Naipe, ArrayList<Carta>> baralhoJogo = baralho;
     private final static Random random = new Random();
@@ -79,8 +78,10 @@ public class DeckCarta {
     }
 
     /**
-     * Remove da mão do jogador as cartas nas posições indicadas pelo vetor de índices.
-     * Ordena a seleção de trás para frente para evitar estouro de índice (IndexOutOfBounds).
+     * Remove da mão do jogador as cartas nas posições indicadas pelo vetor de
+     * índices.
+     * Ordena a seleção de trás para frente para evitar estouro de índice
+     * (IndexOutOfBounds).
      * 
      * @param posMaoJogadas Array com os índices das cartas a remover
      * @return Lista das cartas removidas/jogadas
@@ -129,7 +130,8 @@ public class DeckCarta {
     }
 
     /**
-     * Ordena as cartas em ordem decrescente com base no Valor da carta (Bubble Sort).
+     * Ordena as cartas em ordem decrescente com base no Valor da carta (Bubble
+     * Sort).
      */
     public static void organizarPorClasse(ArrayList<Carta> maoJogador) {
         for (int i = 0; i < maoJogador.size(); i++) {
@@ -147,7 +149,7 @@ public class DeckCarta {
     }
 
     public int[] colocarValorMaoPoker() {
-        return Carta.getValorOrdemDeValor(this.maoJogador);
+        return Carta.getValorOrdemDeValorArray(this.maoJogador);
     }
 
     /**
@@ -167,7 +169,8 @@ public class DeckCarta {
     }
 
     /**
-     * Reseta as contagens de mãos, descartes e reinicializa o baralho completo antes do início de um novo jogo.
+     * Reseta as contagens de mãos, descartes e reinicializa o baralho completo
+     * antes do início de um novo jogo.
      */
     public void resetarPreJogo() {
         this.maoJogador = colocarCartasInicial(tamanhoMao);
@@ -237,7 +240,7 @@ public class DeckCarta {
         return listaNaipes;
     }
 
-    public static ArrayList<String> getListaordemdevalor() {
+    public static ArrayList<OrdemDeValor> getListaordemdevalor() {
         return listaOrdemDeValor;
     }
 

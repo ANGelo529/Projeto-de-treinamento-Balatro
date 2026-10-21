@@ -18,7 +18,7 @@ public class Blind {
 
     /* ------------------ CONSTRUTORES ------------------ */
 
-    public Blind(String nome, int dinheiroAoGanhar, long valorBlind, int multiplicadorValorBase,
+    public Blind(String nome, int dinheiroAoGanhar, long valorBlind, double multiplicadorValorBase,
             int anteMinimoAparicao) {
         this.nome = nome;
         this.dinheiroAoGanhar = dinheiroAoGanhar;
@@ -55,8 +55,8 @@ public class Blind {
     /**
      * Método utilitário/fábrica provisório para sortear e instanciar um Boss Blind.
      */
-    public static Blind gerarBlindAleatorio(int[] valoresBase, int anteAtual) {
-        Blind blind = new Blind();
+    public static BossBlind gerarBlindAleatorio(int[] valoresBase, int anteAtual) {
+        BossBlind blind = new BossBlind(anteAtual);
         blind.setDinheiroAoGanhar(5);
         blind.setMultiplicadorValorBase(2);
         blind.setNome("Boss Blind");

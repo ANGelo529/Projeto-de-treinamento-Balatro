@@ -2,6 +2,7 @@ package model.cartas;
 
 import java.util.ArrayList;
 import model.enums.Naipe;
+import model.enums.OrdemDeValor;
 
 /**
  * Representa uma Carta individual do baralho.
@@ -10,7 +11,7 @@ import model.enums.Naipe;
 public class Carta {
     /* ------------------ VARIÁVEIS ------------------ */
 
-    private String ordemDeValor;       // Representação textual do valor ("2" até "10", "J", "Q", "K", "A")
+    private OrdemDeValor ordemDeValor;       // Representação textual do valor ("2" até "10", "J", "Q", "K", "A")
     private Naipe naipe;              // Enum do Naipe (Ouros, Copas, Espadas, Paus)
     private String melhoria = "Sem valor";
     private String selo = "Sem valor";
@@ -19,12 +20,12 @@ public class Carta {
 
     /* ------------------ CONSTRUTORES ------------------ */
 
-    public Carta(String ordemDeValor, Naipe naipe) {
+    public Carta(OrdemDeValor ordemDeValor, Naipe naipe) {
         this.ordemDeValor = ordemDeValor;
         this.naipe = naipe;
     }
 
-    public Carta(String ordemDeValor, Naipe naipe, String tipoDeCarta) {
+    public Carta(OrdemDeValor ordemDeValor, Naipe naipe, String tipoDeCarta) {
         this.ordemDeValor = ordemDeValor;
         this.naipe = naipe;
         this.tipoDeCarta = tipoDeCarta;
@@ -38,30 +39,24 @@ public class Carta {
      * @param ordemDeValor Caractere/String representando o valor
      * @return Índice inteiro correspondente (J=9, Q=10, K=11, A=12, ou o próprio número)
      */
-    public static int descobrirPosOrdemDeValor(String ordemDeValor) {
-        switch (ordemDeValor) {
-            case "J": return 9;
-            case "Q": return 10;
-            case "K": return 11;
-            case "A": return 12;
-            default:  return Integer.parseInt(ordemDeValor);
+    public static int descobrirPosOrdemDeValor(OrdemDeValor ordemDeValor) {
+        switch (ordemDeValor.getNomeExibicao()) {
+            case "Valete": return 9;
+            case "Dama": return 10;
+            case "Rei": return 11;
+            case "Ás": return 12;
+            default:  return ordemDeValor.getValorOrdemValor();
         }
     }
 
     /**
      * Retorna a quantidade numérica real de Fichas fornecida pelo valor nominal da carta.
      * 
-     * @param ordemDeValor Caractere/String do valor
+     * @param ordemDeValor Enum OrdemDeValor
      * @return Fichas base (Figuras J/Q/K = 10, Ás = 11, Números = valor nominal)
      */
-    public static int getValorOrdemDeValor(String ordemDeValor) {
-        if (ordemDeValor.equals("J") || ordemDeValor.equals("Q") || ordemDeValor.equals("K")) {
-            return 10;
-        } else if (ordemDeValor.equals("A")) {
-            return 11;
-        } else {
-            return Integer.parseInt(ordemDeValor);
-        }
+    public static int getValorOrdemDeValor(OrdemDeValor ordemDeValor) {
+        return ordemDeValor.getValorOrdemValor();
     }
 
     /**
@@ -69,28 +64,21 @@ public class Carta {
      * 
      * @param maoJogador Lista de cartas a serem convertidas em valores numéricos
      */
-    public static int[] getValorOrdemDeValor(ArrayList<Carta> maoJogador) {
+    public static int[] getValorOrdemDeValorArray(ArrayList<Carta> maoJogador) {
         int[] vetAux = new int[maoJogador.size()];
         for (int i = 0; i < vetAux.length; i++) {
-            String val = maoJogador.get(i).getOrdemDeValor();
-            if (val.equals("J") || val.equals("Q") || val.equals("K")) {
-                vetAux[i] = 10;
-            } else if (val.equals("A")) {
-                vetAux[i] = 11;
-            } else {
-                vetAux[i] = Integer.parseInt(val);
-            }
+            vetAux[i] = getValorOrdemDeValor(maoJogador.get(i).getOrdemDeValor());
         }
         return vetAux;
     }
 
     /* ------------------ GETTERS & SETTERS ------------------ */
 
-    public String getOrdemDeValor() {
+    public OrdemDeValor getOrdemDeValor(){
         return ordemDeValor;
     }
-
-    public void setOrdemDeValor(String ordemDeValor) {
+    
+    public void setOrdemDeValor(OrdemDeValor ordemDeValor) {
         this.ordemDeValor = ordemDeValor;
     }
 

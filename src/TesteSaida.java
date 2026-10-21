@@ -7,12 +7,17 @@ import service.*;
 import Factory.*;
 
 /**
- * Classe utilitária e de teste para simulação e impressão dos fluxos do jogo no console.
- * Utilizada para validar o sorteio de cartas, progressão de Ante/Blinds e execução das jogadas.
+ * Classe utilitária e de teste para simulação e impressão dos fluxos do jogo no
+ * console.
+ * Utilizada para validar o sorteio de cartas, progressão de Ante/Blinds e
+ * execução das jogadas.
  */
 public class TesteSaida {
-    
-    /* Métodos de impressão vazios reservados para saídas do fluxo de interface de terminal */
+
+    /*
+     * Métodos de impressão vazios reservados para saídas do fluxo de interface de
+     * terminal
+     */
     public static void printReceberCartas() {}
     public static void printMostrarPontos() {}
     public static void printVerificarOrdenacao() {}
@@ -30,8 +35,9 @@ public class TesteSaida {
         System.out.println("Verificação MaoJogador");
         for (int i = 0; i < maoJogador.size(); i++) {
             String naipe = maoJogador.get(i).getNaipe().getNomeExibicao();
-            String ordemDeValor = maoJogador.get(i).getOrdemDeValor();
-            System.out.printf("Naipe: %s OrdemDeValor: %s %d\n", naipe, ordemDeValor, i);
+            String ordemDeValor = maoJogador.get(i).getOrdemDeValor().getNomeExibicao();
+            System.out.printf("%s de %s %d \t/// Naipe: %s OrdemDeValor: %s\n", ordemDeValor, naipe, i, naipe,
+                    ordemDeValor);
         }
     }
 
@@ -52,7 +58,8 @@ public class TesteSaida {
     }
 
     /**
-     * Realiza um teste interativo do ciclo principal de uma jogada via entrada do console:
+     * Realiza um teste interativo do ciclo principal de uma jogada via entrada do
+     * console:
      * 1. Gera o baralho/mão inicial do jogador;
      * 2. Lê os índices das 5 cartas a serem jogadas;
      * 3. Retira essas cartas do baralho;
@@ -85,10 +92,10 @@ public class TesteSaida {
         for (int i = 1; i <= 4; i++) {
             maoCoringa.add(CoringaFactory.getCoringaPorId(i));
         }
-        
+
         // Avalia e calcula os pontos
         ValidadorPoker.calcularJogada(cartasJogadas, maoCoringa);
-        
+
         // Reabastece a mão do jogador até o limite padrão
         teste.adicionarCartas(teste.getMaoJogador());
         TesteSaida.printMaoJogador(teste.getMaoJogador());

@@ -1,7 +1,5 @@
 package model.enums;
 
-import java.util.ArrayList;
-
 public enum Gatilho {
     PORCARTA("Ativa a cada carta"),
     FINALMAO("Ativo no final da mão"),
