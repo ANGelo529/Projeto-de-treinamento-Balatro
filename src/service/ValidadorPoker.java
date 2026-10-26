@@ -36,7 +36,7 @@ public class ValidadorPoker {
      */
     public static void calcularJogada(ArrayList<Carta> maoJogada, ArrayList<Coringa> maoCoringa) {
         int[] qtdNaipes = new int[4]; // Contador para os 4 naipes (Ouros, Copas, Espadas, Paus)
-        int[] qtdOrdemDeValor = new int[13]; // Contador para as 13 ordens de valor (Ás até Rei)
+        int[] qtdOrdemDeValor = new int[15]; // Contador para as 13 ordens de valor (Ás até Rei)
 
         // Preenche os vetores de frequência com base nas cartas da mão
         for (int i = 0; i < maoJogada.size(); i++) {
@@ -135,11 +135,11 @@ public class ValidadorPoker {
     }
 
     /**
-     * Valida se a mão é um Flush (5 cartas do mesmo naipe).
+     * Valida se a mão é um Flush (tamSeqPoker cartas do mesmo naipe).
      */
     public static boolean validarFlush(int[] qtdNaipe) {
         for (int i = 0; i < qtdNaipe.length; i++) {
-            if (qtdNaipe[i] == 5) {
+            if (qtdNaipe[i] == DeckCarta.getTamSeqPoker()) {
                 return true;
             }
         }
@@ -147,7 +147,7 @@ public class ValidadorPoker {
     }
 
     /**
-     * Valida se as cartas formam uma Sequência (5 valores consecutivos).
+     * Valida se as cartas formam uma Sequência (tamSeqPoker valores consecutivos).
      */
     public static boolean validarSequencia(int[] qtdOrdemDeValor) {
         int qtdValidos = 0;
@@ -156,7 +156,7 @@ public class ValidadorPoker {
         for (int i = 0; i < qtdOrdemDeValor.length; i++) {
             if (qtdOrdemDeValor[i] > 0) {
                 qtdValidos++;
-                if (qtdValidos == 5) {
+                if (qtdValidos == DeckCarta.getTamSeqPoker()) {
                     return true;
                 }
             } else {

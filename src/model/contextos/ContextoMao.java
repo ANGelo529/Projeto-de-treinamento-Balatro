@@ -2,6 +2,7 @@ package model.contextos;
 
 import java.util.ArrayList;
 import model.cartas.Carta;
+import model.coringas.Coringa;
 import model.enums.MaoPoker;
 
 /**
@@ -22,6 +23,8 @@ public class ContextoMao {
 
     /** Carta individual sendo avaliada no momento pelo efeito de um Coringa */
     private Carta cartaAuxiliar;
+
+    private Coringa coringaAtual;
 
     /**
      * Objeto que armazena os valores base de fichas, multiplicadores e nível da mão
@@ -92,6 +95,14 @@ public class ContextoMao {
 
     public void setCartaAuxiliar(Carta cartaAuxiliar) {
         this.cartaAuxiliar = cartaAuxiliar;
+    }
+
+    public Coringa getCoringaAtual() {
+        return coringaAtual;
+    }
+
+    public void setCoringaAtual(Coringa coringaAtual) {
+        this.coringaAtual = coringaAtual;
     }
 
     public Ponto getPontos() {

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class DeckCoringa {
 
     /** Lista de Coringas atualmente equipados */
-    private ArrayList<Coringa> maoCoringa = new ArrayList<>();
+    private static ArrayList<Coringa> maoCoringa = new ArrayList<>();
 
     /**
      * Ponto de entrada estático para processar e aplicar todos os efeitos de Coringas na mão.
@@ -41,6 +41,7 @@ public class DeckCoringa {
                 tempoDeAtivicao = maoCoringa.get(j).getTempoDeAtivicao();
                 if (maoCoringa.get(j) != null && tempoDeAtivicao.equals(Gatilho.PORCARTA)) {
                     // Define a carta corrente que será analisada pelas lambdas em EfeitoCoringa
+                    contextoMao.setCoringaAtual(maoCoringa.get(j));
                     contextoMao.setCartaAuxiliar(cartasJogadas.get(i));
                     contextoMao = maoCoringa.get(j).efeitoCoringa(contextoMao);
                 }
@@ -68,11 +69,11 @@ public class DeckCoringa {
 
     /* ------------------ GETTERS & SETTERS ------------------ */
 
-    public ArrayList<Coringa> getMaoCoringa() {
+    public static ArrayList<Coringa> getMaoCoringa() {
         return maoCoringa;
     }
 
-    public void setMaoCoringa(ArrayList<Coringa> maoCoringa) {
-        this.maoCoringa = maoCoringa;
+    public static void setMaoCoringa(ArrayList<Coringa> newMaoCoringa) {
+        maoCoringa = newMaoCoringa;
     }
 }

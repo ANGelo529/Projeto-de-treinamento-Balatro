@@ -19,18 +19,18 @@ import model.enums.OrdemDeValor;
 public class DeckCarta {
     /* ------------------ VARIÁVEIS ------------------ */
 
-    private  ArrayList<Carta> maoJogador = new ArrayList<>();
+    private ArrayList<Carta> maoJogador = new ArrayList<>();
     private static int tamanhoMao = 8;
     private static int qtdMao = 3; // Quantidade de jogadas restantes na rodada
     private static int qtdMaoDescarte = 3; // Quantidade de descartes restantes na rodada
-    private  String tipoDeOrganizacao = "OrdemDeValor";
+    private String tipoDeOrganizacao = "OrdemDeValor";
     private static int seed;
     private static int tamSeqPoker = 5;
     private final static Naipe[] listaNaipes = Naipe.values();
     private final static ArrayList<OrdemDeValor> listaOrdemDeValor = new ArrayList<>(List.of(OrdemDeValor.values()));
-    private static HashMap<Naipe, ArrayList<Carta>> baralho = criarBaralho();
-    private static HashMap<Naipe, ArrayList<Carta>> baralhoJogo = baralho;
-    private final static Random random = new Random(seed);
+    private static HashMap<Naipe, ArrayList<Carta>> baralho;
+    private static HashMap<Naipe, ArrayList<Carta>> baralhoJogo;
+    private static Random random = new Random(seed);
 
     /* ------------------ CONSTRUTORES ------------------ */
 
@@ -40,6 +40,8 @@ public class DeckCarta {
     }
 
     public DeckCarta(String tipoDeOrganizacao) {
+        baralho = criarBaralho();
+        baralhoJogo = criarBaralho();
         this.tipoDeOrganizacao = tipoDeOrganizacao;
         this.maoJogador = colocarCartasInicial(tamanhoMao);
         DeckCarta.verificarOrdenacao(this.tipoDeOrganizacao, this.maoJogador);
@@ -68,7 +70,7 @@ public class DeckCarta {
      * Repõe cartas na mão do jogador até atingir o tamanho máximo configurado.
      */
     public void adicionarCartas(ArrayList<Carta> maoJogador) {
-        int qtdParaAdicionar = Math.abs(maoJogador.size() - this.tamanhoMao);
+        int qtdParaAdicionar = Math.abs(maoJogador.size() - tamanhoMao);
         for (int i = 0; i < qtdParaAdicionar; i++) {
             maoJogador.add(DeckCarta.gerarCartaAleatoria());
         }
@@ -281,4 +283,9 @@ public class DeckCarta {
     public static Random getRandom() {
         return random;
     }
+
+    public static void setRandom(Random random) {
+        DeckCarta.random = random;
+    }
+
 }

@@ -41,10 +41,10 @@ public class Carta {
      */
     public static int descobrirPosOrdemDeValor(OrdemDeValor ordemDeValor) {
         switch (ordemDeValor.getNomeExibicao()) {
-            case "Valete": return 9;
-            case "Dama": return 10;
-            case "Rei": return 11;
-            case "Ás": return 12;
+            case "Valete": return 11;
+            case "Dama": return 12;
+            case "Rei": return 13;
+            case "Ás": return 14;
             default:  return ordemDeValor.getValorOrdemValor();
         }
     }
