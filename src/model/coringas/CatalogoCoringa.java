@@ -71,7 +71,7 @@ public enum CatalogoCoringa {
 
     /** Diminui a quantidadde necessária para fazer um flush e uma sequência */
     QUATRODEDOS(16, "Quatro Dedos", Raridade.INCOMUM, Gatilho.PASSIVO, 7,
-            EfeitoCoringa.TODO()),
+            EfeitoCoringa.alterarTamSeqPoker()),
 
     /**
      * BlindSelecionado == true destrói o coringa da direita e ganha o dobro do seu
@@ -84,7 +84,7 @@ public enum CatalogoCoringa {
     CARTALEALDADE(18, "Carta de Lealdade", Raridade.INCOMUM, Gatilho.FINALMAO, 7, EfeitoCoringa.TODO()),
 
     /** Cada Ás,2,3,5,8 jogados dão 8 de multi */
-    FIBONNACI(19, "Fibonnaci", Raridade.INCOMUM, Gatilho.PORCARTA, 7, EfeitoCoringa.TODO()),
+    FIBONNACI(19, "Fibonnaci", Raridade.INCOMUM, Gatilho.PORCARTA, 7, EfeitoCoringa.addFibNumeros()),
 
     /** Reativa cada carta com 2, 3, 4, 5 */
     // TODO: ver como reativar as cartas
@@ -95,13 +95,13 @@ public enum CatalogoCoringa {
     PAREIDOLIA(21, "Pareidolia", Raridade.INCOMUM, Gatilho.PASSIVO, 7, EfeitoCoringa.TODO()),
 
     /** Tem uma chance de 1/4 de upar a mão jogada */
-    ESPACIAL(22, "Coringa espacial", Raridade.INCOMUM, Gatilho.FINALMAO, 7, EfeitoCoringa.TODO()),
+    ESPACIAL(22, "Coringa espacial", Raridade.INCOMUM, Gatilho.FINALMAO, 7, EfeitoCoringa.uparMaoPoker()),
 
     /** 3x mult se todas as cartas da mão forem ESPADAS ou PAUS */
     QUADRONEGRO(23, "Quadro negro", Raridade.INCOMUM, Gatilho.FINALMAO, 7, EfeitoCoringa.TODO()),
 
     /** Zera os descartes e ganha +3 mãos */
-    LADRAO(24, "Ladrão", Raridade.INCOMUM, Gatilho.BLINDSELECIONADO, 7, EfeitoCoringa.TODO()),
+    LADRAO(24, "Ladrão", Raridade.INCOMUM, Gatilho.BLINDSELECIONADO, 7, EfeitoCoringa.alterarDescartes()),
 
     /** Adiciona +5 de mult a carta jogada(valor Acumulativo na carta) */
     // TODO: ver como acumular valores

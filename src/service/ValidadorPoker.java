@@ -9,27 +9,34 @@ import model.coringas.*;
 import model.enums.MaoPoker;
 
 /**
- * Classe responsável por identificar, validar e calcular a pontuação das mãos de Poker
- * com base na combinação de cartas jogadas e na aplicação dos efeitos de Coringas.
+ * Classe responsável por identificar, validar e calcular a pontuação das mãos
+ * de Poker
+ * com base na combinação de cartas jogadas e na aplicação dos efeitos de
+ * Coringas.
  */
 public class ValidadorPoker {
     /* ------------------ VARIÁVEIS ------------------ */
 
-    /** Tabela hash estática contendo o mapeamento de cada tipo de mão para sua pontuação base (Fichas e Multiplicador) */
-    private static HashMap<MaoPoker, Ponto> listaMaosPoker = setListaMaosPoker();
+    /**
+     * Tabela hash estática contendo o mapeamento de cada tipo de mão para sua
+     * pontuação base (Fichas e Multiplicador)
+     */
+    private static HashMap<MaoPoker, Ponto> listaMaosPoker = startListaMaosPoker();
 
     /* ------------------ MÉTODOS ------------------ */
 
     /**
      * Calcula o resultado de uma jogada, contando a frequência de naipes e valores,
-     * determinando a melhor mão de poker pontuada e acionando a verificação dos coringas.
+     * determinando a melhor mão de poker pontuada e acionando a verificação dos
+     * coringas.
      * 
-     * @param maoJogada  Lista de cartas selecionadas pelo jogador para a jogada[cite: 1]
+     * @param maoJogada  Lista de cartas selecionadas pelo jogador para a
+     *                   jogada[cite: 1]
      * @param maoCoringa Lista de coringas ativos/equipados no momento[cite: 1]
      */
     public static void calcularJogada(ArrayList<Carta> maoJogada, ArrayList<Coringa> maoCoringa) {
-        int[] qtdNaipes = new int[4];         // Contador para os 4 naipes (Ouros, Copas, Espadas, Paus)
-        int[] qtdOrdemDeValor = new int[13];   // Contador para as 13 ordens de valor (Ás até Rei)
+        int[] qtdNaipes = new int[4]; // Contador para os 4 naipes (Ouros, Copas, Espadas, Paus)
+        int[] qtdOrdemDeValor = new int[13]; // Contador para as 13 ordens de valor (Ás até Rei)
 
         // Preenche os vetores de frequência com base nas cartas da mão
         for (int i = 0; i < maoJogada.size(); i++) {
@@ -38,24 +45,27 @@ public class ValidadorPoker {
             qtdNaipes[naipe]++;
             qtdOrdemDeValor[ordemDeValor]++;
         }
-        
+
         // Avalia qual é a combinação da mão e retorna seus pontos base[cite: 1]
         Ponto pontosMaoJogada = verificarJogada(qtdOrdemDeValor, qtdNaipes);
-        
+
         // Cria o contexto da jogada e processa as alterações dos Coringas[cite: 1]
         ContextoMao contextoMao = new ContextoMao(maoJogada, pontosMaoJogada);
         DeckCoringa.verificarCoringa(contextoMao, maoCoringa);
     }
 
     /**
-     * Avalia o vetor de frequências seguindo a hierarquia do Poker (da mão mais alta para a mais baixa).
+     * Avalia o vetor de frequências seguindo a hierarquia do Poker (da mão mais
+     * alta para a mais baixa).
      * 
      * @param qtdOrdemDeValor Vetor com a contagem de cartas por valor[cite: 1]
      * @param qtdNaipe        Vetor com a contagem de cartas por naipe[cite: 1]
-     * @return Objeto {@link Ponto} com Fichas, Multiplicador e o Enum da mão identificada[cite: 1]
+     * @return Objeto {@link Ponto} com Fichas, Multiplicador e o Enum da mão
+     *         identificada[cite: 1]
      */
     public static Ponto verificarJogada(int[] qtdOrdemDeValor, int[] qtdNaipe) {
-        // Mapeamento booleano ordenado pela hierarquia tradicional de mãos de poker[cite: 1]
+        // Mapeamento booleano ordenado pela hierarquia tradicional de mãos de
+        // poker[cite: 1]
         boolean[] jogadasVerificadas = {
                 validarStraightFlush(qtdOrdemDeValor, qtdNaipe),
                 validarQuadra(qtdOrdemDeValor),
@@ -75,7 +85,8 @@ public class ValidadorPoker {
                 System.out.println(nomeMaoJogada.getNomeExibicao());
                 int ficha = listaMaosPoker.get(nomeMaoJogada).getFicha();
                 int multi = listaMaosPoker.get(nomeMaoJogada).getMulti();
-                return new Ponto(ficha, multi, nomeMaoJogada);
+                int nivel = listaMaosPoker.get(nomeMaoJogada).getNivel();
+                return new Ponto(ficha, multi,nivel, nomeMaoJogada);
             }
         }
 
@@ -83,7 +94,8 @@ public class ValidadorPoker {
     }
 
     /**
-     * Valida se a mão é um Straight Flush (uma sequência onde todas as cartas possuem o mesmo naipe).
+     * Valida se a mão é um Straight Flush (uma sequência onde todas as cartas
+     * possuem o mesmo naipe).
      */
     public static boolean validarStraightFlush(int[] qtdOrdemDeValor, int[] qtdNaipe) {
         return validarSequencia(qtdOrdemDeValor) && validarFlush(qtdNaipe);
@@ -153,7 +165,7 @@ public class ValidadorPoker {
         }
 
         // Caso especial: Sequência A-2-3-4-5 (onde o Ás atua como valor mais baixo)
-        if (qtdOrdemDeValor[12] > 0 && qtdOrdemDeValor[0] > 0 && qtdOrdemDeValor[1] > 0 
+        if (qtdOrdemDeValor[12] > 0 && qtdOrdemDeValor[0] > 0 && qtdOrdemDeValor[1] > 0
                 && qtdOrdemDeValor[2] > 0 && qtdOrdemDeValor[3] > 0) {
             return true;
         }
@@ -220,19 +232,29 @@ public class ValidadorPoker {
         ValidadorPoker.listaMaosPoker = listaMaosPoker;
     }
 
+    public static void setListaMaosPoker(MaoPoker maoPoker) {
+        int ficha = (int) (ValidadorPoker.listaMaosPoker.get(maoPoker).getFicha() * 1.5);
+        int multi = (int) (ValidadorPoker.listaMaosPoker.get(maoPoker).getMulti() * 1.5) ;
+        int nivel = ValidadorPoker.listaMaosPoker.get(maoPoker).getNivel() + 1;
+        Ponto auxPonto = new Ponto(ficha, multi,nivel, maoPoker);
+        ValidadorPoker.listaMaosPoker.put(maoPoker, auxPonto);
+    }
+
     /**
-     * Inicializa a tabela padrão de pontuações bases (Fichas e Multiplicadores) para cada mão de Poker.
+     * Inicializa a tabela padrão de pontuações bases (Fichas e Multiplicadores)
+     * para cada mão de Poker.
      * 
      * @return HashMap populado com as pontuações iniciais
      */
-    public static HashMap<MaoPoker, Ponto> setListaMaosPoker() {
+    public static HashMap<MaoPoker, Ponto> startListaMaosPoker() {
         HashMap<MaoPoker, Ponto> aux = new HashMap<>();
         int[] fichas = { 5, 10, 20, 30, 30, 35, 40, 60, 100 };
         int[] multi = { 1, 2, 2, 3, 4, 4, 4, 7, 8 };
-
-        // Mapeia os valores em ordem invertida associando aos enums correspondentes de MaoPoker
+        MaoPoker[] nomesMaoPoker = MaoPoker.values();
+        // Mapeia os valores em ordem invertida associando aos enums correspondentes de
+        // MaoPoker
         for (int i = fichas.length - 1; i >= 0; i--) {
-            aux.put(MaoPoker.values()[fichas.length - 1 - i], new Ponto(fichas[i], multi[i], 1));
+            aux.put(MaoPoker.values()[fichas.length - 1 - i], new Ponto(fichas[i], multi[i], 1,nomesMaoPoker[i]));
         }
 
         return aux;

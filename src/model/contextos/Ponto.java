@@ -3,7 +3,7 @@ package model.contextos;
 import model.enums.MaoPoker;
 
 /**
- * Representa os valores base de pontuação (Fichas e Multiplicador) associados 
+ * Representa os valores base de pontuação (Fichas e Multiplicador) associados
  * a um nível específico de uma mão de poker.
  */
 public class Ponto {
@@ -27,26 +27,15 @@ public class Ponto {
     /**
      * Construtor para definir ficha, multiplicador e nível da mão.
      * 
-     * @param ficha Valor base em fichas.
-     * @param multi Valor base do multiplicador.
-     * @param nivel Nível inicial.
+     * @param ficha         Valor base em fichas.
+     * @param multi         Valor base do multiplicador.
+     * @param nivel         Nível inicial.
+     * @param nomeMaoJogada nomeMaoJogada
      */
-    public Ponto(int ficha, int multi, int nivel) {
+    public Ponto(int ficha, int multi, int nivel, MaoPoker nomeMaoJogada) {
         this.ficha = ficha;
         this.multi = multi;
         this.nivel = nivel;
-    }
-
-    /**
-     * Construtor para mapear a pontuação a um tipo específico de mão de poker.
-     * 
-     * @param ficha Valor base em fichas.
-     * @param multi Valor base do multiplicador.
-     * @param nomeMaoJogada Enum do tipo da mão de poker.
-     */
-    public Ponto(int ficha, int multi, MaoPoker nomeMaoJogada) {
-        this.ficha = ficha;
-        this.multi = multi;
         this.nomeMaoJogada = nomeMaoJogada;
     }
 
@@ -58,7 +47,8 @@ public class Ponto {
 
     /**
      * Incrementa o nível da mão e melhora os seus atributos base.
-     * Aumenta a ficha e o multiplicador em 50% do seu valor atual (usando divisão inteira truncada).
+     * Aumenta a ficha e o multiplicador em 50% do seu valor atual (usando divisão
+     * inteira truncada).
      */
     public void uparMao() {
         this.nivel++;

@@ -1,7 +1,12 @@
 package model.Efeitos;
 
+import java.util.Random;
+
+import model.cartas.DeckCarta;
 import model.contextos.ContextoMao;
 import model.enums.*;
+import service.ValidadorCoringa;
+import service.ValidadorPoker;
 
 /**
  * Interface funcional e fábrica de estratégias para os efeitos dos
@@ -112,6 +117,48 @@ public interface EfeitoCoringa {
         return ctx -> {
             if (ctx.getTipoMao() == maoPoker) {
                 ctx.adicionarMult(valor);
+            }
+            return ctx;
+        };
+    }
+
+    static EfeitoCoringa addFibNumeros() {
+        OrdemDeValor[] fibNumeros = { OrdemDeValor.AS, OrdemDeValor.DOIS, OrdemDeValor.TRES, OrdemDeValor.CINCO,
+                OrdemDeValor.OITO };
+        return ctx -> {
+            for (OrdemDeValor fibNumerosAtual : fibNumeros) {
+                if (ctx.getCartaAuxiliar().getOrdemDeValor() == fibNumerosAtual) {
+                    ctx.getPontos().setMulti(ctx.getPontos().getMulti() + 8);
+                    return ctx;
+                }
+            }
+            return ctx;
+        };
+    }
+
+    static EfeitoCoringa alterarTamSeqPoker() {
+        int novoTamanho = 4;
+        return ctx -> {
+            DeckCarta.setTamSeqPoker(novoTamanho);
+            return ctx;
+        };
+    }
+
+    static EfeitoCoringa alterarDescartes() {
+        return ctx -> {
+            DeckCarta.setQtdMaoDescarte(0);
+            DeckCarta.setQtdMao(DeckCarta.getQtdMao() + 3);
+            return ctx;
+        };
+    }
+
+    static EfeitoCoringa uparMaoPoker() {
+        int numRandom = DeckCarta.getRandom().nextInt(4);
+        // numeros de 0 a 4 para dar a sensação de 1/4 fiz se for um número 0 deu certo
+        // a porcentagem
+        return ctx -> {
+            if (numRandom == 0) {
+                ValidadorPoker.setListaMaosPoker(ctx.getTipoMao());
             }
             return ctx;
         };

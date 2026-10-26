@@ -17,8 +17,10 @@ public class Coringa {
     private Modificador modificador;
     private Gatilho tempoDeAtivicao;
     private float preco;
-
-    /** Comportamento executável (interface funcional/lambda) do efeito do Coringa */
+    private int incremento = 0;
+    /**
+     * Comportamento executável (interface funcional/lambda) do efeito do Coringa
+     */
     private EfeitoCoringa efeitoCoringa;
 
     /* ------------------ CONSTRUTORES ------------------ */
@@ -54,7 +56,8 @@ public class Coringa {
     /* ------------------ MÉTODOS DE NEGÓCIO ------------------ */
 
     /**
-     * Aplica a regra de negócio/efeito deste Coringa sobre o contexto da mão jogada.
+     * Aplica a regra de negócio/efeito deste Coringa sobre o contexto da mão
+     * jogada.
      * 
      * @param maoCarta Contexto atual do cálculo de pontuação.
      * @return O objeto ContextoMao modificado após a aplicação do efeito.
@@ -111,6 +114,14 @@ public class Coringa {
 
     public void setPreco(float preco) {
         this.preco = preco;
+    }
+
+    public int getIncremento() {
+        return incremento;
+    }
+
+    public void setIncremento(int incremento) {
+        this.incremento = incremento;
     }
 
     public EfeitoCoringa getEfeitoCoringa() {

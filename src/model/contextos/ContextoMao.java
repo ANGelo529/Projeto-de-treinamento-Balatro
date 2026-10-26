@@ -6,12 +6,9 @@ import model.enums.MaoPoker;
 
 /**
  * Classe responsável por representar o contexto de pontuação de uma mão jogada.
- * Atua como um DTO (Data Transfer Object) transportando o estado das cartas, 
+ * Atua como um DTO (Data Transfer Object) transportando o estado das cartas,
  * pontuação atual e carta em processamento.
  * 
- * ATENÇÃO (BUG DE DESSINCRONIZAÇÃO): Esta classe mantém 'fichasAtuais' e 'multAtual'
- * de forma duplicada em relação ao objeto 'pontos' (instância de Ponto). Alterar
- * 'multAtual' nesta classe não atualiza a propriedade correspondente em 'pontos'.
  */
 public class ContextoMao {
 
@@ -26,18 +23,20 @@ public class ContextoMao {
     /** Carta individual sendo avaliada no momento pelo efeito de um Coringa */
     private Carta cartaAuxiliar;
 
-    /** Objeto que armazena os valores base de fichas, multiplicadores e nível da mão */
+    /**
+     * Objeto que armazena os valores base de fichas, multiplicadores e nível da mão
+     */
     private Ponto pontos = new Ponto();
-
 
     /* ------------------ CONSTRUTORES ------------------ */
 
     /**
      * Construtor completo a partir de uma lista de cartas e do objeto Ponto.
-     * Inicializa os valores locais de fichas e multiplicador com base no Ponto informado.
+     * Inicializa os valores locais de fichas e multiplicador com base no Ponto
+     * informado.
      * 
      * @param cartasJogadas Lista de cartas jogadas.
-     * @param pontos Objeto Ponto com as estatísticas base da mão.
+     * @param pontos        Objeto Ponto com as estatísticas base da mão.
      */
     public ContextoMao(ArrayList<Carta> cartasJogadas, Ponto pontos) {
         this.tipoMao = pontos.getNomeMaoJogada();
@@ -62,6 +61,7 @@ public class ContextoMao {
 
     /**
      * Incrementa as fichas com um valor específico.
+     * 
      * @param valor quantidade a ser somada as fichas
      */
     public void adicionarFicha(int valor) {

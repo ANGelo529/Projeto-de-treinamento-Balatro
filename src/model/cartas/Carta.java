@@ -11,7 +11,7 @@ import model.enums.OrdemDeValor;
 public class Carta {
     /* ------------------ VARIÁVEIS ------------------ */
 
-    private OrdemDeValor ordemDeValor;       // Representação textual do valor ("2" até "10", "J", "Q", "K", "A")
+    private OrdemDeValor ordemDeValor;       // Enum do valor ("2" até "10", "J", "Q", "K", "A")
     private Naipe naipe;              // Enum do Naipe (Ouros, Copas, Espadas, Paus)
     private String melhoria = "Sem valor";
     private String selo = "Sem valor";

@@ -19,16 +19,18 @@ import model.enums.OrdemDeValor;
 public class DeckCarta {
     /* ------------------ VARIÁVEIS ------------------ */
 
-    private ArrayList<Carta> maoJogador = new ArrayList<>();
-    private int tamanhoMao = 8;
-    private int qtdMao = 3; // Quantidade de jogadas restantes na rodada
-    private int qtdMaoDescarte = 3; // Quantidade de descartes restantes na rodada
-    private String tipoDeOrganizacao = "OrdemDeValor";
+    private  ArrayList<Carta> maoJogador = new ArrayList<>();
+    private static int tamanhoMao = 8;
+    private static int qtdMao = 3; // Quantidade de jogadas restantes na rodada
+    private static int qtdMaoDescarte = 3; // Quantidade de descartes restantes na rodada
+    private  String tipoDeOrganizacao = "OrdemDeValor";
+    private static int seed;
+    private static int tamSeqPoker = 5;
     private final static Naipe[] listaNaipes = Naipe.values();
     private final static ArrayList<OrdemDeValor> listaOrdemDeValor = new ArrayList<>(List.of(OrdemDeValor.values()));
     private static HashMap<Naipe, ArrayList<Carta>> baralho = criarBaralho();
     private static HashMap<Naipe, ArrayList<Carta>> baralhoJogo = baralho;
-    private final static Random random = new Random();
+    private final static Random random = new Random(seed);
 
     /* ------------------ CONSTRUTORES ------------------ */
 
@@ -175,8 +177,8 @@ public class DeckCarta {
     public void resetarPreJogo() {
         this.maoJogador = colocarCartasInicial(tamanhoMao);
         baralho = criarBaralho();
-        this.qtdMao = 3;
-        this.qtdMaoDescarte = 3;
+        qtdMao = 3;
+        qtdMaoDescarte = 3;
     }
 
     /**
@@ -204,28 +206,28 @@ public class DeckCarta {
         this.maoJogador = maoJogador;
     }
 
-    public int getTamanhoMao() {
+    public static int getTamanhoMao() {
         return tamanhoMao;
     }
 
-    public void setTamanhoMao(int tamanhoMao) {
-        this.tamanhoMao = tamanhoMao;
+    public static void setTamanhoMao(int newTamanhoMao) {
+        tamanhoMao = newTamanhoMao;
     }
 
-    public int getQtdMao() {
+    public static int getQtdMao() {
         return qtdMao;
     }
 
-    public void setQtdMao(int qtdMao) {
-        this.qtdMao = qtdMao;
+    public static void setQtdMao(int newQtdMao) {
+        qtdMao = newQtdMao;
     }
 
-    public int getQtdMaoDescarte() {
+    public static int getQtdMaoDescarte() {
         return qtdMaoDescarte;
     }
 
-    public void setQtdMaoDescarte(int qtdMaoDescarte) {
-        this.qtdMaoDescarte = qtdMaoDescarte;
+    public static void setQtdMaoDescarte(int newQtdMaoDescarte) {
+        qtdMaoDescarte = newQtdMaoDescarte;
     }
 
     public String getTipoDeOrganizacao() {
@@ -234,6 +236,22 @@ public class DeckCarta {
 
     public void setTipoDeOrganizacao(String tipoDeOrganizacao) {
         this.tipoDeOrganizacao = tipoDeOrganizacao;
+    }
+
+    public static int getSeed() {
+        return seed;
+    }
+
+    public static void setSeed(int seed) {
+        DeckCarta.seed = seed;
+    }
+
+    public static int getTamSeqPoker() {
+        return tamSeqPoker;
+    }
+
+    public static void setTamSeqPoker(int tamSeqPoker) {
+        DeckCarta.tamSeqPoker = tamSeqPoker;
     }
 
     public static Naipe[] getListanaipes() {
@@ -258,5 +276,9 @@ public class DeckCarta {
 
     public static void setBaralhoJogo(HashMap<Naipe, ArrayList<Carta>> baralhoJogo) {
         DeckCarta.baralhoJogo = baralhoJogo;
+    }
+
+    public static Random getRandom() {
+        return random;
     }
 }
