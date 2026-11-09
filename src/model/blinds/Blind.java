@@ -1,18 +1,24 @@
-package backEnd.codigojava;
+package model.blinds;
 
+import model.Efeitos.EfeitoBlind;
+
+/**
+ * Modelo de representação das metas (Small Blind, Big Blind e Boss Blind) no jogo.
+ * Armazena a meta de pontuação necessária para vencer a rodada, recompensa financeira e efeitos especiais do Chefe.
+ */
 public class Blind {
     /* ------------------ VARIÁVEIS ------------------ */
 
     private String nome;
-    private int dinheiroAoGanhar = 3;
-    private long valorBlind;
-    private double multiplicadorValorBase;
-    private int anteMinimoAparicao = 0;
-    private EfeitoBlind efeitoBlind;
+    private int dinheiroAoGanhar = 3;             // Recompensa paga ao jogador caso a meta seja batida
+    private long valorBlind;                       // Meta de pontuação necessária
+    private double multiplicadorValorBase;        // Multiplicador aplicado sobre a pontuação do Ante
+    private int anteMinimoAparicao = 0;            // Requisito mínimo de rodada para aparecer
+    private EfeitoBlind efeitoBlind;              // Efeito passivo/restrição imposta pelo Boss
 
-    /* ------------------ CONSTRUTOR ------------------ */
+    /* ------------------ CONSTRUTORES ------------------ */
 
-    public Blind(String nome, int dinheiroAoGanhar, long valorBlind, int multiplicadorValorBase,
+    public Blind(String nome, int dinheiroAoGanhar, long valorBlind, double multiplicadorValorBase,
             int anteMinimoAparicao) {
         this.nome = nome;
         this.dinheiroAoGanhar = dinheiroAoGanhar;
@@ -44,10 +50,13 @@ public class Blind {
     public Blind() {
     }
 
-    public static Blind gerarBlindAleatorio(int[] valoresBase, int anteAtual) {
-        // BlindFactory conjuntoBLind = BlindFactory.getTodosOsBlinds();
-        // Blind blind = conjuntoBLind.sortearBlind();
-        Blind blind = new Blind();
+    /* ------------------ MÉTODOS ------------------ */
+
+    /**
+     * Método utilitário/fábrica provisório para sortear e instanciar um Boss Blind.
+     */
+    public static BossBlind gerarBlindAleatorio(int[] valoresBase, int anteAtual) {
+        BossBlind blind = new BossBlind(anteAtual);
         blind.setDinheiroAoGanhar(5);
         blind.setMultiplicadorValorBase(2);
         blind.setNome("Boss Blind");
@@ -104,5 +113,4 @@ public class Blind {
     public void setEfeitoBlind(EfeitoBlind efeitoBlind) {
         this.efeitoBlind = efeitoBlind;
     }
-
 }

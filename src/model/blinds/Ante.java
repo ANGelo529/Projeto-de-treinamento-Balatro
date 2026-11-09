@@ -1,14 +1,24 @@
-package backEnd.codigojava;
+package model.blinds;
 
+/**
+ * Gerenciador dos estágios de dificuldade do jogo (Ante).
+ * Controla os multiplicadores e escalas de pontuação para o Small, Big e Boss
+ * Blind.
+ */
 public class Ante {
     /* ------------------ VARIÁVEIS ------------------ */
 
+    /** Número do Ante/rodada atual */
     private static int numAnteAtual = 1;
-    private static Blind[] blindsAtuais = new Blind[3];
-    private static final int[] valoresBase = { 100, 300, 800, 2000, 5000, 11000, 20000, 35000, 50000 };
 
-    /* ------------------ CONSTRUTOR ------------------ */
-    
+    /** Array com as 3 metas de pontuação ativas (0 = Small, 1 = Big, 2 = Boss) */
+    private static Blind[] blindsAtuais = new Blind[3];
+
+    /** Tabela progressiva de pontuação base por nível de Ante */
+    protected static final int[] valoresBase = { 100, 300, 800, 2000, 5000, 11000, 20000, 35000, 50000 };
+
+    /* ------------------ CONSTRUTORES ------------------ */
+
     public Ante() {
         blindsAtuais = atualizarBlind(numAnteAtual);
     }
@@ -17,8 +27,11 @@ public class Ante {
         blindsAtuais = atualizarBlind(anteAtual);
     }
 
-    /* ------------------ MéTODOS ------------------ */
+    /* ------------------ MÉTODOS ------------------ */
 
+    /**
+     * Atualiza e retorna o trio de Blinds para o Ante atual.
+     */
     public static Blind[] atualizarBlind() {
         Blind[] blind = new Blind[3];
         blind[0] = getSmallBlind(numAnteAtual);
@@ -27,6 +40,11 @@ public class Ante {
         return blind;
     }
 
+    /**
+     * Atualiza e retorna o trio de Blinds para um Ante específico fornecido.
+     * 
+     * @param anteAtual Índice do estágio a ser configurado
+     */
     public static Blind[] atualizarBlind(int anteAtual) {
         Blind[] blind = new Blind[3];
         blind[0] = getSmallBlind(anteAtual);
@@ -35,10 +53,14 @@ public class Ante {
         return blind;
     }
 
-    public static Blind getBossBlind(int anteAtual) {
-        Blind blind = new Blind();
+    /**
+     * TODO tem que deixar automático para a lógica de criação do Boss Blind ficar
+     * inteira na classe do BossBlind
+     */
+    public static BossBlind getBossBlind(int anteAtual) {
+        BossBlind blind = new BossBlind(anteAtual);
         while (true) {
-            Blind aux = Blind.gerarBlindAleatorio(valoresBase, anteAtual);
+            BossBlind aux = Blind.gerarBlindAleatorio(valoresBase, anteAtual);
             if (aux.getAnteMinimoAparicao() <= anteAtual) {
                 blind = aux;
                 blind.setValorBlind((int) (valoresBase[anteAtual] * aux.getMultiplicadorValorBase()));
@@ -47,20 +69,19 @@ public class Ante {
         }
     }
 
+    /**
+     * Gera e calcula o valor da meta para o Big Blind (Multiplicador base 1.5x).
+     */
     public static Blind getBigBlind(int anteAtual) {
-        String nomeBlind = "Big Blind";
-        double multiplicadorValorBase = 1.5;
-        int valorBlind = (int) (valoresBase[anteAtual] * multiplicadorValorBase);
-        Blind auxBlind = new Blind(nomeBlind, multiplicadorValorBase, valorBlind);
-        return auxBlind;
+        return new BigBlind(anteAtual);
     }
 
-    public static Blind getSmallBlind(int anteAtual) {
-        String nomeBlind = "Small Blind";
-        double multiplicadorValorBase = 1;
-        int valorBlind = (int) (valoresBase[anteAtual] * multiplicadorValorBase);
-        Blind auxBlind = new Blind(nomeBlind, multiplicadorValorBase, valorBlind);
-        return auxBlind;
+    /**
+     * Gera e calcula o valor da meta para o Small Blind (Multiplicador base 1.0x).
+     */
+    public static SmallBlind getSmallBlind(int anteAtual) {
+        return new SmallBlind(anteAtual);
+
     }
 
     /* ------------------ GETTERS & SETTERS ------------------ */
