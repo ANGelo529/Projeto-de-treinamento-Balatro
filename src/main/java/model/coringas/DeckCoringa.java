@@ -10,20 +10,25 @@ import java.util.ArrayList;
  * Gerenciador e executor do conjunto de Coringas equipados pelo jogador.
  */
 public class DeckCoringa {
+    /* ------------------ ATRIBUTOS ------------------ */
+    
+    private static int idDeckCoringa;
+    private static ArrayList<Coringa> maoCoringa = new ArrayList<>();// Lista de Coringas equipados
 
-    /** Lista de Coringas atualmente equipados */
-    private static ArrayList<Coringa> maoCoringa = new ArrayList<>();
+    /* ------------------ MÉTODOS ------------------ */
 
     /**
-     * Ponto de entrada estático para processar e aplicar todos os efeitos de Coringas na mão.
+     * Ponto de entrada estático para processar e aplicar todos os efeitos de
+     * Coringas na mão.
      * 
      * @param contextoMao Estado atual do cálculo da mão.
-     * @param maoCoringa Lista dos coringas equipados a serem testados.
+     * @param maoCoringa  Lista dos coringas equipados a serem testados.
      */
     public static void verificarCoringa(ContextoMao contextoMao, ArrayList<Coringa> maoCoringa) {
         ArrayList<Carta> cartasJogadas = contextoMao.getCartasJogadas();
 
-        // 1º Passo: Dispara os coringas que reagem a cada carta pontuada individualmente
+        // 1º Passo: Dispara os coringas que reagem a cada carta pontuada
+        // individualmente
         verificarCoringasPorCarta(contextoMao, cartasJogadas, maoCoringa);
 
         // 2º Passo: Dispara os coringas que reagem ao valor final da mão inteira
@@ -31,7 +36,8 @@ public class DeckCoringa {
     }
 
     /**
-     * Executa um loop aninhado: para cada carta jogada, percorre todos os coringas com gatilho PORCARTA.
+     * Executa um loop aninhado: para cada carta jogada, percorre todos os coringas
+     * com gatilho PORCARTA.
      */
     private static void verificarCoringasPorCarta(ContextoMao contextoMao, ArrayList<Carta> cartasJogadas,
             ArrayList<Coringa> maoCoringa) {
@@ -50,11 +56,15 @@ public class DeckCoringa {
     }
 
     /**
-     * Executa os coringas que reagem apenas no final do cálculo do round (Gatilho.FINALMAO).
+     * Executa os coringas que reagem apenas no final do cálculo do round
+     * (Gatilho.FINALMAO).
      * 
-     * ATENÇÃO (BUG DE ESTADO RESIDUAL): O objeto 'contextoMao' mantém a 'cartaAuxiliar' 
-     * referente à última carta iterada no método anterior. Se algum coringa de FINALMAO 
-     * tentar acessar 'getCartaAuxiliar()', estará avaliando uma carta residual em vez do contexto global.
+     * ATENÇÃO (BUG DE ESTADO RESIDUAL): O objeto 'contextoMao' mantém a
+     * 'cartaAuxiliar'
+     * referente à última carta iterada no método anterior. Se algum coringa de
+     * FINALMAO
+     * tentar acessar 'getCartaAuxiliar()', estará avaliando uma carta residual em
+     * vez do contexto global.
      */
     private static void verificarCoringasFinalRound(ContextoMao contextoMao,
             ArrayList<Coringa> maoCoringa) {
@@ -69,6 +79,14 @@ public class DeckCoringa {
 
     /* ------------------ GETTERS & SETTERS ------------------ */
 
+    public static int getIdDeckCoringa() {
+        return idDeckCoringa;
+    }
+
+    public static void setIdDeckCoringa(int idDeckCoringa) {
+        DeckCoringa.idDeckCoringa = idDeckCoringa;
+    }
+
     public static ArrayList<Coringa> getMaoCoringa() {
         return maoCoringa;
     }
@@ -76,4 +94,5 @@ public class DeckCoringa {
     public static void setMaoCoringa(ArrayList<Coringa> newMaoCoringa) {
         maoCoringa = newMaoCoringa;
     }
+
 }

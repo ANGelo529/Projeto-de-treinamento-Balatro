@@ -29,7 +29,7 @@ public class ContextoMao {
     /**
      * Objeto que armazena os valores base de fichas, multiplicadores e nível da mão
      */
-    private Ponto pontos = new Ponto();
+    private PokerMao pontos = new PokerMao();
 
     /* ------------------ CONSTRUTORES ------------------ */
 
@@ -41,7 +41,7 @@ public class ContextoMao {
      * @param cartasJogadas Lista de cartas jogadas.
      * @param pontos        Objeto Ponto com as estatísticas base da mão.
      */
-    public ContextoMao(ArrayList<Carta> cartasJogadas, Ponto pontos) {
+    public ContextoMao(ArrayList<Carta> cartasJogadas, PokerMao pontos) {
         this.tipoMao = pontos.getNomeMaoJogada();
         this.cartasJogadas = cartasJogadas;
         this.pontos = pontos;
@@ -105,11 +105,11 @@ public class ContextoMao {
         this.coringaAtual = coringaAtual;
     }
 
-    public Ponto getPontos() {
+    public PokerMao getPontos() {
         return pontos;
     }
 
-    public void setPontos(Ponto pontos) {
+    public void setPontos(PokerMao pontos) {
         this.pontos = pontos;
     }
 

@@ -80,8 +80,6 @@ public class TesteSaida {
      */
     public static void printTesteJogo() {
         System.out.println("--------DEFINIR SEED--------");
-        DeckCarta.setSeed(LER.nextInt());
-        DeckCarta.setRandom(new Random(DeckCarta.getSeed()));
         DeckCarta teste = new DeckCarta("Naipe");
         Integer[] vet = new Integer[5]; // Índices das cartas selecionadas
         ArrayList<Carta> cartasJogadas = new ArrayList<>();

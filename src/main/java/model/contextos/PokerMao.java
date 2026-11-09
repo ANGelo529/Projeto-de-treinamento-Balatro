@@ -6,7 +6,7 @@ import model.enums.MaoPoker;
  * Representa os valores base de pontuação (Fichas e Multiplicador) associados
  * a um nível específico de uma mão de poker.
  */
-public class Ponto {
+public class PokerMao {
 
     /* ------------------ VARIÁVEIS ------------------ */
 
@@ -32,7 +32,7 @@ public class Ponto {
      * @param nivel         Nível inicial.
      * @param nomeMaoJogada nomeMaoJogada
      */
-    public Ponto(int ficha, int multi, int nivel, MaoPoker nomeMaoJogada) {
+    public PokerMao(int ficha, int multi, int nivel, MaoPoker nomeMaoJogada) {
         this.ficha = ficha;
         this.multi = multi;
         this.nivel = nivel;
@@ -40,7 +40,7 @@ public class Ponto {
     }
 
     /** Construtor padrão sem parâmetros. */
-    public Ponto() {
+    public PokerMao() {
     }
 
     /* ------------------ MÉTODOS DE NEGÓCIO ------------------ */

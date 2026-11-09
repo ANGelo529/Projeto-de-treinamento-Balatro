@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import main.java.model.GameState;
 import model.enums.Naipe;
 import model.enums.OrdemDeValor;
 
@@ -20,37 +21,30 @@ public class DeckCarta {
     /* ------------------ VARIÁVEIS ------------------ */
 
     private ArrayList<Carta> maoJogador = new ArrayList<>();
-    private static int tamanhoMao = 8;
-    private static int qtdMao = 3; // Quantidade de jogadas restantes na rodada
-    private static int qtdMaoDescarte = 3; // Quantidade de descartes restantes na rodada
-    private String tipoDeOrganizacao = "OrdemDeValor";
-    private static int seed;
-    private static int tamSeqPoker = 5;
     private final static Naipe[] listaNaipes = Naipe.values();
     private final static ArrayList<OrdemDeValor> listaOrdemDeValor = new ArrayList<>(List.of(OrdemDeValor.values()));
     private static HashMap<Naipe, ArrayList<Carta>> baralho;
     private static HashMap<Naipe, ArrayList<Carta>> baralhoJogo;
-    private static Random random = new Random(seed);
+
 
     /* ------------------ CONSTRUTORES ------------------ */
 
-    public DeckCarta() {
-        this.maoJogador = colocarCartasInicial(tamanhoMao);
-        DeckCarta.verificarOrdenacao(this.tipoDeOrganizacao, this.maoJogador);
+    public DeckCarta(int tamanhoMao) {
+        this.maoJogador = colocarCartasInicial();
+        DeckCarta.verificarOrdenacao(GameState.getTipoDeOrganizacao(), this.maoJogador);
     }
 
     public DeckCarta(String tipoDeOrganizacao) {
         baralho = criarBaralho();
         baralhoJogo = criarBaralho();
-        this.tipoDeOrganizacao = tipoDeOrganizacao;
-        this.maoJogador = colocarCartasInicial(tamanhoMao);
-        DeckCarta.verificarOrdenacao(this.tipoDeOrganizacao, this.maoJogador);
+        this.maoJogador = colocarCartasInicial();
+        DeckCarta.verificarOrdenacao(GameState.getTipoDeOrganizacao(), this.maoJogador);
     }
 
     public DeckCarta(HashMap<Naipe, ArrayList<Carta>> baralhoNovo) {
         baralhoJogo = baralhoNovo;
-        this.maoJogador = colocarCartasInicial(tamanhoMao);
-        DeckCarta.verificarOrdenacao(this.tipoDeOrganizacao, this.maoJogador);
+        this.maoJogador = colocarCartasInicial();
+        DeckCarta.verificarOrdenacao(GameState.getTipoDeOrganizacao(), this.maoJogador);
     }
 
     /* ------------------ MÉTODOS ------------------ */
@@ -58,9 +52,9 @@ public class DeckCarta {
     /**
      * Sorteia a mão inicial preenchendo até o tamanho padrão.
      */
-    public ArrayList<Carta> colocarCartasInicial(int tamanhoMao) {
+    public ArrayList<Carta> colocarCartasInicial() {
         ArrayList<Carta> auxMaoJogador = new ArrayList<>();
-        for (int i = 0; i < tamanhoMao; i++) {
+        for (int i = 0; i < GameState.getTamanhoMao(); i++) {
             auxMaoJogador.add(gerarCartaAleatoria());
         }
         return auxMaoJogador;
@@ -70,11 +64,11 @@ public class DeckCarta {
      * Repõe cartas na mão do jogador até atingir o tamanho máximo configurado.
      */
     public void adicionarCartas(ArrayList<Carta> maoJogador) {
-        int qtdParaAdicionar = Math.abs(maoJogador.size() - tamanhoMao);
+        int qtdParaAdicionar = Math.abs(maoJogador.size() - GameState.getTamanhoMao());
         for (int i = 0; i < qtdParaAdicionar; i++) {
             maoJogador.add(DeckCarta.gerarCartaAleatoria());
         }
-        DeckCarta.verificarOrdenacao(this.tipoDeOrganizacao, simpGetMaoJogador());
+        DeckCarta.verificarOrdenacao(GameState.getTipoDeOrganizacao(), simpGetMaoJogador());
     }
 
     private ArrayList<Carta> simpGetMaoJogador() {
@@ -98,8 +92,8 @@ public class DeckCarta {
             cartasJogadas.add(this.maoJogador.remove(indice));
         }
 
-        DeckCarta.verificarOrdenacao(this.tipoDeOrganizacao, this.maoJogador);
-        DeckCarta.verificarOrdenacao(this.tipoDeOrganizacao, cartasJogadas);
+        DeckCarta.verificarOrdenacao(GameState.getTipoDeOrganizacao(), this.maoJogador);
+        DeckCarta.verificarOrdenacao(GameState.getTipoDeOrganizacao(), cartasJogadas);
         return cartasJogadas;
     }
 
@@ -160,6 +154,7 @@ public class DeckCarta {
      * Sorteia e remove do baralho do jogo uma carta aleatória.
      */
     public static Carta gerarCartaAleatoria() {
+        Random random = GameState.getRandom();
         Naipe naipeSorteado = listaNaipes[random.nextInt(listaNaipes.length)];
         ArrayList<Carta> cartasNaipeSorteado = baralhoJogo.get(naipeSorteado);
 
@@ -172,16 +167,7 @@ public class DeckCarta {
         return cartasNaipeSorteado.remove(indexSorteado);
     }
 
-    /**
-     * Reseta as contagens de mãos, descartes e reinicializa o baralho completo
-     * antes do início de um novo jogo.
-     */
-    public void resetarPreJogo() {
-        this.maoJogador = colocarCartasInicial(tamanhoMao);
-        baralho = criarBaralho();
-        qtdMao = 3;
-        qtdMaoDescarte = 3;
-    }
+
 
     /**
      * Constrói o HashMap inicial de 52 cartas estruturado por Naipes.
@@ -208,54 +194,6 @@ public class DeckCarta {
         this.maoJogador = maoJogador;
     }
 
-    public static int getTamanhoMao() {
-        return tamanhoMao;
-    }
-
-    public static void setTamanhoMao(int newTamanhoMao) {
-        tamanhoMao = newTamanhoMao;
-    }
-
-    public static int getQtdMao() {
-        return qtdMao;
-    }
-
-    public static void setQtdMao(int newQtdMao) {
-        qtdMao = newQtdMao;
-    }
-
-    public static int getQtdMaoDescarte() {
-        return qtdMaoDescarte;
-    }
-
-    public static void setQtdMaoDescarte(int newQtdMaoDescarte) {
-        qtdMaoDescarte = newQtdMaoDescarte;
-    }
-
-    public String getTipoDeOrganizacao() {
-        return tipoDeOrganizacao;
-    }
-
-    public void setTipoDeOrganizacao(String tipoDeOrganizacao) {
-        this.tipoDeOrganizacao = tipoDeOrganizacao;
-    }
-
-    public static int getSeed() {
-        return seed;
-    }
-
-    public static void setSeed(int seed) {
-        DeckCarta.seed = seed;
-    }
-
-    public static int getTamSeqPoker() {
-        return tamSeqPoker;
-    }
-
-    public static void setTamSeqPoker(int tamSeqPoker) {
-        DeckCarta.tamSeqPoker = tamSeqPoker;
-    }
-
     public static Naipe[] getListanaipes() {
         return listaNaipes;
     }
@@ -278,14 +216,6 @@ public class DeckCarta {
 
     public static void setBaralhoJogo(HashMap<Naipe, ArrayList<Carta>> baralhoJogo) {
         DeckCarta.baralhoJogo = baralhoJogo;
-    }
-
-    public static Random getRandom() {
-        return random;
-    }
-
-    public static void setRandom(Random random) {
-        DeckCarta.random = random;
     }
 
 }
