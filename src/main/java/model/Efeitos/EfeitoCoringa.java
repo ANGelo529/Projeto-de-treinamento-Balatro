@@ -2,6 +2,7 @@ package model.Efeitos;
 
 import java.util.List;
 
+import model.GameState;
 import model.cartas.Carta;
 import model.cartas.DeckCarta;
 import model.contextos.ContextoMao;
@@ -110,7 +111,7 @@ public interface EfeitoCoringa {
     static EfeitoCoringa addFichaMenosMao(int ficha, int dimiMao) {
         return ctx -> {
             ctx.adicionarFicha(ficha);
-            DeckCarta.setTamanhoMao(DeckCarta.getTamanhoMao() - dimiMao);
+            GameState.setTamanhoMao(GameState.getTamanhoMao() - dimiMao);
             return ctx;
         };
     }
@@ -132,15 +133,15 @@ public interface EfeitoCoringa {
     static EfeitoCoringa alterarTamSeqPoker() {
         int novoTamanho = 4;
         return ctx -> {
-            DeckCarta.setTamSeqPoker(novoTamanho);
+            ValidadorPoker.setTamSeqMaoPoker(novoTamanho);
             return ctx;
         };
     }
 
     static EfeitoCoringa alterarDescartes() {
         return ctx -> {
-            DeckCarta.setQtdMaoDescarte(0);
-            DeckCarta.setQtdMao(DeckCarta.getQtdMao() + 3);
+            GameState.setQtdMaoDescarte(0);
+            GameState.setQtdMao(GameState.getQtdMao() + 3);
             return ctx;
         };
     }
@@ -167,7 +168,7 @@ public interface EfeitoCoringa {
     static EfeitoCoringa multiplicarPorNaipe() {
         return ctx -> {
             Naipe[] naipes = Naipe.values();
-            Naipe naipeSorteado = naipes[DeckCarta.getRandom().nextInt(4)];
+            Naipe naipeSorteado = naipes[GameState.getRandom().nextInt(4)];
             if (ctx.getCartaAuxiliar().getNaipe() == naipeSorteado) {
                 ctx.getPontos().setMulti((int) (ctx.getPontos().getMulti() * 1.5));
             }
@@ -190,7 +191,7 @@ public interface EfeitoCoringa {
 
     static EfeitoCoringa uparMaoPoker() {
         return ctx -> {
-            int numRandom = DeckCarta.getRandom().nextInt(4);
+            int numRandom = GameState.getRandom().nextInt(4);
             // numeros de 0 a 4 para dar a sensação de 1/4 fiz se for um número 0 deu certo
             // a porcentagem
             if (numRandom == 0) {
@@ -271,7 +272,7 @@ public interface EfeitoCoringa {
 
             int numDeletar;
             do {
-                numDeletar = DeckCarta.getRandom().nextInt(mao.size());
+                numDeletar = GameState.getRandom().nextInt(mao.size());
             } while (numDeletar == indexCorg);
 
             mao.remove(numDeletar);

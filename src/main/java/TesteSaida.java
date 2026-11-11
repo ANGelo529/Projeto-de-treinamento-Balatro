@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+
+import model.GameState;
 import model.blinds.*;
 import model.cartas.*;
 import model.coringas.*;
@@ -80,12 +82,12 @@ public class TesteSaida {
      */
     public static void printTesteJogo() {
         System.out.println("--------DEFINIR SEED--------");
-        DeckCarta teste = new DeckCarta("Naipe");
+
         Integer[] vet = new Integer[5]; // Índices das cartas selecionadas
         ArrayList<Carta> cartasJogadas = new ArrayList<>();
 
         System.out.println("CARTAS ORIGINAIS ");
-        TesteSaida.printMaoJogador(teste.getMaoJogador());
+
         System.out.println("\n\n\n\n\n\n");
 
         // Entrada das posições das cartas a jogar
@@ -94,7 +96,7 @@ public class TesteSaida {
         }
 
         // Retira as cartas escolhidas pelo jogador
-        cartasJogadas = teste.retirarCartas(vet);
+
         System.out.println("CARTAS RETIRADAS");
         TesteSaida.printMaoJogador(cartasJogadas);
         System.out.println("\n\n\n\n\n\n");
@@ -112,11 +114,12 @@ public class TesteSaida {
         // Avalia e calcula os pontos
         ValidadorPoker.calcularJogada(cartasJogadas, DeckCoringa.getMaoCoringa());
 
-        
-        // Reabastece a mão do jogador até o limite padrão
-        teste.adicionarCartas(teste.getMaoJogador());
-        TesteSaida.printMaoJogador(teste.getMaoJogador());
 
         LER.close();
+    }
+
+    public static void testeTeste(){
+        GameState.iniciarSeed("1456");
+        GameState.iniciarRodada();
     }
 }

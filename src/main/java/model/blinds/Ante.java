@@ -30,17 +30,6 @@ public class Ante {
     /* ------------------ MÉTODOS ------------------ */
 
     /**
-     * Atualiza e retorna o trio de Blinds para o Ante atual.
-     */
-    public static Blind[] atualizarBlind() {
-        Blind[] blind = new Blind[3];
-        blind[0] = getSmallBlind(numAnteAtual);
-        blind[1] = getBigBlind(numAnteAtual);
-        blind[2] = getBossBlind(numAnteAtual);
-        return blind;
-    }
-
-    /**
      * Atualiza e retorna o trio de Blinds para um Ante específico fornecido.
      * 
      * @param anteAtual Índice do estágio a ser configurado
@@ -69,6 +58,8 @@ public class Ante {
         }
     }
 
+    /* ------------------ GETTERS & SETTERS ------------------ */
+    
     /**
      * Gera e calcula o valor da meta para o Big Blind (Multiplicador base 1.5x).
      */
@@ -83,8 +74,6 @@ public class Ante {
         return new SmallBlind(anteAtual);
 
     }
-
-    /* ------------------ GETTERS & SETTERS ------------------ */
 
     public static int getNumAnteAtual() {
         return numAnteAtual;

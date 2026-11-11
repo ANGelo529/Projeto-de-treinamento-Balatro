@@ -1,9 +1,9 @@
-package main.java.jdbc;
+package jdbc;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class BaralhoDao {
+public class DeckCartaDao {
     
     public void inserirBaralho(){
     }

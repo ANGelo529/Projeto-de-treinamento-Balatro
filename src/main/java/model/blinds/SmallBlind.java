@@ -3,15 +3,12 @@ package model.blinds;
 public class SmallBlind extends Blind {
     // Classe que inicializa a maneira padrão de um Small Blind
     SmallBlind(int anteAtual) {
-        String nome = "Small Blind";
-        int dinheiroAoGanhar = 3;
-        double multiplicadorValorBase = 1.0;
-        int anteMinimoAparicao = 0;
-        long valorBlind = (long) (Ante.valoresBase[anteAtual] * multiplicadorValorBase);
-        super(nome,dinheiroAoGanhar,valorBlind,multiplicadorValorBase,anteMinimoAparicao);
+        super(
+        "Small Blind", // nome 
+        3, // dinheiro ao ganhar
+        (long) (Ante.valoresBase[anteAtual] * 1.0), // valor Blind calculado baseado no anteAtual
+        1.0, // multiplicador Valor Base
+        0); // ante mínimo aparição
 
-        // String nome, int dinheiroAoGanhar, long valorBlind, int
-        // multiplicadorValorBase,
-        // int anteMinimoAparicao
     }
 }

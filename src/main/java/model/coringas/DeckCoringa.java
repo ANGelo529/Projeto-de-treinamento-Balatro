@@ -3,23 +3,39 @@ package model.coringas;
 import model.cartas.Carta;
 import model.contextos.*;
 import model.enums.Gatilho;
-
 import java.util.ArrayList;
+import Factory.CoringaFactory;
 
 /**
  * Gerenciador e executor do conjunto de Coringas equipados pelo jogador.
  */
 public class DeckCoringa {
     /* ------------------ ATRIBUTOS ------------------ */
-    
+
     private static int idDeckCoringa;
+    private static int limiteCoringas = 5;
     private static ArrayList<Coringa> maoCoringa = new ArrayList<>();// Lista de Coringas equipados
 
     /* ------------------ MÉTODOS ------------------ */
+    public static void addCoringa(int idCorg) {
+        if (DeckCoringa.maoCoringa.size() + 1 > DeckCoringa.limiteCoringas) {
+            System.out.println("Não é possível adicionar mais coringas você chegou ao limite de espaços");
+        } else {
+            maoCoringa.add(CoringaFactory.getCoringaPorId(idCorg));
+            System.out.printf("Coringa %s adicionado", maoCoringa.get(maoCoringa.size() - 1).getNome());
+        }
+
+    }
+
+    public static void delTodosCoringas() {
+        maoCoringa.clear();
+        System.out.println("Mao coringa esvaziada");
+    }
 
     /**
      * Ponto de entrada estático para processar e aplicar todos os efeitos de
      * Coringas na mão.
+     * TODO: Verificar utilidade desse método provavelmente chamada direta dos métodos auxiliares seja mais útil
      * 
      * @param contextoMao Estado atual do cálculo da mão.
      * @param maoCoringa  Lista dos coringas equipados a serem testados.
@@ -33,6 +49,12 @@ public class DeckCoringa {
 
         // 2º Passo: Dispara os coringas que reagem ao valor final da mão inteira
         verificarCoringasFinalRound(contextoMao, maoCoringa);
+    }
+
+    /*
+     * TODO: terminar implementação
+     */
+    public static void verificarCoringasPassivos(ContextoMao contextoMao) {
     }
 
     /**
@@ -53,6 +75,8 @@ public class DeckCoringa {
                 }
             }
         }
+        contextoMao.setCartaAuxiliar(null);
+
     }
 
     /**

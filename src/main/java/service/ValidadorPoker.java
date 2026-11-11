@@ -10,8 +10,6 @@ import model.coringas.Coringa;
 import model.coringas.DeckCoringa;
 import model.enums.MaoPoker;
 
-
-
 /**
  * Classe responsável por identificar, validar e calcular a pontuação das mãos
  * de Poker
@@ -26,7 +24,7 @@ public class ValidadorPoker {
      * pontuação base (Fichas e Multiplicador)
      */
     private static HashMap<MaoPoker, PokerMao> listaMaosPoker = startListaMaosPoker();
-
+    private static int tamSeqMaoPoker = 5;
     /* ------------------ MÉTODOS ------------------ */
 
     /**
@@ -90,7 +88,7 @@ public class ValidadorPoker {
                 int ficha = listaMaosPoker.get(nomeMaoJogada).getFicha();
                 int multi = listaMaosPoker.get(nomeMaoJogada).getMulti();
                 int nivel = listaMaosPoker.get(nomeMaoJogada).getNivel();
-                return new PokerMao(ficha, multi,nivel, nomeMaoJogada);
+                return new PokerMao(ficha, multi, nivel, nomeMaoJogada);
             }
         }
 
@@ -238,9 +236,9 @@ public class ValidadorPoker {
 
     public static void setListaMaosPoker(MaoPoker maoPoker) {
         int ficha = (int) (ValidadorPoker.listaMaosPoker.get(maoPoker).getFicha() * 1.5);
-        int multi = (int) (ValidadorPoker.listaMaosPoker.get(maoPoker).getMulti() * 1.5) ;
+        int multi = (int) (ValidadorPoker.listaMaosPoker.get(maoPoker).getMulti() * 1.5);
         int nivel = ValidadorPoker.listaMaosPoker.get(maoPoker).getNivel() + 1;
-        PokerMao auxPonto = new PokerMao(ficha, multi,nivel, maoPoker);
+        PokerMao auxPonto = new PokerMao(ficha, multi, nivel, maoPoker);
         ValidadorPoker.listaMaosPoker.put(maoPoker, auxPonto);
     }
 
@@ -258,9 +256,17 @@ public class ValidadorPoker {
         // Mapeia os valores em ordem invertida associando aos enums correspondentes de
         // MaoPoker
         for (int i = fichas.length - 1; i >= 0; i--) {
-            aux.put(MaoPoker.values()[fichas.length - 1 - i], new PokerMao(fichas[i], multi[i], 1,nomesMaoPoker[i]));
+            aux.put(MaoPoker.values()[fichas.length - 1 - i], new PokerMao(fichas[i], multi[i], 1, nomesMaoPoker[i]));
         }
 
         return aux;
+    }
+
+    public static int getTamSeqMaoPoker() {
+        return tamSeqMaoPoker;
+    }
+
+    public static void setTamSeqMaoPoker(int tamSeqMaoPoker) {
+        ValidadorPoker.tamSeqMaoPoker = tamSeqMaoPoker;
     }
 }
