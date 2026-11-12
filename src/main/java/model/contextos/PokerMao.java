@@ -11,10 +11,10 @@ public class PokerMao {
     /* ------------------ VARIÁVEIS ------------------ */
 
     /** Quantidade base de fichas concedidas pela mão */
-    private int ficha;
+    private long ficha;
 
     /** Valor base do multiplicador concedido pela mão */
-    private int multi;
+    private long multi;
 
     /** Nível atual de evolução da mão de poker (padrão inicia em 1) */
     private int nivel = 1;
@@ -32,7 +32,7 @@ public class PokerMao {
      * @param nivel         Nível inicial.
      * @param nomeMaoJogada nomeMaoJogada
      */
-    public PokerMao(int ficha, int multi, int nivel, MaoPoker nomeMaoJogada) {
+    public PokerMao(long ficha, long multi, int nivel, MaoPoker nomeMaoJogada) {
         this.ficha = ficha;
         this.multi = multi;
         this.nivel = nivel;
@@ -58,19 +58,19 @@ public class PokerMao {
 
     /* ------------------ GETTERS & SETTERS ------------------ */
 
-    public int getFicha() {
+    public long getFicha() {
         return ficha;
     }
 
-    public void setFicha(int ficha) {
+    public void setFicha(long ficha) {
         this.ficha = ficha;
     }
 
-    public int getMulti() {
+    public long getMulti() {
         return multi;
     }
 
-    public void setMulti(int multi) {
+    public void setMulti(long multi) {
         this.multi = multi;
     }
 

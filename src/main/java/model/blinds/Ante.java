@@ -1,5 +1,7 @@
 package model.blinds;
 
+import model.GameState;
+
 /**
  * Gerenciador dos estágios de dificuldade do jogo (Ante).
  * Controla os multiplicadores e escalas de pontuação para o Small, Big e Boss
@@ -8,24 +10,13 @@ package model.blinds;
 public class Ante {
     /* ------------------ VARIÁVEIS ------------------ */
 
-    /** Número do Ante/rodada atual */
-    private static int numAnteAtual = 1;
-
     /** Array com as 3 metas de pontuação ativas (0 = Small, 1 = Big, 2 = Boss) */
     private static Blind[] blindsAtuais = new Blind[3];
 
     /** Tabela progressiva de pontuação base por nível de Ante */
     protected static final int[] valoresBase = { 100, 300, 800, 2000, 5000, 11000, 20000, 35000, 50000 };
 
-    /* ------------------ CONSTRUTORES ------------------ */
 
-    public Ante() {
-        blindsAtuais = atualizarBlind(numAnteAtual);
-    }
-
-    public Ante(int anteAtual) {
-        blindsAtuais = atualizarBlind(anteAtual);
-    }
 
     /* ------------------ MÉTODOS ------------------ */
 
@@ -59,7 +50,7 @@ public class Ante {
     }
 
     /* ------------------ GETTERS & SETTERS ------------------ */
-    
+
     /**
      * Gera e calcula o valor da meta para o Big Blind (Multiplicador base 1.5x).
      */
@@ -73,14 +64,6 @@ public class Ante {
     public static SmallBlind getSmallBlind(int anteAtual) {
         return new SmallBlind(anteAtual);
 
-    }
-
-    public static int getNumAnteAtual() {
-        return numAnteAtual;
-    }
-
-    public static void setNumAnteAtual(int numAnteAtual) {
-        Ante.numAnteAtual = numAnteAtual;
     }
 
     public static Blind[] getBlindsAtuais() {

@@ -21,6 +21,7 @@ public class DeckCarta {
     /* ------------------ VARIÁVEIS ------------------ */
 
     private static ArrayList<Carta> maoJogador = new ArrayList<>();
+    private static ArrayList<Carta> cartasDescartadas = new ArrayList<>();
     private final static Naipe[] listaNaipes = Naipe.values();
     private final static ArrayList<OrdemDeValor> listaOrdemDeValor = new ArrayList<>(List.of(OrdemDeValor.values()));
     private static HashMap<Naipe, ArrayList<Carta>> baralho;
@@ -47,7 +48,7 @@ public class DeckCarta {
     /**
      * Sorteia a mão inicial preenchendo até o tamanho padrão.
      */
-    public static  ArrayList<Carta> colocarCartasInicial() {
+    public static ArrayList<Carta> colocarCartasInicial() {
         ArrayList<Carta> auxMaoJogador = new ArrayList<>();
         for (int i = 0; i < GameState.getTamanhoMao(); i++) {
             auxMaoJogador.add(gerarCartaAleatoria());
@@ -68,19 +69,22 @@ public class DeckCarta {
 
     /**
      * Remove da mão do jogador as cartas nas posições indicadas pelo vetor de
-     * índices e com as cartas removidas cria as cartas que contarão para a pontuação.
+     * índices e com as cartas removidas cria as cartas que contarão para a
+     * pontuação.
      * Ordena a seleção de trás para frente para evitar estouro de índice
      * (IndexOutOfBounds).
      * 
      * @param posMaoJogadas Array com os índices das cartas a remover
      * @return Lista das cartas removidas/jogadas
      */
-    public ArrayList<Carta> jogarCartas(Integer[] posMaoJogadas) {
+    public static ArrayList<Carta> jogarCartas(Integer[] posMaoJogadas) {
         Arrays.sort(posMaoJogadas, Collections.reverseOrder());
         ArrayList<Carta> cartasJogadas = new ArrayList<>();
         for (int i = 0; i < posMaoJogadas.length; i++) {
             int indice = (int) (posMaoJogadas[i]);
-            cartasJogadas.add(DeckCarta.maoJogador.remove(indice));
+            Carta cartaRemovida = DeckCarta.maoJogador.remove(indice);
+            cartasJogadas.add(cartaRemovida);
+            DeckCarta.cartasDescartadas.add(cartaRemovida);
         }
 
         DeckCarta.verificarOrdenacao(GameState.getTipoDeOrganizacao(), DeckCarta.maoJogador);
@@ -115,7 +119,7 @@ public class DeckCarta {
     /**
      * Constrói o HashMap inicial de 52 cartas estruturado por Naipes.
      */
-    private static HashMap<Naipe, ArrayList<Carta>> criarBaralho() {
+    private static HashMap<Naipe, ArrayList<Carta>> criarBaralhoNovo() {
         HashMap<Naipe, ArrayList<Carta>> baralhoAuxiliar = new HashMap<>();
         for (Naipe str : Naipe.values()) {
             ArrayList<Carta> listaCarta = new ArrayList<>();
@@ -126,8 +130,31 @@ public class DeckCarta {
         }
         return baralhoAuxiliar;
     }
-    public static void criarBaralhoJogo(){
-        DeckCarta.setBaralhoJogo(criarBaralho());
+
+    /**
+     * Constrói o HashMap inicial de 52 cartas estruturado por Naipes.
+     * Se baseando no baralho que o jogador já possui
+     */
+    private static HashMap<Naipe, ArrayList<Carta>> criarBaralhoAntigo() {
+        HashMap<Naipe, ArrayList<Carta>> baralhoAuxiliar = new HashMap<>();
+        for (Naipe str : Naipe.values()) {
+            ArrayList<Carta> listaCarta = new ArrayList<>();
+            for (int i = 0; i < listaOrdemDeValor.size(); i++) {
+                listaCarta.add(new Carta(baralho.get(str).get(i).getOrdemDeValor(), str));
+            }
+            baralhoAuxiliar.put(str, listaCarta);
+        }
+
+        return baralhoAuxiliar;
+    }
+
+    public static void criarBaralhoJogo() {
+        if (baralho == null) {
+            DeckCarta.setBaralho(criarBaralhoNovo());
+        }
+
+        DeckCarta.setBaralhoJogo(criarBaralhoAntigo());
+
     }
 
     /**
@@ -182,6 +209,7 @@ public class DeckCarta {
     public int[] colocarValorMaoPoker() {
         return Carta.getValorOrdemDeValorArray(DeckCarta.maoJogador);
     }
+
     /* ------------------ GETTERS & SETTERS ------------------ */
 
     public static ArrayList<Carta> getMaoJogador() {
@@ -190,6 +218,14 @@ public class DeckCarta {
 
     public static void setMaoJogador(ArrayList<Carta> maoJogador) {
         DeckCarta.maoJogador = maoJogador;
+    }
+
+    public static ArrayList<Carta> getCartasDescartadas() {
+        return cartasDescartadas;
+    }
+
+    public static void setCartasDescartadas(ArrayList<Carta> cartasDescartadas) {
+        DeckCarta.cartasDescartadas = cartasDescartadas;
     }
 
     public static Naipe[] getListanaipes() {
@@ -204,7 +240,7 @@ public class DeckCarta {
         return baralho;
     }
 
-    public void setBaralho(HashMap<Naipe, ArrayList<Carta>> baralho) {
+    public static void setBaralho(HashMap<Naipe, ArrayList<Carta>> baralho) {
         DeckCarta.baralho = baralho;
     }
 

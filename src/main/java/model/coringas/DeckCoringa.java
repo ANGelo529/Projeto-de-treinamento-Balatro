@@ -101,6 +101,7 @@ public class DeckCoringa {
         }
     }
 
+    
     /* ------------------ GETTERS & SETTERS ------------------ */
 
     public static int getIdDeckCoringa() {

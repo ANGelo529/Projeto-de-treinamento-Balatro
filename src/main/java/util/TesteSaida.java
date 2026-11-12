@@ -1,3 +1,5 @@
+package util;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -17,6 +19,7 @@ import Factory.*;
  */
 public class TesteSaida {
     final static Scanner LER = new Scanner(System.in);
+
     /*
      * Métodos de impressão vazios reservados para saídas do fluxo de interface de
      * terminal
@@ -24,7 +27,20 @@ public class TesteSaida {
     public static void printReceberCartas() {
     }
 
-    public static void printMostrarPontos() {
+    public static void printBlindAtual() {
+        Blind blindAtual = Ante.getBlindsAtuais()[GameState.getPosBlindAtual()];
+        System.out.println("---------" + blindAtual.getNome() + "---------");
+        System.out.println("Pontue pelo menos: " + blindAtual.getValorBlind());
+        System.out.println("Pontuação Atual: " + GameState.getPontosTotaisAtuais());
+    }
+
+    public static void printBlidsAtuais() {
+        Blind[] blindAtuais = Ante.getBlindsAtuais();
+        for (int i = 0; i < blindAtuais.length; i++) {
+            System.out.printf("---------%10s \t", blindAtuais[i].getNome() + "---------");
+            System.out.printf("Pontue pelo menos: %10s \t", blindAtuais[i].getValorBlind() + "");
+            System.out.println();
+        }
     }
 
     public static void printVerificarOrdenacao() {
@@ -50,7 +66,7 @@ public class TesteSaida {
         for (int i = 0; i < maoJogador.size(); i++) {
             String naipe = maoJogador.get(i).getNaipe().getNomeExibicao();
             String ordemDeValor = maoJogador.get(i).getOrdemDeValor().getNomeExibicao();
-            System.out.printf("%s de %s %d \t/// Naipe: %s OrdemDeValor: %s\n", ordemDeValor, naipe, i, naipe,
+            System.out.printf("%s de %s %d \t %5s %s OrdemDeValor: %s\n", ordemDeValor, naipe, i, "/// Naipe:", naipe,
                     ordemDeValor);
         }
     }
@@ -112,14 +128,23 @@ public class TesteSaida {
         DeckCoringa.setMaoCoringa(maoCoringa);
 
         // Avalia e calcula os pontos
-        ValidadorPoker.calcularJogada(cartasJogadas, DeckCoringa.getMaoCoringa());
-
+        ValidadorPoker.calcularJogada(cartasJogadas);
 
         LER.close();
     }
 
-    public static void testeTeste(){
+    public static Integer[] pegarPosicoes() {
+        TesteSaida.printMaoJogador(DeckCarta.getMaoJogador());
+        System.out.println("INFORME AS POSIÇÕES QUE DESEJA JOGAR");
+        Integer[] cartasJogadas = new Integer[5];
+        for (int i = 0; i < cartasJogadas.length; i++) {
+            cartasJogadas[i] = LER.nextInt();
+        }
+
+        return cartasJogadas;
+    }
+
+    public static void testeTeste() {
         GameState.iniciarSeed("1456");
-        GameState.iniciarRodada();
     }
 }

@@ -36,7 +36,7 @@ public class ValidadorPoker {
      *                   jogada[cite: 1]
      * @param maoCoringa Lista de coringas ativos/equipados no momento[cite: 1]
      */
-    public static void calcularJogada(ArrayList<Carta> maoJogada, ArrayList<Coringa> maoCoringa) {
+    public static PokerMao calcularJogada(ArrayList<Carta> maoJogada) {
         int[] qtdNaipes = new int[4]; // Contador para os 4 naipes (Ouros, Copas, Espadas, Paus)
         int[] qtdOrdemDeValor = new int[15]; // Contador para as 13 ordens de valor (Ás até Rei)
 
@@ -49,11 +49,8 @@ public class ValidadorPoker {
         }
 
         // Avalia qual é a combinação da mão e retorna seus pontos base[cite: 1]
-        PokerMao pontosMaoJogada = verificarJogada(qtdOrdemDeValor, qtdNaipes);
+        return verificarJogada(qtdOrdemDeValor, qtdNaipes);
 
-        // Cria o contexto da jogada e processa as alterações dos Coringas[cite: 1]
-        ContextoMao contextoMao = new ContextoMao(maoJogada, pontosMaoJogada);
-        DeckCoringa.verificarCoringa(contextoMao, maoCoringa);
     }
 
     /**
@@ -85,8 +82,8 @@ public class ValidadorPoker {
             if (jogadasVerificadas[i]) {
                 MaoPoker nomeMaoJogada = MaoPoker.values()[i];
                 System.out.println(nomeMaoJogada.getNomeExibicao());
-                int ficha = listaMaosPoker.get(nomeMaoJogada).getFicha();
-                int multi = listaMaosPoker.get(nomeMaoJogada).getMulti();
+                long ficha = listaMaosPoker.get(nomeMaoJogada).getFicha();
+                long multi = listaMaosPoker.get(nomeMaoJogada).getMulti();
                 int nivel = listaMaosPoker.get(nomeMaoJogada).getNivel();
                 return new PokerMao(ficha, multi, nivel, nomeMaoJogada);
             }
