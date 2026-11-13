@@ -46,19 +46,23 @@ public class GameState {
         iniciarRodada();
         TesteSaida.printBlidsAtuais();
         ContextoMao ctx = new ContextoMao();
-        while (true) {
+        while (qtdMao > 0) {
             // Futuramente fazer uma forma de receber/entregar um valor do JavaScript
             // Ou seja se for fazer com front todo print vira um request pro front
             
             TesteSaida.printBlindAtual();
             // DeckCoringa.verificarCoringaPassivo();
-            ArrayList<Carta> cartasJogadas = DeckCarta.jogarCartas(TesteSaida.pegarPosicoes());
-            TesteSaida.printMaoJogador(cartasJogadas);
-            ctx.setPontos(ValidadorPoker.calcularJogada(cartasJogadas));
+            ctx.setCartasJogadas(DeckCarta.jogarCartas(TesteSaida.pegarPosicoes()));
+            TesteSaida.printMaoJogador(ctx.getCartasJogadas());
+            ctx.setPontos(ValidadorPoker.calcularJogada(ctx));
+            System.out.println("Fichas: " + ctx.getFichas());
+            System.out.println("Multi: " + ctx.getMulti());
             // DeckCoringa.verificarCoringaPorCarta()
             if (verificarPontos(ctx)) {
                 break;
             }
+            DeckCarta.adicionarCartas(DeckCarta.getMaoJogador());
+            qtdMao--;
         }
 
         // TesteSaida.printGanhouBlind();

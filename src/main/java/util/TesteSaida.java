@@ -97,40 +97,40 @@ public class TesteSaida {
      * 5. Repõe a mão do jogador.
      */
     public static void printTesteJogo() {
-        System.out.println("--------DEFINIR SEED--------");
+        // System.out.println("--------DEFINIR SEED--------");
 
-        Integer[] vet = new Integer[5]; // Índices das cartas selecionadas
-        ArrayList<Carta> cartasJogadas = new ArrayList<>();
+        // Integer[] vet = new Integer[5]; // Índices das cartas selecionadas
+        // ArrayList<Carta> cartasJogadas = new ArrayList<>();
 
-        System.out.println("CARTAS ORIGINAIS ");
+        // System.out.println("CARTAS ORIGINAIS ");
 
-        System.out.println("\n\n\n\n\n\n");
+        // System.out.println("\n\n\n\n\n\n");
 
-        // Entrada das posições das cartas a jogar
-        for (int i = 0; i < vet.length; i++) {
-            vet[i] = LER.nextInt();
-        }
+        // // Entrada das posições das cartas a jogar
+        // for (int i = 0; i < vet.length; i++) {
+        //     vet[i] = LER.nextInt();
+        // }
 
-        // Retira as cartas escolhidas pelo jogador
+        // // Retira as cartas escolhidas pelo jogador
 
-        System.out.println("CARTAS RETIRADAS");
-        TesteSaida.printMaoJogador(cartasJogadas);
-        System.out.println("\n\n\n\n\n\n");
+        // System.out.println("CARTAS RETIRADAS");
+        // TesteSaida.printMaoJogador(cartasJogadas);
+        // System.out.println("\n\n\n\n\n\n");
 
-        // Cria uma mão de coringas padrão para aplicar na jogada
-        int QTDCORGTESTE = 5;
-        ArrayList<Coringa> maoCoringa = new ArrayList<>();
-        System.out.println("---------DEFINIR CORINGAS---------");
-        for (int i = 0; i < QTDCORGTESTE; i++) {
-            maoCoringa.add(CoringaFactory.getCoringaPorId(LER.nextInt()));
-        }
+        // // Cria uma mão de coringas padrão para aplicar na jogada
+        // int QTDCORGTESTE = 5;
+        // ArrayList<Coringa> maoCoringa = new ArrayList<>();
+        // System.out.println("---------DEFINIR CORINGAS---------");
+        // for (int i = 0; i < QTDCORGTESTE; i++) {
+        //     maoCoringa.add(CoringaFactory.getCoringaPorId(LER.nextInt()));
+        // }
 
-        DeckCoringa.setMaoCoringa(maoCoringa);
+        // DeckCoringa.setMaoCoringa(maoCoringa);
 
-        // Avalia e calcula os pontos
-        ValidadorPoker.calcularJogada(cartasJogadas);
+        // // Avalia e calcula os pontos
+        // //ValidadorPoker.calcularJogada(cartasJogadas);
 
-        LER.close();
+        // LER.close();
     }
 
     public static Integer[] pegarPosicoes() {

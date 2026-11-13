@@ -71,6 +71,13 @@ public class ContextoMao {
         this.pontos.setFicha(valor + pontos.getFicha());
     }
 
+    public long getFichas() {
+        return pontos.getFicha();
+    }
+
+    public long getMulti() {
+        return pontos.getMulti();
+    }
     /* ------------------ GETTERS & SETTERS ------------------ */
 
     public MaoPoker getTipoMao() {

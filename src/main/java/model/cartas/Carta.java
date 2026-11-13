@@ -41,11 +41,13 @@ public class Carta {
      */
     public static int descobrirPosOrdemDeValor(OrdemDeValor ordemDeValor) {
         switch (ordemDeValor.getNomeExibicao()) {
-            case "Valete": return 11;
-            case "Dama": return 12;
-            case "Rei": return 13;
-            case "Ás": return 14;
-            default:  return ordemDeValor.getValorOrdemValor();
+            case "Valete": return 9;
+            case "Dama": return 10;
+            case "Rei": return 11;
+            case "Ás": return 12;
+            default:  return ordemDeValor.getValorOrdemValor() - 2; 
+            // Para ajustar para as ordens de um vetor que começam em 0
+            // E é -2 porque o não tem 1
         }
     }
 
