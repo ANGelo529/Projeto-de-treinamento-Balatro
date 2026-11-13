@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="interface.css">
     <title>Balatro</title>
 </head>
+
 <body>
-    
-    <div id = "telaInicial">
+
+    <div id="telaInicial">
         <h1>Balatro</h1>
-        <button id = botaoJogar>Jogar</button>
-        <button id = botaoinstrucoes>instruções</button>
-        <button id = botaocreditos>créditos</button>
+        <button id=botaoJogar>Jogar</button>
+        <button id=botaoinstrucoes>instruções</button>
+        <button id=botaocreditos>créditos</button>
 
     </div>
-    <div id = "creditos">
+    <div id="creditos">
         <h1>
             <strong>creditos:</strong> <!--Strong é pra deixa em  negrito-->
         </h1>
@@ -25,33 +27,57 @@
         <h3>
             Angelo Miguel Brito Vieira
         </h3>
-        <button id = botaoVoltarC>Voltar</button>
+        <button id=botaoVoltarC>Voltar</button>
     </div>
 
-    <div id = "instrucoes">
+    <div id="instrucoes">
         <h1>
             Aqui sera inserido as instruções
         </h1>
-        <button id = "botaoVoltarI">Voltar</button>
+        <button id="botaoVoltarI">Voltar</button>
     </div>
-    
+
     <!-- <h4>Um jogo inspirado no balatro.</h4> -->
 
-    <div id = "jogando">
+    <div id="jogando">
         <h1>
-            jogando
+
         </h1>
-        <div id = "infoBlind">
+        <div id="infoBlind">
+            <div id = "caixaBlind">
+                 <span>Pontuação mínima:</span>
+                <strong id="metaBlind">300</strong>
+            </div>
+            <button id="Options">opções</button>
+            <div class="painelStatus">
+                <div class="caixaStatus">
+                    <span>Hands</span>
+                    <strong id="valorHands">4</strong>
+                </div>
+                <div class="caixaStatus">
+                    <span>Discards</span>
+                    <strong id="valorDiscards">3</strong>
+                </div>
+                <div class="caixaStatus">
+                    <span>Ante</span>
+                    <strong id="valorAnte">1/8</strong>
+                </div>
+                <div class="caixaStatus">
+                    <span>Round</span>
+                    <strong id="valorRound">1</strong>
+                </div>
+            </div>
+        </div>
+        <div id="coringas">
 
         </div>
-        <div id = "coringas">
+        <div id="MaoCartas">
 
         </div>
-        <div id = "MaoCartas">
 
-        </div>
-        <button id = "botaoVoltarJ">Voltar</button>
+        <button id="botaoVoltarJ">Voltar</button>
     </div>
     <script src="interface.js"></script>
 </body>
+
 </html>

@@ -1,3 +1,4 @@
+
 class carta {
     constructor(numero, naipe, tipo) {
         this.numero = numero

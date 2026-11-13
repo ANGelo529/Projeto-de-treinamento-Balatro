@@ -1,7 +1,10 @@
-#telainicial{
+#telaInicial{
     display: block;
     min-height: 100vh;         
     background-color: #1a752e;
+}
+#infoBlind{
+    display:none;
 }
 #instrucoes{
     display: none;
@@ -48,15 +51,22 @@
 }
 
 #infoBlind{
-    width: 20%;         /* Largura: pode usar px, % ou vw */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;         /* Largura: pode usar px, % ou vw */
     height: 100vh;    
 
     background-color: rgb(56, 56, 56);
-
+    color: white;
     border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 4px 10px rgb(238, 7, 7);
 
+    display: flex;
+    flex-direction: column;
     margin: 20px auto;
+    z-index: 10;
+    gap: 14px;
 }
 
 #botaoJogar{
@@ -70,6 +80,10 @@
     color: white;
     
 }
+#botaoJogar:active{
+     transform: translateY(4px); /* Afunda o botão 4 pixels para baixo */
+    box-shadow: 0 1px 0 #1e331e; /* Reduz a sombra inferior enquanto estiver pressionado */
+}
 
 #botaoinstrucoes{
     background-color: #228B22;
@@ -81,7 +95,10 @@
     background-color: #1d311d;
     color: white;
 }
-
+#botaoinstrucoes:active{
+    transform: translateY(4px); /* Afunda o botão 4 pixels para baixo */
+    box-shadow: 0 1px 0 #1e331e; /* Reduz a sombra inferior enquanto estiver pressionado */
+}
 #botaocreditos{
     background-color: #228B22;
     color: white;
@@ -92,3 +109,128 @@
     background-color: #1d311d;
     color: white;
 }
+
+#botaocreditos:active{
+    transform: translateY(4px); /* Afunda o botão 4 pixels para baixo */
+    box-shadow: 0 1px 0 #1e331e; /* Reduz a sombra inferior enquanto estiver pressionado */
+}
+
+#MaoCartas{
+   background-color: rgba(0, 0, 0, 0.5);
+    position: fixed; /* Fixa a área das cartas na tela */
+    bottom: 0; /* Encosta a parte de baixo da caixa no limite inferior da tela */
+    left: 250px; /* Faz a caixa começar exatamente aos 250 pixels da esquerda (onde a #infoBlind termina) */
+    right: 0; /* Estica a caixa até encostar na borda direita extrema da tela */
+    height: 200px; /* Define a altura da área das cartas em 200 pixels */
+    display: flex; /* Ativa o modo Flexbox para organizar os itens (cartas) lado a lado */
+    justify-content: center; /* Centraliza as cartas horizontalmente no meio dessa faixa */
+    align-items: center; /* Centraliza as cartas verticalmente dentro dos 200 pixels de altura */
+    gap: 10px; /* Cria um espaço automático de 10 pixels entre uma carta e outra */
+}
+
+#coringas {
+    position: fixed; /* Fixa a área dos coringas no topo da tela */
+    top: 0; /* Encosta a parte de cima da caixa no limite superior da tela (0 pixels) */
+    left: 250px; /* Começa exatamente onde a barra lateral #infoBlind termina */
+    right: 0; /* Estica a caixa até encostar na borda direita extrema da tela */
+    height: 160px; /* Define a altura da faixa superior em 160 pixels (um pouco menor que a mão de cartas) */
+    background-color: rgba(0, 0, 0, 0.08); /* Fundo preto com 8% de opacidade (praticamente transparente) */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15); /* Linha inferior sutil para marcar onde a caixa termina */
+    display: flex; /* Ativa o modo Flexbox para alinhar os coringas lado a lado */
+    justify-content: center; /* Centraliza os coringas horizontalmente no meio dessa faixa */
+    align-items: center; /* Centraliza os coringas verticalmente dentro dos 160 pixels */
+    gap: 12px; /* Cria um espaço de 12 pixels entre um coringa e outro */
+}
+
+#Options{
+    display: block; /* Garante que o botão se comporte como um bloco e respeite as larguras definidas */
+    position: absolute; /* Libera o uso de bottom e left dentro da #infoBlind */
+    bottom: 20px; /* Encosta o botão na parte de baixo*/
+    width: 25%; /* Faz o botão ocupar exatamente a metade esquerda da largura interna da #infoBlind */
+    aspect-ratio: 1 / 1; /* Mantém a altura sempre igual à largura, formando um quadrado perfeito */
+    background-color: #ff9f1c; /* Pinta o botão de laranja vibrante (cor clássica do botão Options no Balatro) */
+    color: white; /* Deixa o texto "Options" em branco */
+    font-size: 16px; /* Aumenta o tamanho da letra */
+    font-weight: bold; /* Deixa o texto em negrito */
+    border: none; /* Remove a borda padrão do navegador */
+    border-radius: 10px; /* Arredonda levemente os cantos do quadrado */
+    box-shadow: 0 5px 0 #b86b00; /* Cria uma sombra sólida embaixo para dar efeito de botão 3D */
+    cursor: pointer; /* Muda o cursor do mouse para a mãozinha ao passar por cima */
+    transition: transform 0.1s; /* Suaviza o movimento na hora do clique */
+}
+
+#options:hover{
+    background-color: #ffb042; 
+}
+
+#options:active{
+    transform: translateY(4px); /* Afunda o botão 4 pixels para baixo */
+    box-shadow: 0 1px 0 #b86b00; /* Reduz a sombra inferior enquanto estiver pressionado */
+}
+/* Única div container usando CSS Grid para criar a grade 2x2 */
+.painelStatus {
+    display: grid; /* Ativa o modo de grade (Grid) */
+    grid-template-columns: 1fr 1fr; /* Divide a largura em 2 colunas de tamanhos iguais */
+    gap: 8px; /* Cria um espaço de 8 pixels entre as caixinhas */
+    margin-bottom: 12px; /* Dá um respiro entre essa grade e o que vier abaixo */
+}
+
+/* Estiliza cada quadradinho interno (Hands, Discards, Ante, Round) */
+.caixaStatus {
+    background-color: #2b2d42; /* Fundo escuro azulado para destacar os números */
+    border-radius: 8px; /* Arredonda os cantos de cada caixinha */
+    padding: 8px; /* Cria um espaçamento interno */
+    text-align: center; /* Centraliza o texto e o número */
+    display: flex; /* Organiza o título e o número */
+    flex-direction: column; /* Coloca o título em cima e o número embaixo */
+}
+
+/* Estilo do título pequeno (Hands, Discards, etc.) */
+.caixaStatus span {
+    font-size: 12px; /* Letra menor para o rótulo */
+    color: #b0b0b0; /* Cinza claro */
+}
+
+/* Estilo do número principal */
+.caixaStatus strong {
+    font-size: 20px; /* Número grande e visível */
+    color: #4cc9f0; /* Azul claro estilo Balatro (você pode mudar por ID depois) */
+}
+
+/* Cores específicas para diferenciar Hands e Discards como no jogo original */
+#valorHands {
+    color: #4cc9f0; /* Azul para Hands */
+}
+
+#valorDiscards {
+    color: #f72585; /* Vermelho/Rosa para Discards */
+}
+
+#valorAnte, #valorRound {
+    color: #ffbe0b; /* Amarelo/Dourado para Ante e Round */
+}
+#caixaBlind {
+    background-color: #0b0c10; /* Fundo interno quase preto */
+    border: 4px solid #161822; /* Borda interna escura */
+    outline: 3px solid #3a86ff; /* Segunda borda azul por fora */
+    border-radius: 10px; /* Arredonda os cantos */
+    padding: 16px 12px; /* Espaçamento interno */
+    margin: 15px; /* Distância das bordas da barra lateral */
+    box-shadow: 0 7px 0 #0d1321; /* Sombra 3D embaixo */
+    display: flex; /* Ativa Flexbox */
+    flex-direction: column; /* Texto em cima, número embaixo */
+    align-items: center; /* Centraliza no meio */
+    gap: 6px; /* Espaço entre texto e número */
+}
+
+#caixaBlind span {
+    font-size: 13px; /* Tamanho do texto pequeno */
+    color: #a0a0b0; /* Cor cinza claro */
+}
+
+#caixaBlind strong {
+    font-size: 30px; /* Tamanho do número 300 */
+    color: #ff4d6d; /* Cor vermelha vibrante */
+    text-shadow: 0 0 8px rgba(255, 77, 109, 0.4); /* Brilho suave no número */
+}
+
