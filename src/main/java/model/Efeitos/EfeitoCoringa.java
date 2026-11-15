@@ -1,10 +1,9 @@
-package model.Efeitos;
+package model.efeitos;
 
 import java.util.List;
 
 import model.GameState;
 import model.cartas.Carta;
-import model.cartas.DeckCarta;
 import model.contextos.ContextoMao;
 import model.coringas.Coringa;
 import model.coringas.DeckCoringa;

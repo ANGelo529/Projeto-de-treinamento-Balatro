@@ -6,17 +6,20 @@ import model.enums.OrdemDeValor;
 
 /**
  * Representa uma Carta individual do baralho.
- * Possui atributos de valor, naipe e modificadores de estilo de jogo (melhorias, selos, edições).
+ * Possui atributos de valor, naipe e modificadores de estilo de jogo
+ * (melhorias, selos, edições).
  */
 public class Carta {
     /* ------------------ VARIÁVEIS ------------------ */
 
-    private OrdemDeValor ordemDeValor;       // Enum do valor ("2" até "10", "J", "Q", "K", "A")
-    private Naipe naipe;              // Enum do Naipe (Ouros, Copas, Espadas, Paus)
+    private int idCarta;
+    private OrdemDeValor ordemDeValor; // Enum do valor ("2" até "10", "J", "Q", "K", "A")
+    private Naipe naipe; // Enum do Naipe (Ouros, Copas, Espadas, Paus)
     private String melhoria = "Sem valor";
     private String selo = "Sem valor";
     private String edicao = "Sem valor";
     private String tipoDeCarta = "Numero";
+    private String posicaoCarta;
 
     /* ------------------ CONSTRUTORES ------------------ */
 
@@ -34,25 +37,33 @@ public class Carta {
     /* ------------------ MÉTODOS ------------------ */
 
     /**
-     * Mapeia a representação textual do valor para a posição do índice numérico no vetor (0 a 12).
+     * Mapeia a representação textual do valor para a posição do índice numérico no
+     * vetor (0 a 12).
      * 
      * @param ordemDeValor Caractere/String representando o valor
-     * @return Índice inteiro correspondente (J=9, Q=10, K=11, A=12, ou o próprio número)
+     * @return Índice inteiro correspondente (J=9, Q=10, K=11, A=12, ou o próprio
+     *         número)
      */
     public static int descobrirPosOrdemDeValor(OrdemDeValor ordemDeValor) {
         switch (ordemDeValor.getNomeExibicao()) {
-            case "Valete": return 9;
-            case "Dama": return 10;
-            case "Rei": return 11;
-            case "Ás": return 12;
-            default:  return ordemDeValor.getValorOrdemValor() - 2; 
+            case "Valete":
+                return 9;
+            case "Dama":
+                return 10;
+            case "Rei":
+                return 11;
+            case "Ás":
+                return 12;
+            default:
+                return ordemDeValor.getValorOrdemValor() - 2;
             // Para ajustar para as ordens de um vetor que começam em 0
             // E é -2 porque o não tem 1
         }
     }
 
     /**
-     * Retorna a quantidade numérica real de Fichas fornecida pelo valor nominal da carta.
+     * Retorna a quantidade numérica real de Fichas fornecida pelo valor nominal da
+     * carta.
      * 
      * @param ordemDeValor Enum OrdemDeValor
      * @return Fichas base (Figuras J/Q/K = 10, Ás = 11, Números = valor nominal)
@@ -76,10 +87,18 @@ public class Carta {
 
     /* ------------------ GETTERS & SETTERS ------------------ */
 
-    public OrdemDeValor getOrdemDeValor(){
+    public int getIdCarta() {
+        return idCarta;
+    }
+
+    public void setIdCarta(int idCarta) {
+        this.idCarta = idCarta;
+    }
+
+    public OrdemDeValor getOrdemDeValor() {
         return ordemDeValor;
     }
-    
+
     public void setOrdemDeValor(OrdemDeValor ordemDeValor) {
         this.ordemDeValor = ordemDeValor;
     }
@@ -123,4 +142,13 @@ public class Carta {
     public void setTipoDeCarta(String tipoDeCarta) {
         this.tipoDeCarta = tipoDeCarta;
     }
+
+    public String getPosicaoCarta() {
+        return posicaoCarta;
+    }
+
+    public void setPosicaoCarta(String posicaoCarta) {
+        this.posicaoCarta = posicaoCarta;
+    }
+
 }

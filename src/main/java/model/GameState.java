@@ -1,11 +1,8 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.Random;
-
 import util.TesteSaida;
 import model.blinds.Ante;
-import model.cartas.Carta;
 import model.cartas.DeckCarta;
 import model.contextos.ContextoMao;
 import model.coringas.DeckCoringa;
@@ -18,10 +15,12 @@ public class GameState {
     private static int tamanhoMao = 8;
     private static int qtdMao = 3; // Quantidade de jogadas restantes na rodada
     private static int qtdMaoDescarte = 3; // Quantidade de descartes restantes na rodada
-    private static long pontosTotaisAtuais = 0;
+    private static long pontosAtuais = 0;
     private static int seed;
     private static int anteAtual = 1;
     private static int posBlindAtual;
+    private static int limiteCoringas = 5;
+    private static int limiteConsumiveis = 5;
     private static String tipoDeOrganizacao = "OrdemDeValor";
     private static Random random;
     private static DeckCarta deckCarta;
@@ -49,7 +48,7 @@ public class GameState {
         while (qtdMao > 0) {
             // Futuramente fazer uma forma de receber/entregar um valor do JavaScript
             // Ou seja se for fazer com front todo print vira um request pro front
-            
+
             TesteSaida.printBlindAtual();
             // DeckCoringa.verificarCoringaPassivo();
             ctx.setCartasJogadas(DeckCarta.jogarCartas(TesteSaida.pegarPosicoes()));
@@ -75,8 +74,8 @@ public class GameState {
         long fichas = ctx.getPontos().getFicha();
         long multi = ctx.getPontos().getMulti();
         long limiteBlind = Ante.getBlindsAtuais()[posBlindAtual].getValorBlind();
-        pontosTotaisAtuais = fichas * multi;
-        if (pontosTotaisAtuais >= limiteBlind) {
+        pontosAtuais = fichas * multi;
+        if (pontosAtuais >= limiteBlind) {
             return true;
         }
         return false;
@@ -143,16 +142,32 @@ public class GameState {
         return tipoDeOrganizacao;
     }
 
+    public static int getLimiteCoringas() {
+        return limiteCoringas;
+    }
+
+    public static void setLimiteCoringas(int limiteCoringas) {
+        GameState.limiteCoringas = limiteCoringas;
+    }
+
+    public static int getLimiteConsumiveis() {
+        return limiteConsumiveis;
+    }
+
+    public static void setLimiteConsumiveis(int limiteConsumiveis) {
+        GameState.limiteConsumiveis = limiteConsumiveis;
+    }
+
     public static void setTipoDeOrganizacao(String tipoDeOrganizacao) {
         GameState.tipoDeOrganizacao = tipoDeOrganizacao;
     }
 
-    public static long getPontosTotaisAtuais() {
-        return pontosTotaisAtuais;
+    public static long getpontosAtuais() {
+        return pontosAtuais;
     }
 
-    public static void setPontosTotaisAtuais(long pontosTotaisAtuais) {
-        GameState.pontosTotaisAtuais = pontosTotaisAtuais;
+    public static void setpontosAtuais(long pontosAtuais) {
+        GameState.pontosAtuais = pontosAtuais;
     }
 
     public static int getSeed() {

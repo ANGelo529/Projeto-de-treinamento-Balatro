@@ -1,4 +1,4 @@
-package Factory;
+package factory;
 
 import model.coringas.CatalogoCoringa;
 import model.coringas.Coringa;

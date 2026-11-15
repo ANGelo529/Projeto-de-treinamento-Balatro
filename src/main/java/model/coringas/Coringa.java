@@ -1,7 +1,7 @@
 package model.coringas;
 
-import model.Efeitos.EfeitoCoringa;
 import model.contextos.ContextoMao;
+import model.efeitos.EfeitoCoringa;
 import model.enums.*;
 
 /**

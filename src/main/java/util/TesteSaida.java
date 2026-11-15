@@ -1,15 +1,11 @@
 package util;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Scanner;
-
 import model.GameState;
 import model.blinds.*;
 import model.cartas.*;
-import model.coringas.*;
 import service.*;
-import Factory.*;
 
 /**
  * Classe utilitária e de teste para simulação e impressão dos fluxos do jogo no
@@ -31,7 +27,7 @@ public class TesteSaida {
         Blind blindAtual = Ante.getBlindsAtuais()[GameState.getPosBlindAtual()];
         System.out.println("---------" + blindAtual.getNome() + "---------");
         System.out.println("Pontue pelo menos: " + blindAtual.getValorBlind());
-        System.out.println("Pontuação Atual: " + GameState.getPontosTotaisAtuais());
+        System.out.println("Pontuação Atual: " + GameState.getpontosAtuais());
     }
 
     public static void printBlidsAtuais() {
@@ -108,7 +104,7 @@ public class TesteSaida {
 
         // // Entrada das posições das cartas a jogar
         // for (int i = 0; i < vet.length; i++) {
-        //     vet[i] = LER.nextInt();
+        // vet[i] = LER.nextInt();
         // }
 
         // // Retira as cartas escolhidas pelo jogador
@@ -122,7 +118,7 @@ public class TesteSaida {
         // ArrayList<Coringa> maoCoringa = new ArrayList<>();
         // System.out.println("---------DEFINIR CORINGAS---------");
         // for (int i = 0; i < QTDCORGTESTE; i++) {
-        //     maoCoringa.add(CoringaFactory.getCoringaPorId(LER.nextInt()));
+        // maoCoringa.add(CoringaFactory.getCoringaPorId(LER.nextInt()));
         // }
 
         // DeckCoringa.setMaoCoringa(maoCoringa);

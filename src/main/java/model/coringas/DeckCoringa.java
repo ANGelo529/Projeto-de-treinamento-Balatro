@@ -1,10 +1,12 @@
 package model.coringas;
 
+import model.GameState;
 import model.cartas.Carta;
 import model.contextos.*;
 import model.enums.Gatilho;
 import java.util.ArrayList;
-import Factory.CoringaFactory;
+
+import factory.CoringaFactory;
 
 /**
  * Gerenciador e executor do conjunto de Coringas equipados pelo jogador.
@@ -13,12 +15,11 @@ public class DeckCoringa {
     /* ------------------ ATRIBUTOS ------------------ */
 
     private static int idDeckCoringa;
-    private static int limiteCoringas = 5;
     private static ArrayList<Coringa> maoCoringa = new ArrayList<>();// Lista de Coringas equipados
 
     /* ------------------ MÉTODOS ------------------ */
     public static void addCoringa(int idCorg) {
-        if (DeckCoringa.maoCoringa.size() + 1 > DeckCoringa.limiteCoringas) {
+        if (DeckCoringa.maoCoringa.size() + 1 > GameState.getLimiteCoringas()) {
             System.out.println("Não é possível adicionar mais coringas você chegou ao limite de espaços");
         } else {
             maoCoringa.add(CoringaFactory.getCoringaPorId(idCorg));
@@ -35,7 +36,8 @@ public class DeckCoringa {
     /**
      * Ponto de entrada estático para processar e aplicar todos os efeitos de
      * Coringas na mão.
-     * TODO: Verificar utilidade desse método provavelmente chamada direta dos métodos auxiliares seja mais útil
+     * TODO: Verificar utilidade desse método provavelmente chamada direta dos
+     * métodos auxiliares seja mais útil
      * 
      * @param contextoMao Estado atual do cálculo da mão.
      * @param maoCoringa  Lista dos coringas equipados a serem testados.
@@ -101,7 +103,6 @@ public class DeckCoringa {
         }
     }
 
-    
     /* ------------------ GETTERS & SETTERS ------------------ */
 
     public static int getIdDeckCoringa() {

@@ -1,7 +1,7 @@
 package model.blinds;
 
-import Factory.BlindFactory;
-import model.Efeitos.EfeitoBlind;
+import factory.BlindFactory;
+import model.efeitos.EfeitoBlind;
 
 public class BossBlind extends Blind{
     // TODO: colocar para pegar um BossBlind random do factory e inicializar tudo aq

@@ -1,8 +1,8 @@
-package Factory;
+package factory;
 
-import model.Efeitos.EfeitoBlind;
 import model.blinds.BossBlind;
 import model.contextos.ContextoMao;
+import model.efeitos.EfeitoBlind;
 import model.blinds.CatalogoBlind;
 
 

@@ -1,6 +1,6 @@
 package model.blinds;
 
-import model.Efeitos.EfeitoBlind;
+import model.efeitos.EfeitoBlind;
 
 /**
  * Modelo de representação das metas (Small Blind, Big Blind e Boss Blind) no jogo.

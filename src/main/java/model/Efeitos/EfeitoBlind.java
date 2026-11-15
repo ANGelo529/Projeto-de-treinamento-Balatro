@@ -1,4 +1,4 @@
-package model.Efeitos;
+package model.efeitos;
 
 import model.contextos.ContextoMao;
 
