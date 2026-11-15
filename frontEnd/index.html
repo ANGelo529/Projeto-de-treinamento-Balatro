@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="interface.css">
+    <link rel="stylesheet" href="style.css">
     <title>Balatro</title>
 </head>
 
@@ -44,6 +44,23 @@
 
         </h1>
         <div id="infoBlind">
+            <div id="caixaPontuacao">
+                <span>Pontuação da rodada:</span>
+                <strong id="pontuacaoAtual">0</strong>
+            </div>
+            <div id="caixaMao">
+                <span id="nomeMao">Selecione cartas</span>
+                <div class="linhaCalculo">
+                    <strong id="valorChips">0</strong>
+                    <span>X</span>
+                    <strong id="valorMult">0</strong>
+                </div>
+            </div>
+            <div id="caixaDinheiro">
+                <span>Dinheiro:</span>
+                <strong id="valorDinheiro">$4</strong>
+            </div>
+
             <div id = "caixaBlind">
                  <span>Pontuação mínima:</span>
                 <strong id="metaBlind">300</strong>
@@ -74,10 +91,18 @@
         <div id="MaoCartas">
 
         </div>
+        <div id="botoesAcao">
+            <button id="btnJogarMao">Jogar Mão</button>
+            <button id="btnDescartar">Descartar</button>
+        </div>
+
+        <div id="mesaCentral">
+
+        </div>
 
         <button id="botaoVoltarJ">Voltar</button>
     </div>
-    <script src="interface.js"></script>
+    <script src="main.js"></script>
 </body>
 
 </html>

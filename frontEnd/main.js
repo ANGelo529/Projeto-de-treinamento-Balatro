@@ -9,8 +9,10 @@ class carta {
 function redenrizarCarta(objetoCarta) {
     //Cria a div da carta (somente no js)
     const visualCarta = document.createElement('div')
-    const mesa = document.getElementById('jogando')
+    const mesa = document.getElementById('MaoCartas')
     visualCarta.classList.add('carta')
+
+    console.log("Achou a div?", mesa) 
 
     
     if (objetoCarta.naipe == "espadas" || objetoCarta.naipe == "paus") {
@@ -51,7 +53,41 @@ function redenrizarCarta(objetoCarta) {
     if (mesa) {
         mesa.appendChild(visualCarta);
     }
-    
+
+    // Permite selecionar/desselecionar a carta ao clicar (máximo 5, igual no Balatro)
+    visualCarta.onclick = function() {
+        const jaSelecionada = visualCarta.classList.contains('selecionada');
+        const totalSelecionadas = document.querySelectorAll('#MaoCartas .selecionada').length;
+
+        if (jaSelecionada) {
+            visualCarta.classList.remove('selecionada');
+        } else if (totalSelecionadas < 5) {
+            visualCarta.classList.add('selecionada');
+        }
+    };
+}
+function redenrizarNoMeio(objetoCarta) {
+    const visualCarta = document.createElement('div');
+    const mesaCentral = document.getElementById('mesaCentral');
+    visualCarta.classList.add('carta');
+
+    if (objetoCarta.naipe == "espadas") {
+        visualCarta.classList.add('preto');
+        visualCarta.innerHTML = `<span>${objetoCarta.numero}</span><span>♠</span>`;
+    } else if (objetoCarta.naipe == "ouros") {
+        visualCarta.classList.add('vermelho');
+        visualCarta.innerHTML = `<span>${objetoCarta.numero}</span><span>♦</span>`;
+    } else if (objetoCarta.naipe == "paus") {
+        visualCarta.classList.add('preto');
+        visualCarta.innerHTML = `<span>${objetoCarta.numero}</span><span>♣</span>`;
+    } else {
+        visualCarta.classList.add('vermelho');
+        visualCarta.innerHTML = `<span>${objetoCarta.numero}</span><span>♥</span>`;
+    }
+
+    if (mesaCentral) {
+        mesaCentral.appendChild(visualCarta);
+    }
 }
 // --- PAUS ♣ ---
 const DoisPaus = new carta("2", "paus", "comun");
@@ -127,7 +163,7 @@ const baralho = [
 document.getElementById("botaoJogar").onclick = function(){
     document.getElementById("telaInicial").style.display = "none"
     document.getElementById("jogando").style.display = "block"
-    document.getElementById("infoBlind").style.display = "block"
+    document.getElementById("infoBlind").style.display = "flex"
 }
 
 document.getElementById("botaocreditos").onclick = function(){
@@ -158,4 +194,54 @@ document.getElementById("botaoVoltarJ").onclick = function(){
 // for (let key of baralho) {
 //     redenrizarCarta(key)    
 // }
+redenrizarCarta(TresPaus);
+redenrizarCarta(AOuros);
+redenrizarCarta(KCopas);
+class Coringa {
+    constructor(nome, descricao, imagem) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.imagem = imagem;
+    }
+}
 
+function redenrizarCoringa(objetoCoringa) {
+    const visualCoringa = document.createElement('div');
+    const areaCoringas = document.getElementById('coringas');
+    
+    visualCoringa.classList.add('carta', 'coringa');
+    visualCoringa.innerHTML = `
+        <img src="${objetoCoringa.imagem}" alt="${objetoCoringa.nome}" class="imgCoringa">
+        <div class="tooltipCoringa">
+        <strong class="nomeCoringa">${objetoCoringa.nome}</strong>
+        <span class="descCoringa">${objetoCoringa.descricao}</span>
+    `;
+
+    if (areaCoringas) {
+        areaCoringas.appendChild(visualCoringa);
+    }
+}
+
+// Botão JOGAR MÃO: move as cartas selecionadas para #mesaCentral
+document.getElementById("btnJogarMao").onclick = function() {
+    const selecionadas = document.querySelectorAll("#MaoCartas .selecionada");
+    const mesaCentral = document.getElementById("mesaCentral");
+
+    if (selecionadas.length === 0) return; // Não faz nada se nenhuma carta estiver selecionada
+
+    mesaCentral.innerHTML = ""; // Limpa a jogada anterior do meio
+
+    selecionadas.forEach(carta => {
+        carta.classList.remove("selecionada"); // Abaixa a carta
+        carta.onclick = null;                   // Impede clicar nela depois de jogada
+        mesaCentral.appendChild(carta);         // Move da mão direto para o meio!
+    });
+};
+
+// Botão DESCARTAR: remove as cartas selecionadas da mão
+document.getElementById("btnDescartar").onclick = function() {
+    const selecionadas = document.querySelectorAll("#MaoCartas .selecionada");
+    selecionadas.forEach(carta => carta.remove());
+};
+const coringaBasico = new Coringa("Joker", "+4 Mult", "img/joker.png");
+redenrizarCoringa(coringaBasico);
