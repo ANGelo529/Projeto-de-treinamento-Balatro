@@ -5,10 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
+import java.sql.Statement;
 import org.mindrot.jbcrypt.BCrypt;
-
-import com.mysql.cj.xdevapi.Statement;
 
 import model.usuario.Usuario;
 
@@ -19,13 +17,15 @@ public class UsuarioDAO {
         String senhaHash = BCrypt.hashpw(usuario.getSenha(), BCrypt.gensalt(12));
 
         try (Connection conexao = Conexao.conectarBD();
-                PreparedStatement stmt = conexao.prepareStatement(sql);) {
+                PreparedStatement stmt = conexao.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);) {
 
             stmt.setString(1, usuario.getNome());
             stmt.setString(2, senhaHash);
             stmt.setBoolean(3, usuario.isJogoAtivo());
             stmt.executeUpdate();
 
+            ResultSet rs = stmt.getGeneratedKeys();
+            if(rs.next()) usuario.setId_Usuario(rs.getInt(1));
             System.out.println("Usuario inserido com sucesso");
 
         } catch (SQLException ex) {
