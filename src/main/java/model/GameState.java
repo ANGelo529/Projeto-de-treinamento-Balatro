@@ -1,11 +1,16 @@
 package model;
 
 import java.util.Random;
+
+import jdbc.DeckCartaDao;
+import jdbc.GameStateDAO;
+import jdbc.UsuarioDAO;
 import util.TesteSaida;
 import model.blinds.Ante;
 import model.cartas.DeckCarta;
 import model.contextos.ContextoMao;
 import model.coringas.DeckCoringa;
+import model.usuario.Usuario;
 import service.ValidadorPoker;
 
 public class GameState {
@@ -26,6 +31,7 @@ public class GameState {
     private static DeckCarta deckCarta;
     private static DeckCoringa deckCoringa;
     private static Ante ante;
+    private static Usuario usuario;
 
     /* ------------------ MÉTODOS ------------------ */
 
@@ -35,10 +41,14 @@ public class GameState {
     }
 
     public static void iniciarRodada() {
+        GameStateDAO.receberDados(usuario);
         DeckCarta.criarBaralhoJogo();
+        DeckCartaDao.inserirBaralho();
         DeckCarta.adicionarCartas(DeckCarta.getMaoJogador());
         Ante.setBlindsAtuais(Ante.atualizarBlind(anteAtual));
         posBlindAtual = 0;
+        DeckCartaDao.updateCartasJogadas();
+        UsuarioDAO.updateStatusJogo(usuario,true);
     }
 
     public static void controleJogo() {
@@ -208,5 +218,13 @@ public class GameState {
 
     public static void setAnte(Ante ante) {
         GameState.ante = ante;
+    }
+
+    public static Usuario getUsuario() {
+        return usuario;
+    }
+
+    public static void setUsuario(Usuario usuario) {
+        GameState.usuario = usuario;
     }
 }

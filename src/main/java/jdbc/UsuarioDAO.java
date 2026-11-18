@@ -17,7 +17,7 @@ public class UsuarioDAO {
         String senhaHash = BCrypt.hashpw(usuario.getSenha(), BCrypt.gensalt(12));
 
         try (Connection conexao = Conexao.conectarBD();
-                PreparedStatement stmt = conexao.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);) {
+                PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
 
             stmt.setString(1, usuario.getNome());
             stmt.setString(2, senhaHash);
@@ -25,7 +25,8 @@ public class UsuarioDAO {
             stmt.executeUpdate();
 
             ResultSet rs = stmt.getGeneratedKeys();
-            if(rs.next()) usuario.setId_Usuario(rs.getInt(1));
+            if (rs.next())
+                usuario.setId_Usuario(rs.getInt(1));
             System.out.println("Usuario inserido com sucesso");
 
         } catch (SQLException ex) {
@@ -63,6 +64,72 @@ public class UsuarioDAO {
         }
     }
 
+    public static Usuario selectUnico(String nome, String senha) {
+        String sqlSelect = "SELECT * FROM usuario WHERE nome = ?;";
+
+        try (Connection conexao = Conexao.conectarBD();
+                PreparedStatement stmtSelect = conexao.prepareStatement(sqlSelect);) {
+
+            stmtSelect.setString(1, nome);
+
+            try (ResultSet rs = stmtSelect.executeQuery()) {
+                if (rs.next()) {
+                    String senhaHashBanco = rs.getString("senha");
+
+                    if (BCrypt.checkpw(senha, senhaHashBanco)) {
+                        Usuario user = new Usuario();
+                        user.setId_Usuario(rs.getInt("id_usuario"));
+                        user.setNome(rs.getString("nome"));
+                        user.setSenha(rs.getString("senha"));
+                        user.setJogoAtivo(rs.getBoolean("jogo_ativo"));
+                        System.out.println("Dados do usuário recuperado com sucesso!");
+                        return user;
+                    } else {
+                        System.out.println("Erro ao recuperar dados usuário: Senha incorreta.");
+                    }
+
+                } else {
+                    System.out.println("Erro ao recuperar dados do usuário: Usuário não encontrado.");
+                }
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Erro ao recuperar dados do usuario " + ex.getMessage());
+        }
+        return new Usuario();
+    }
+
+    public static boolean verificarUsuarioExistente(String nome, String senha) {
+        String sqlSelect = "SELECT * FROM usuario WHERE nome = ?;";
+
+        try (Connection conexao = Conexao.conectarBD();
+                PreparedStatement stmtSelect = conexao.prepareStatement(sqlSelect);) {
+
+            stmtSelect.setString(1, nome);
+
+            try (ResultSet rs = stmtSelect.executeQuery()) {
+                if (rs.next()) {
+                    String senhaHashBanco = rs.getString("senha");
+
+                    if (BCrypt.checkpw(senha, senhaHashBanco)) {
+                        System.out.println("Usuário já existe (RECUPERANDO DADOS DO USUÁRIO)!");
+                        return true;
+                    } else {
+                        System.out.println("Erro ao recuperar dados usuário: Senha incorreta.");
+                    }
+
+                } else {
+                    System.out.println("Erro ao recuperar dados do usuário: Usuário não encontrado.");
+                }
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Erro ao recuperar dados do usuario " + ex.getMessage());
+        }
+        System.out.println("O usuário não existe!");
+        return false;
+    }
+
     public static void deletar(String nome, String senha) {
         String sqlDelete = "DELETE FROM usuario WHERE id_usuario = ?";
         String sqlSelect = "SELECT id_usuario, senha FROM usuario WHERE nome = ?;";
@@ -97,35 +164,26 @@ public class UsuarioDAO {
         }
     }
 
-    public static void updateStatusJogo(Usuario usuario) {
+    public static void updateStatusJogo(Usuario usuario, Boolean novoStatusJogo) {
         String sqlUpdate = "UPDATE usuario SET jogo_ativo = ? WHERE id_usuario = ?";
-        String sqlSelect = "SELECT id_usuario, senha FROM usuario WHERE nome = ?;";
 
         try (Connection conexao = Conexao.conectarBD();
-                PreparedStatement stmtSelect = conexao.prepareStatement(sqlSelect);) {
+                PreparedStatement stmtUpdate = conexao.prepareStatement(sqlUpdate);) {
 
-            stmtSelect.setString(1, usuario.getNome());
+            stmtUpdate.setBoolean(1, novoStatusJogo);
+            stmtUpdate.setInt(2, usuario.getId_Usuario());
 
-            try (ResultSet rs = stmtSelect.executeQuery()) {
-                if (rs.next()) {
-                    int idUsuario = rs.getInt("id_usuario");
-                    String senhaHashBanco = rs.getString("senha");
+            int linhasAfetadas = stmtUpdate.executeUpdate();
 
-                    if (BCrypt.checkpw(usuario.getSenha(), senhaHashBanco)) {
-                        try (PreparedStatement stmtUpdate = conexao.prepareStatement(sqlUpdate)) {
-                            stmtUpdate.setBoolean(1, usuario.isJogoAtivo());
-                            stmtUpdate.setInt(2, idUsuario);
-                            stmtUpdate.executeUpdate();
-                            System.out.println("Usuário atualizado com sucesso!");
-                        }
-                    } else {
-                        System.out.println("Erro ao atualizar usuário: Senha incorreta.");
-                    }
-
-                } else {
-                    System.out.println("Erro ao atualizar usuário: Usuário não encontrado.");
-                }
+            if (linhasAfetadas > 0) {
+                System.out.println("Status do jogo atualizado com sucesso!");
+                usuario.setJogoAtivo(novoStatusJogo);
+            } else {
+                System.out.println("Erro ao atualizar status: Usuário não encontrado.");
             }
+            
+            stmtUpdate.executeUpdate();
+            System.out.println("Usuário atualizado com sucesso!");
 
         } catch (SQLException ex) {
             System.out.println("Erro ao atualizar usuario " + ex.getMessage());
@@ -169,4 +227,5 @@ public class UsuarioDAO {
             System.out.println("Erro ao atualizar usuario " + ex.getMessage());
         }
     }
+
 }

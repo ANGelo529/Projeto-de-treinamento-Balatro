@@ -4,7 +4,7 @@ use tcb_BD;
 
 CREATE TABLE usuario (
     id_usuario INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(50) NOT NULL,
+    nome VARCHAR(50) UNIQUE NOT NULL,
     senha VARCHAR(255) NOT NULL,
     jogo_ativo BOOLEAN NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; 
@@ -21,6 +21,7 @@ CREATE TABLE game_state (
     limite_coringa INT NOT NULL DEFAULT 5,
     limite_consumivel INT NOT NULL DEFAULT 2,
     tipo_organizacao VARCHAR(20) DEFAULT "OrdemDeValor",
+    seed varchar(100),
     CONSTRAINT fk_usuario FOREIGN KEY (id_usuario) REFERENCES usuario (id_usuario) ON DELETE CASCADE 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -56,5 +57,7 @@ CREATE TABLE consumivel_instancia (
         REFERENCES game_state (id_game_state) ON DELETE CASCADE 
 )  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4;
 
+
 select * from usuario;
 select * from game_state;
+select * from carta_instancia;

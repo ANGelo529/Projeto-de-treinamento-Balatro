@@ -1,18 +1,32 @@
 package model.usuario;
 
+import java.util.Scanner;
+
 public class Usuario {
     private int id_Usuario;
     private String nome;
     private String senha;
-    private boolean jogoAtivo;
+    private boolean jogoAtivo = false;
 
     public Usuario(String nome, String senha, boolean jogoAtivo) {
         this.nome = nome;
         this.senha = senha;
         this.jogoAtivo = jogoAtivo;
     }
-
+    
     public Usuario() {
+    }
+
+    public static Usuario definirUsuario(){
+        Scanner LER = new Scanner(System.in);
+        Usuario usuario = new Usuario();
+        System.out.println("INFORME SEU NOME DE USUARIO E SUA SENHA");
+        System.out.print("NOME DE USUÁRIO: ");
+        usuario.setNome(LER.nextLine());
+        System.out.print("SENHA: ");
+        usuario.setSenha(LER.nextLine());
+        LER.close();
+        return usuario;
     }
 
     public int getId_Usuario() {

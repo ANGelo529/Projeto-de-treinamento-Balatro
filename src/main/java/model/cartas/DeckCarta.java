@@ -124,7 +124,11 @@ public class DeckCarta {
         for (Naipe str : Naipe.values()) {
             ArrayList<Carta> listaCarta = new ArrayList<>();
             for (int i = 0; i < listaOrdemDeValor.size(); i++) {
-                listaCarta.add(new Carta(listaOrdemDeValor.get(i), str));
+                if (i > 9 && i < 12) {
+                    listaCarta.add(new Carta(listaOrdemDeValor.get(i), str, "REALEZA"));
+                } else {
+                    listaCarta.add(new Carta(listaOrdemDeValor.get(i), str));
+                }
             }
             baralhoAuxiliar.put(str, listaCarta);
         }
@@ -140,7 +144,7 @@ public class DeckCarta {
         for (Naipe str : Naipe.values()) {
             ArrayList<Carta> listaCarta = new ArrayList<>();
             for (int i = 0; i < listaOrdemDeValor.size(); i++) {
-                listaCarta.add(new Carta(baralho.get(str).get(i).getOrdemDeValor(), str));
+                listaCarta.add(new Carta(baralho.get(str).get(i).getOrdemDeValor(), str,baralho.get(str).get(i).getTipoDeCarta()));
             }
             baralhoAuxiliar.put(str, listaCarta);
         }
@@ -210,6 +214,14 @@ public class DeckCarta {
         return Carta.getValorOrdemDeValorArray(DeckCarta.maoJogador);
     }
 
+    public static int getTamanhoBaralho() {
+        int tamanhoBaralho = 0;
+        for (Naipe naipe : listaNaipes) {
+            tamanhoBaralho += baralhoJogo.get(naipe).size();
+        }
+
+        return tamanhoBaralho;
+    }
     /* ------------------ GETTERS & SETTERS ------------------ */
 
     public static ArrayList<Carta> getMaoJogador() {

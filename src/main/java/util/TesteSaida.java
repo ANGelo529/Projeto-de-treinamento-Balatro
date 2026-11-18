@@ -2,9 +2,14 @@ package util;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import jdbc.DeckCartaDao;
+import jdbc.GameStateDAO;
+import jdbc.UsuarioDAO;
 import model.GameState;
 import model.blinds.*;
 import model.cartas.*;
+import model.usuario.Usuario;
 import service.*;
 
 /**
@@ -93,40 +98,7 @@ public class TesteSaida {
      * 5. Repõe a mão do jogador.
      */
     public static void printTesteJogo() {
-        // System.out.println("--------DEFINIR SEED--------");
 
-        // Integer[] vet = new Integer[5]; // Índices das cartas selecionadas
-        // ArrayList<Carta> cartasJogadas = new ArrayList<>();
-
-        // System.out.println("CARTAS ORIGINAIS ");
-
-        // System.out.println("\n\n\n\n\n\n");
-
-        // // Entrada das posições das cartas a jogar
-        // for (int i = 0; i < vet.length; i++) {
-        // vet[i] = LER.nextInt();
-        // }
-
-        // // Retira as cartas escolhidas pelo jogador
-
-        // System.out.println("CARTAS RETIRADAS");
-        // TesteSaida.printMaoJogador(cartasJogadas);
-        // System.out.println("\n\n\n\n\n\n");
-
-        // // Cria uma mão de coringas padrão para aplicar na jogada
-        // int QTDCORGTESTE = 5;
-        // ArrayList<Coringa> maoCoringa = new ArrayList<>();
-        // System.out.println("---------DEFINIR CORINGAS---------");
-        // for (int i = 0; i < QTDCORGTESTE; i++) {
-        // maoCoringa.add(CoringaFactory.getCoringaPorId(LER.nextInt()));
-        // }
-
-        // DeckCoringa.setMaoCoringa(maoCoringa);
-
-        // // Avalia e calcula os pontos
-        // //ValidadorPoker.calcularJogada(cartasJogadas);
-
-        // LER.close();
     }
 
     public static Integer[] pegarPosicoes() {
@@ -143,4 +115,28 @@ public class TesteSaida {
     public static void testeTeste() {
         GameState.iniciarSeed("1456");
     }
+
+    public static void inserirUsuarioDev() {
+        Usuario usuario = new Usuario("dev", "dev", false);
+        if (UsuarioDAO.verificarUsuarioExistente(usuario.getNome(), usuario.getSenha())) {
+            usuario = UsuarioDAO.selectUnico(usuario.getNome(), usuario.getSenha());
+
+        } else {
+            UsuarioDAO.inserir(usuario);
+        }
+
+        if (GameStateDAO.verificarGameStateExistente(usuario)) {
+            GameStateDAO.receberDados(usuario);
+        } else {
+            GameState.iniciarSeed("BANANA");
+            // TODO : colocar uma maneira de receber um import do usuário
+            // principalmente usando o front end 
+            GameStateDAO.inserirGeral(usuario);
+        }
+
+        if(usuario.isJogoAtivo()){
+            DeckCartaDao.deletarBaralho();
+        }
+    }
+
 }
