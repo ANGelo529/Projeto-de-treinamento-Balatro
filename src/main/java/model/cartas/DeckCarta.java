@@ -60,6 +60,7 @@ public class DeckCarta {
      * Repõe cartas na mão do jogador até atingir o tamanho máximo configurado.
      */
     public static void adicionarCartas(ArrayList<Carta> maoJogador) {
+        System.out.println(GameState.getTamanhoMao() + " " + maoJogador.size());
         int qtdParaAdicionar = Math.abs(maoJogador.size() - GameState.getTamanhoMao());
         for (int i = 0; i < qtdParaAdicionar; i++) {
             maoJogador.add(DeckCarta.gerarCartaAleatoria());
@@ -124,7 +125,7 @@ public class DeckCarta {
         for (Naipe str : Naipe.values()) {
             ArrayList<Carta> listaCarta = new ArrayList<>();
             for (int i = 0; i < listaOrdemDeValor.size(); i++) {
-                if (i > 9 && i < 12) {
+                if (i > 8 && i < 12) {
                     listaCarta.add(new Carta(listaOrdemDeValor.get(i), str, "REALEZA"));
                 } else {
                     listaCarta.add(new Carta(listaOrdemDeValor.get(i), str));
@@ -144,7 +145,8 @@ public class DeckCarta {
         for (Naipe str : Naipe.values()) {
             ArrayList<Carta> listaCarta = new ArrayList<>();
             for (int i = 0; i < listaOrdemDeValor.size(); i++) {
-                listaCarta.add(new Carta(baralho.get(str).get(i).getOrdemDeValor(), str,baralho.get(str).get(i).getTipoDeCarta()));
+                listaCarta.add(new Carta(baralho.get(str).get(i).getOrdemDeValor(), str,
+                        baralho.get(str).get(i).getTipoDeCarta()));
             }
             baralhoAuxiliar.put(str, listaCarta);
         }

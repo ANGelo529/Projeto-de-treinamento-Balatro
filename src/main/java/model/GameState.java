@@ -21,7 +21,7 @@ public class GameState {
     private static int qtdMao = 3; // Quantidade de jogadas restantes na rodada
     private static int qtdMaoDescarte = 3; // Quantidade de descartes restantes na rodada
     private static long pontosAtuais = 0;
-    private static int seed;
+    private static String seed;
     private static int anteAtual = 1;
     private static int posBlindAtual;
     private static int limiteCoringas = 5;
@@ -37,18 +37,28 @@ public class GameState {
 
     public static void iniciarSeed(String seedParaSortear) {
         GameState.setRandom(new Random(seedParaSortear.hashCode()));
+        GameState.setSeed(seedParaSortear);
         // Lembrar de implementar o INSERT da seed aqui
     }
 
     public static void iniciarRodada() {
         GameStateDAO.receberDados(usuario);
         DeckCarta.criarBaralhoJogo();
-        DeckCartaDao.inserirBaralho();
+        if (DeckCartaDao.verificarExistente()) {
+            DeckCartaDao.receberBaralho();
+        } else {
+            DeckCartaDao.inserirBaralho();
+        }
+
         DeckCarta.adicionarCartas(DeckCarta.getMaoJogador());
         Ante.setBlindsAtuais(Ante.atualizarBlind(anteAtual));
         posBlindAtual = 0;
-        DeckCartaDao.updateCartasJogadas();
-        UsuarioDAO.updateStatusJogo(usuario,true);
+        DeckCartaDao.updateMaoJogador();
+        UsuarioDAO.updateStatusJogo(usuario, true);
+        System.out.println(tamanhoMao);
+        GameStateDAO.update();
+        // AnteDao.update();
+        // talvez usar insert
     }
 
     public static void controleJogo() {
@@ -180,11 +190,11 @@ public class GameState {
         GameState.pontosAtuais = pontosAtuais;
     }
 
-    public static int getSeed() {
+    public static String getSeed() {
         return seed;
     }
 
-    public static void setSeed(int seed) {
+    public static void setSeed(String seed) {
         GameState.seed = seed;
     }
 

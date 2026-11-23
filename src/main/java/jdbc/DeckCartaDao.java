@@ -7,11 +7,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import model.GameState;
 import model.cartas.Carta;
 import model.cartas.DeckCarta;
 import model.enums.Naipe;
+import model.enums.OrdemDeValor;
+import model.usuario.Usuario;
 
 public class DeckCartaDao {
 
@@ -58,7 +61,7 @@ public class DeckCartaDao {
         }
     }
 
-    public static void updateCartasJogadas() {
+    public static void updateMaoJogador() {
         String sql = "UPDATE carta_instancia SET id_game_state = ?,ordem_de_valor = ?, naipe = ?,melhoria = ?, selo = ?,edicao = ?, tipo_de_carta = ?, posicao_carta = ? WHERE id_carta_instancia = ?";
 
         try (Connection conexao = Conexao.conectarBD();
@@ -116,7 +119,8 @@ public class DeckCartaDao {
             System.out.println("Dados atualizados do baralho (agora na mão descartes) com sucesso");
 
         } catch (SQLException ex) {
-            System.out.println("Erro ao atualizar cartas do baralho (para ir para a mão descartes)  " + ex.getMessage());
+            System.out
+                    .println("Erro ao atualizar cartas do baralho (para ir para a mão descartes)  " + ex.getMessage());
         }
     }
 
@@ -138,5 +142,99 @@ public class DeckCartaDao {
         } catch (SQLException ex) {
             System.out.println("Erro ao deletar o Baralho " + ex.getMessage());
         }
+    }
+
+    public static void receberBaralho() {
+        String sql = "SELECT * FROM carta_instancia WHERE id_game_state = ?;";
+
+        try (Connection conexao = Conexao.conectarBD();
+                PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setInt(1, GameState.getIdGameState());
+
+            try (ResultSet rs = stmt.executeQuery();) {
+                if (rs.next()) {
+                    Carta carta = new Carta();
+                    carta.setOrdemDeValor(strParaOrdemValor(rs.getString(3)));
+                    carta.setNaipe(strParaNaipe(rs.getString(4)));
+                    carta.setMelhoria(rs.getString(5));
+                    carta.setSelo(rs.getString(6));
+                    carta.setEdicao(rs.getString(7));
+                    carta.setTipoDeCarta(rs.getString(8));
+                    carta.setPosicaoCarta(rs.getString(9));
+
+                    if (carta.getPosicaoCarta() == "BARALHO") {
+                        DeckCarta.getBaralhoJogo().get(carta.getNaipe()).add(carta);
+                    } else if (carta.getPosicaoCarta() == "MAOJOGADOR") {
+                        DeckCarta.getMaoJogador().add(carta);
+                    } else if (carta.getPosicaoCarta() == "DESCARTADAS") {
+                        DeckCarta.getCartasDescartadas().add(carta);
+                    }
+
+                } else {
+                    System.out.println("Todas as cartas já foram lidas ");
+                }
+
+            } catch (Exception e) {
+                System.out.println("Erro ao recuperar dados das cartas " + e.getMessage());
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro ao receber cartas já existentes " + e.getMessage());
+        }
+    }
+
+    /*
+     * Esse método serve como um método auxiliar para o recebimento de dados do
+     * banco sql
+     * Trocando atavés de uma String para o Enum OrdemDeValor.
+     */
+    private static OrdemDeValor strParaOrdemValor(String strOrdemValor) {
+        for (OrdemDeValor ODV : DeckCarta.getListaordemdevalor()) {
+            if (strOrdemValor.equals(ODV.getNomeSimplificado())) {
+                return ODV;
+            }
+        }
+        System.out.println("String para troca não é um valor compátivel");
+        return null;
+    }
+
+    /*
+     * Esse método serve como um método auxiliar para o recebimento de dados do
+     * banco sql
+     * Trocando atavés de uma String para o Enum Naipe.
+     */
+    private static Naipe strParaNaipe(String strOrdemValor) {
+        for (Naipe ODV : DeckCarta.getListanaipes()) {
+            if (strOrdemValor.equals(ODV.getNomeExibicao())) {
+                return ODV;
+            }
+        }
+
+        System.out.println("String para troca não é um valor compátivel");
+        return null;
+    }
+
+    public static boolean verificarExistente() {
+        String sqlSelect = "SELECT * FROM carta_instancia WHERE id_game_state = ?;";
+
+        try (Connection conexao = Conexao.conectarBD();
+                PreparedStatement stmtSelect = conexao.prepareStatement(sqlSelect);) {
+
+            stmtSelect.setInt(1, GameState.getIdGameState());
+
+            try (ResultSet rs = stmtSelect.executeQuery()) {
+                if (rs.next()) {
+                    System.out.println("Alguma carta já existe (RECUPERANDO DADOS DAS CARTAS)!");
+                    return true;
+
+                }
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Erro ao recuperar dados das cartas: " + ex.getMessage());
+        }
+
+        System.out.println("As cartas não foram inseridas ainda!");
+        return false;
     }
 }

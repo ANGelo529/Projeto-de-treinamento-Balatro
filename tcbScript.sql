@@ -21,7 +21,7 @@ CREATE TABLE game_state (
     limite_coringa INT NOT NULL DEFAULT 5,
     limite_consumivel INT NOT NULL DEFAULT 2,
     tipo_organizacao VARCHAR(20) DEFAULT "OrdemDeValor",
-    seed varchar(100),
+    seed varchar(300),
     CONSTRAINT fk_usuario FOREIGN KEY (id_usuario) REFERENCES usuario (id_usuario) ON DELETE CASCADE 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -35,7 +35,7 @@ CREATE TABLE carta_instancia (
     edicao VARCHAR(30),
     tipo_de_carta VARCHAR(30),
     posicao_carta VARCHAR(10),
-    CONSTRAINT fk_carta_game_state FOREIGN KEY (id_game_state) REFERENCES game_state (id_game_state)
+    CONSTRAINT fk_carta_game_state FOREIGN KEY (id_game_state) REFERENCES game_state (id_game_state) ON DELETE CASCADE 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE coringa_instancia (

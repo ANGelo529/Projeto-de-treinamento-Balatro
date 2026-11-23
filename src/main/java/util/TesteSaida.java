@@ -116,7 +116,7 @@ public class TesteSaida {
         GameState.iniciarSeed("1456");
     }
 
-    public static void inserirUsuarioDev() {
+    public static Usuario getUsuarioDev() {
         Usuario usuario = new Usuario("dev", "dev", false);
         if (UsuarioDAO.verificarUsuarioExistente(usuario.getNome(), usuario.getSenha())) {
             usuario = UsuarioDAO.selectUnico(usuario.getNome(), usuario.getSenha());
@@ -130,13 +130,16 @@ public class TesteSaida {
         } else {
             GameState.iniciarSeed("BANANA");
             // TODO : colocar uma maneira de receber um import do usuário
-            // principalmente usando o front end 
+            // principalmente usando o front end
+            System.out.println(GameState.getTamanhoMao());
             GameStateDAO.inserirGeral(usuario);
+
         }
 
-        if(usuario.isJogoAtivo()){
+        if (usuario.isJogoAtivo()) {
             DeckCartaDao.deletarBaralho();
         }
+        return usuario;
     }
 
 }

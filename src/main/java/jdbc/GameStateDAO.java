@@ -16,21 +16,7 @@ import model.usuario.Usuario;
 public class GameStateDAO {
 
     public static void inserirGeral(Usuario usuario) {
-        String sql = "INSERT INTO game_state (" +
-                " id_usuario, tamanho_mao, qtd_mao, qtd_descarte, " +
-                " pontos_atuais, ante_atual, pos_blind_atual, " +
-                " limite_coringa, limite_consumivel, tipo_organizacao,seed" +
-                " ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)" +
-                " ON DUPLICATE KEY UPDATE" +
-                " tamanho_mao = VALUES(tamanho_mao)," +
-                " qtd_mao = VALUES(qtd_mao)," +
-                " qtd_descarte = VALUES(qtd_descarte)," +
-                " pontos_atuais = VALUES(pontos_atuais)," +
-                " ante_atual = VALUES(ante_atual)," +
-                " pos_blind_atual = VALUES(pos_blind_atual)," +
-                " limite_coringa = VALUES(limite_coringa)," +
-                " limite_consumivel = VALUES(limite_consumivel)," +
-                " tipo_organizacao = VALUES(tipo_organizacao);";
+        String sql = "INSERT INTO game_state ( id_usuario, tamanho_mao, qtd_mao, qtd_descarte, pontos_atuais, ante_atual, pos_blind_atual, limite_coringa, limite_consumivel, tipo_organizacao, seed ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
         try (Connection conexao = Conexao.conectarBD();
                 PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
@@ -45,12 +31,14 @@ public class GameStateDAO {
             stmt.setInt(8, GameState.getLimiteCoringas());
             stmt.setInt(9, GameState.getLimiteConsumiveis());
             stmt.setString(10, GameState.getTipoDeOrganizacao());
-            stmt.setString(11, GameState.getSeed() + "");
-            ResultSet rs = stmt.getGeneratedKeys();
-            if (rs.next())
-                GameState.setIdGameState(rs.getInt(1));
+            stmt.setString(11, GameState.getSeed());
 
             stmt.executeUpdate();
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    GameState.setIdGameState(rs.getInt(1));
+                }
+            }
 
             System.out.println("Dados inseridos com sucesso");
 
@@ -69,8 +57,10 @@ public class GameStateDAO {
                 " pos_blind_atual = ?," +
                 " limite_coringa = ?," +
                 " limite_consumivel = ?," +
-                " tipo_organizacao = ?" +
+                " tipo_organizacao = ?," +
+                "seed = ? " +
                 "WHERE id_usuario = ?;";
+
         try (Connection conexao = Conexao.conectarBD();
                 PreparedStatement stmt = conexao.prepareStatement(sql);) {
 
@@ -82,8 +72,9 @@ public class GameStateDAO {
             stmt.setInt(6, GameState.getPosBlindAtual());
             stmt.setInt(7, GameState.getLimiteCoringas());
             stmt.setInt(8, GameState.getLimiteConsumiveis());
-            stmt.setString(9, "Naipe");
-            stmt.setInt(10, 1);
+            stmt.setString(9, GameState.getTipoDeOrganizacao());
+            stmt.setString(10, GameState.getSeed());
+            stmt.setInt(11, GameState.getUsuario().getId_Usuario());
 
             stmt.executeUpdate();
 
@@ -104,16 +95,16 @@ public class GameStateDAO {
             try (ResultSet rs1 = stmt.executeQuery();) {
                 if (rs1.next()) {
                     GameState.setIdGameState(rs1.getInt(1));
-                    GameState.setTamanhoMao(rs1.getInt(2));
-                    GameState.setQtdMao(rs1.getInt(3));
-                    GameState.setQtdMaoDescarte(rs1.getInt(4));
-                    GameState.setpontosAtuais(rs1.getLong(5));
-                    GameState.setAnteAtual(rs1.getInt(6));
-                    GameState.setPosBlindAtual(rs1.getInt(7));
-                    GameState.setLimiteCoringas(rs1.getInt(8));
-                    GameState.setLimiteConsumiveis(rs1.getInt(9));
-                    GameState.setTipoDeOrganizacao(rs1.getString(10));
-                    GameState.setRandom(new Random(rs1.getString(11).hashCode()));
+                    GameState.setTamanhoMao(rs1.getInt(3));
+                    GameState.setQtdMao(rs1.getInt(4));
+                    GameState.setQtdMaoDescarte(rs1.getInt(5));
+                    GameState.setpontosAtuais(rs1.getLong(6));
+                    GameState.setAnteAtual(rs1.getInt(7));
+                    GameState.setPosBlindAtual(rs1.getInt(8));
+                    GameState.setLimiteCoringas(rs1.getInt(9));
+                    GameState.setLimiteConsumiveis(rs1.getInt(10));
+                    GameState.setTipoDeOrganizacao(rs1.getString(11));
+                    GameState.setRandom(new Random(rs1.getString(12).hashCode()));
                 } else {
                     System.out.println("GameState não existe no banco de dados");
                 }
@@ -160,8 +151,6 @@ public class GameStateDAO {
                     System.out.println("GameState já existe (RECUPERANDO DADOS DO GAMESTATE)!");
                     return true;
 
-                } else {
-                    System.out.println("Erro ao recuperar dados do GameState: GameState não encontrado.");
                 }
             }
 

@@ -34,6 +34,8 @@ public class Carta {
         this.tipoDeCarta = tipoDeCarta;
     }
 
+    public Carta() {
+    }
     /* ------------------ MÉTODOS ------------------ */
 
     /**
