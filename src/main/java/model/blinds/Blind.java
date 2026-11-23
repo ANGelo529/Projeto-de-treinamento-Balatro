@@ -3,18 +3,21 @@ package model.blinds;
 import model.efeitos.EfeitoBlind;
 
 /**
- * Modelo de representação das metas (Small Blind, Big Blind e Boss Blind) no jogo.
- * Armazena a meta de pontuação necessária para vencer a rodada, recompensa financeira e efeitos especiais do Chefe.
+ * Modelo de representação das metas (Small Blind, Big Blind e Boss Blind) no
+ * jogo.
+ * Armazena a meta de pontuação necessária para vencer a rodada, recompensa
+ * financeira e efeitos especiais do Chefe.
  */
 public class Blind {
     /* ------------------ VARIÁVEIS ------------------ */
 
+    private int idBlind;
     private String nome;
-    private int dinheiroAoGanhar = 3;             // Recompensa paga ao jogador caso a meta seja batida
-    private long valorBlind;                       // Meta de pontuação necessária
-    private double multiplicadorValorBase;        // Multiplicador aplicado sobre a pontuação do Ante
-    private int anteMinimoAparicao = 0;            // Requisito mínimo de rodada para aparecer
-    private EfeitoBlind efeitoBlind;              // Efeito passivo/restrição imposta pelo Boss
+    private int dinheiroAoGanhar = 3; // Recompensa paga ao jogador caso a meta seja batida
+    private long valorBlind; // Meta de pontuação necessária
+    private double multiplicadorValorBase; // Multiplicador aplicado sobre a pontuação do Ante
+    private int anteMinimoAparicao = 0; // Requisito mínimo de rodada para aparecer
+    private EfeitoBlind efeitoBlind; // Efeito passivo/restrição imposta pelo Boss
 
     /* ------------------ CONSTRUTORES ------------------ */
 
@@ -65,6 +68,13 @@ public class Blind {
     }
 
     /* ------------------ GETTERS & SETTERS ------------------ */
+    public int getIdBlind() {
+        return idBlind;
+    }
+
+    public void setIdBlind(int idBlind) {
+        this.idBlind = idBlind;
+    }
 
     public String getNome() {
         return nome;

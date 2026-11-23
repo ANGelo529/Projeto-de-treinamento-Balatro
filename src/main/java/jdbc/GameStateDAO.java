@@ -2,14 +2,10 @@ package jdbc;
 
 import java.sql.Statement;
 import java.util.Random;
-
-import org.mindrot.jbcrypt.BCrypt;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import model.GameState;
 import model.usuario.Usuario;
 

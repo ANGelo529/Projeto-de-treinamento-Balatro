@@ -163,6 +163,15 @@ public class DeckCarta {
 
     }
 
+    public static void iniciarBaralho() {
+        baralho = new HashMap<>();
+        baralhoJogo = new HashMap<>();
+        for (Naipe naipe : Naipe.values()) {
+            baralho.put(naipe, new ArrayList<>());
+            baralhoJogo.put(naipe, new ArrayList<>());
+        }
+    }
+
     /**
      * Aplica o algoritmo de ordenação selecionado sobre a lista de cartas passada.
      */
@@ -224,6 +233,7 @@ public class DeckCarta {
 
         return tamanhoBaralho;
     }
+
     /* ------------------ GETTERS & SETTERS ------------------ */
 
     public static ArrayList<Carta> getMaoJogador() {
@@ -250,7 +260,7 @@ public class DeckCarta {
         return listaOrdemDeValor;
     }
 
-    public HashMap<Naipe, ArrayList<Carta>> getBaralho() {
+    public static HashMap<Naipe, ArrayList<Carta>> getBaralho() {
         return baralho;
     }
 

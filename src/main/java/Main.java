@@ -1,6 +1,3 @@
-import jdbc.DeckCartaDao;
-import jdbc.GameStateDAO;
-import jdbc.UsuarioDAO;
 import model.GameState;
 import model.usuario.Usuario;
 import util.TesteSaida;

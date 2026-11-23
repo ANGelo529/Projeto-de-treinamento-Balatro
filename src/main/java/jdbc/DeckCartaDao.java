@@ -6,15 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
 
 import model.GameState;
 import model.cartas.Carta;
 import model.cartas.DeckCarta;
 import model.enums.Naipe;
 import model.enums.OrdemDeValor;
-import model.usuario.Usuario;
 
 public class DeckCartaDao {
 
@@ -25,7 +22,7 @@ public class DeckCartaDao {
             conexao.setAutoCommit(false);
             ArrayList<Carta> cartasInseridas = new ArrayList<>();
             for (Naipe naipe : Naipe.values()) {
-                ArrayList<Carta> cartas = DeckCarta.getBaralhoJogo().get(naipe);
+                ArrayList<Carta> cartas = DeckCarta.getBaralho().get(naipe);
                 if (cartas == null)
                     continue;
                 for (Carta carta : cartas) {
@@ -152,8 +149,9 @@ public class DeckCartaDao {
             stmt.setInt(1, GameState.getIdGameState());
 
             try (ResultSet rs = stmt.executeQuery();) {
-                if (rs.next()) {
+                while (rs.next()) {
                     Carta carta = new Carta();
+                    carta.setIdCarta(rs.getInt(1));
                     carta.setOrdemDeValor(strParaOrdemValor(rs.getString(3)));
                     carta.setNaipe(strParaNaipe(rs.getString(4)));
                     carta.setMelhoria(rs.getString(5));
@@ -162,24 +160,23 @@ public class DeckCartaDao {
                     carta.setTipoDeCarta(rs.getString(8));
                     carta.setPosicaoCarta(rs.getString(9));
 
-                    if (carta.getPosicaoCarta() == "BARALHO") {
-                        DeckCarta.getBaralhoJogo().get(carta.getNaipe()).add(carta);
-                    } else if (carta.getPosicaoCarta() == "MAOJOGADOR") {
+                    if (carta.getPosicaoCarta().equals("BARALHO")) {
+                        DeckCarta.getBaralho().get(carta.getNaipe()).add(carta);
+                    } else if (carta.getPosicaoCarta().equals("MAOJOGADOR")) {
                         DeckCarta.getMaoJogador().add(carta);
-                    } else if (carta.getPosicaoCarta() == "DESCARTADAS") {
+                    } else if (carta.getPosicaoCarta().equals("DESCARTADAS")) {
                         DeckCarta.getCartasDescartadas().add(carta);
                     }
-
-                } else {
-                    System.out.println("Todas as cartas já foram lidas ");
                 }
+                
+                System.out.println("Todas as cartas já foram lidas ");
 
             } catch (Exception e) {
                 System.out.println("Erro ao recuperar dados das cartas " + e.getMessage());
             }
 
         } catch (Exception e) {
-            System.out.println("Erro ao receber cartas já existentes " + e.getMessage());
+            System.out.println("Erro ao recuperar dados das cartas " + e.getMessage());
         }
     }
 

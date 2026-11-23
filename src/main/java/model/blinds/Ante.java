@@ -1,7 +1,5 @@
 package model.blinds;
 
-import model.GameState;
-
 /**
  * Gerenciador dos estágios de dificuldade do jogo (Ante).
  * Controla os multiplicadores e escalas de pontuação para o Small, Big e Boss

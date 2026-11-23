@@ -43,10 +43,11 @@ public class GameState {
 
     public static void iniciarRodada() {
         GameStateDAO.receberDados(usuario);
-        DeckCarta.criarBaralhoJogo();
         if (DeckCartaDao.verificarExistente()) {
+            DeckCarta.iniciarBaralho();
             DeckCartaDao.receberBaralho();
         } else {
+            DeckCarta.criarBaralhoJogo();
             DeckCartaDao.inserirBaralho();
         }
 
@@ -54,7 +55,7 @@ public class GameState {
         Ante.setBlindsAtuais(Ante.atualizarBlind(anteAtual));
         posBlindAtual = 0;
         DeckCartaDao.updateMaoJogador();
-        UsuarioDAO.updateStatusJogo(usuario, true);
+        UsuarioDAO.updateStatusJogo(usuario, false);
         System.out.println(tamanhoMao);
         GameStateDAO.update();
         // AnteDao.update();

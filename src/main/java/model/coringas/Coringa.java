@@ -11,10 +11,11 @@ public class Coringa {
 
     /* ------------------ ATRIBUTOS ------------------ */
 
+    private int idBD;
     private int idJoker;
     private String nome;
     private Raridade raridade;
-    private Modificador modificador;
+    private Modificador modificador = Modificador.CORG_BASE;
     private Gatilho tempoDeAtivicao;
     private float preco;
     private int incremento = 0;
@@ -67,6 +68,13 @@ public class Coringa {
     }
 
     /* ------------------ GETTERS & SETTERS ------------------ */
+    public int getIdBD() {
+        return idBD;
+    }
+
+    public void setIdBD(int idBD) {
+        this.idBD = idBD;
+    }
 
     public int getIdJoker() {
         return idJoker;

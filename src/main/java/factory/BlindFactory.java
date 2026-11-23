@@ -5,7 +5,6 @@ import model.contextos.ContextoMao;
 import model.efeitos.EfeitoBlind;
 import model.blinds.CatalogoBlind;
 
-
 /**
  * Fábrica (Factory Pattern) destinada à geração de instâncias de Blinds
  * (Apostas/Chefões) do jogo[cite: 22].
@@ -21,7 +20,7 @@ public class BlindFactory {
     // criarBossBlind)[cite: 22]
 
     // Método temp pra poder testar alterar dps com a criação do catalagoBlind
-    private static BossBlind criarBlind(CatalogoBlind coringaAux) {
+    public static BossBlind criarBlind(int idInGame) {
         EfeitoBlind efeitoBlind = ctx -> {
             return new ContextoMao();
         };
