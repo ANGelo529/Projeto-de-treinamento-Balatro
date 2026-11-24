@@ -15,49 +15,72 @@ import model.enums.OrdemDeValor;
 
 public class DeckCartaDao {
 
+    /*
+     * Método que insere todas as cartas criadas no Baralho no Banco de dados
+     * Ele considera todas as cartas inicialmente como "BARALHO" ou seja
+     * Por padrão todas as cartas estão no baralho
+     */
     public static void inserirBaralho() {
         String sql = "INSERT INTO carta_instancia (id_game_state,ordem_de_valor,naipe,melhoria,selo,edicao,tipo_de_carta,posicao_carta) VALUES (?,?,?,?,?,?,?,?);";
         try (Connection conexao = Conexao.conectarBD();
                 PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
             conexao.setAutoCommit(false);
-            ArrayList<Carta> cartasInseridas = new ArrayList<>();
-            for (Naipe naipe : Naipe.values()) {
-                ArrayList<Carta> cartas = DeckCarta.getBaralho().get(naipe);
-                if (cartas == null)
-                    continue;
-                for (Carta carta : cartas) {
-                    stmt.setInt(1, GameState.getIdGameState());
-                    stmt.setString(2, carta.getOrdemDeValor().getNomeSimplificado());
-                    stmt.setString(3, carta.getNaipe().getNomeExibicao());
-                    stmt.setString(4, carta.getMelhoria());
-                    stmt.setString(5, carta.getSelo());
-                    stmt.setString(6, carta.getEdicao());
-                    stmt.setString(7, carta.getTipoDeCarta());
-                    stmt.setString(8, "BARALHO");
-                    stmt.addBatch();
-                    cartasInseridas.add(carta);
+            try {
+                ArrayList<Carta> cartasInseridas = new ArrayList<>();
+                for (Naipe naipe : Naipe.values()) {
+                    ArrayList<Carta> cartas = DeckCarta.getBaralho().get(naipe);
+                    if (cartas == null)
+                        continue;
+                    for (Carta carta : cartas) {
+                        stmt.setInt(1, GameState.getIdGameState());
+                        stmt.setString(2, carta.getOrdemDeValor().getNomeSimplificado());
+                        stmt.setString(3, carta.getNaipe().getNomeExibicao());
+                        stmt.setString(4, carta.getMelhoria());
+                        stmt.setString(5, carta.getSelo());
+                        stmt.setString(6, carta.getEdicao());
+                        stmt.setString(7, carta.getTipoDeCarta());
+                        stmt.setString(8, "BARALHO");
+                        stmt.addBatch();
+                        cartasInseridas.add(carta);
+                    }
                 }
+
+                stmt.executeBatch();
+                conexao.commit();
+
+                try (ResultSet rs = stmt.getGeneratedKeys();) {
+                    int i = 0;
+                    while (rs.next() && i < cartasInseridas.size()) {
+                        int idGerado = rs.getInt(1);
+                        cartasInseridas.get(i).setIdCarta(idGerado);
+                        i++;
+                    }
+                }
+            } catch (Exception e) {
+                try {
+                    conexao.rollback();
+                } catch (SQLException rollbackEx) {
+                    e.addSuppressed(rollbackEx);
+                }
+                throw e;
+            } finally {
+                conexao.setAutoCommit(true);
             }
 
-            stmt.executeBatch();
-            conexao.commit();
-
-            try (ResultSet rs = stmt.getGeneratedKeys();) {
-                int i = 0;
-                while (rs.next() && i < cartasInseridas.size()) {
-                    int idGerado = rs.getInt(1);
-                    cartasInseridas.get(i).setIdCarta(idGerado);
-                    i++;
-                }
-            }
-
-            System.out.println("Baralho padrão inserido com sucesso! Total de cartas: " + cartasInseridas.size());
+            // System.out.println("Baralho padrão inserido com sucesso! Total de cartas: " +
+            // cartasInseridas.size());
 
         } catch (Exception e) {
-            System.out.println("Erro ao inserir as cartas do Baralho " + e.getMessage());
+            throw new RuntimeException("Erro ao inserir as cartas do Baralho " + e.getMessage(), e);
         }
+
     }
 
+    /*
+     * Método que atualiza todas as cartas que estão na mão do jogador no BD
+     * Ele pega em base a mão sorteada pelo jogador para altera-las nos BD
+     * Altera a posicaoCarta para "MAOJOGADOR"
+     */
     public static void updateMaoJogador() {
         String sql = "UPDATE carta_instancia SET id_game_state = ?,ordem_de_valor = ?, naipe = ?,melhoria = ?, selo = ?,edicao = ?, tipo_de_carta = ?, posicao_carta = ? WHERE id_carta_instancia = ?";
 
@@ -65,30 +88,48 @@ public class DeckCartaDao {
                 PreparedStatement stmt = conexao.prepareStatement(sql);) {
 
             conexao.setAutoCommit(false);
+            try {
+                for (Carta carta : DeckCarta.getMaoJogador()) {
+                    stmt.setInt(1, GameState.getIdGameState());
+                    stmt.setString(2, carta.getOrdemDeValor().getNomeSimplificado());
+                    stmt.setString(3, carta.getNaipe().getNomeExibicao());
+                    stmt.setString(4, carta.getMelhoria());
+                    stmt.setString(5, carta.getSelo());
+                    stmt.setString(6, carta.getEdicao());
+                    stmt.setString(7, carta.getTipoDeCarta());
+                    stmt.setString(8, "MAOJOGADOR");
+                    stmt.setInt(9, carta.getIdCarta());
+                    stmt.addBatch();
+                }
 
-            for (Carta carta : DeckCarta.getMaoJogador()) {
-                stmt.setInt(1, GameState.getIdGameState());
-                stmt.setString(2, carta.getOrdemDeValor().getNomeSimplificado());
-                stmt.setString(3, carta.getNaipe().getNomeExibicao());
-                stmt.setString(4, carta.getMelhoria());
-                stmt.setString(5, carta.getSelo());
-                stmt.setString(6, carta.getEdicao());
-                stmt.setString(7, carta.getTipoDeCarta());
-                stmt.setString(8, "MAOJOGADOR");
-                stmt.setInt(9, carta.getIdCarta());
-                stmt.addBatch();
+                stmt.executeBatch();
+                conexao.commit();
+
+                // System.out.println("Dados atualizados do baralho (agora na mão jogada) com
+                // sucesso");}
+
+            } catch (Exception e) {
+                try {
+                    conexao.rollback();
+                } catch (SQLException rollbackEx) {
+                    e.addSuppressed(rollbackEx);
+                }
+                throw e;
+            } finally {
+                conexao.setAutoCommit(true);
             }
 
-            stmt.executeBatch();
-            conexao.commit();
-
-            System.out.println("Dados atualizados do baralho (agora na mão jogada) com sucesso");
-
-        } catch (SQLException ex) {
-            System.out.println("Erro ao atualizar cartas do baralho (para ir para a mão jogada)  " + ex.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException(
+                    "Erro ao atualizar cartas do baralho (para ir para a mão jogada)  " + e.getMessage(), e);
         }
     }
 
+    /*
+     * Método que atualiza todas as cartas que estão na pilha de descartes no BD
+     * Ele pega em base a mão descartada pelo jogador para alterá-las nos BD
+     * Altera a posicaoCarta para "DESCARTADAS"
+     */
     public static void updateCartasDescartadas() {
         String sql = "UPDATE carta_instancia SET id_game_state = ?,ordem_de_valor = ?, naipe = ?,melhoria = ?, selo = ?,edicao = ?, tipo_de_carta = ?, posicao_carta = ? WHERE id_carta_instancia = ?";
 
@@ -96,31 +137,48 @@ public class DeckCartaDao {
                 PreparedStatement stmt = conexao.prepareStatement(sql);) {
 
             conexao.setAutoCommit(false);
+            try {
+                for (Carta carta : DeckCarta.getMaoJogador()) {
+                    stmt.setInt(1, GameState.getIdGameState());
+                    stmt.setString(2, carta.getOrdemDeValor().getNomeSimplificado());
+                    stmt.setString(3, carta.getNaipe().getNomeExibicao());
+                    stmt.setString(4, carta.getMelhoria());
+                    stmt.setString(5, carta.getSelo());
+                    stmt.setString(6, carta.getEdicao());
+                    stmt.setString(7, carta.getTipoDeCarta());
+                    stmt.setString(8, "DESCARTADAS");
+                    stmt.setInt(9, carta.getIdCarta());
+                    stmt.addBatch();
+                }
 
-            for (Carta carta : DeckCarta.getMaoJogador()) {
-                stmt.setInt(1, GameState.getIdGameState());
-                stmt.setString(2, carta.getOrdemDeValor().getNomeSimplificado());
-                stmt.setString(3, carta.getNaipe().getNomeExibicao());
-                stmt.setString(4, carta.getMelhoria());
-                stmt.setString(5, carta.getSelo());
-                stmt.setString(6, carta.getEdicao());
-                stmt.setString(7, carta.getTipoDeCarta());
-                stmt.setString(8, "DESCARTADAS");
-                stmt.setInt(9, carta.getIdCarta());
-                stmt.addBatch();
+                stmt.executeBatch();
+                conexao.commit();
+
+                // System.out.println("Dados atualizados do baralho (agora na mão descartes) com
+                // sucesso");
+
+            } catch (Exception e) {
+                try {
+                    conexao.rollback();
+                } catch (SQLException rollbackEx) {
+                    e.addSuppressed(rollbackEx);
+                }
+                throw e;
+            } finally {
+                conexao.setAutoCommit(true);
             }
 
-            stmt.executeBatch();
-            conexao.commit();
+        } catch (SQLException e) {
+            throw new RuntimeException(
+                    "Erro ao atualizar cartas do baralho (para ir para a mão descartes)  " + e.getMessage(), e);
 
-            System.out.println("Dados atualizados do baralho (agora na mão descartes) com sucesso");
-
-        } catch (SQLException ex) {
-            System.out
-                    .println("Erro ao atualizar cartas do baralho (para ir para a mão descartes)  " + ex.getMessage());
         }
     }
 
+    /*
+     * Método que DELETA todas as cartas de um determinado jogador no BD
+     * Pega como identificador para o DELETE o id do game state no BD
+     */
     public static void deletarBaralho() {
         String sqlDelete = "DELETE FROM carta_instancia WHERE id_game_state = ?";
 
@@ -131,16 +189,21 @@ public class DeckCartaDao {
             int qtdAlterados = stmtDelete.executeUpdate();
 
             if (qtdAlterados > 0) {
-                System.out.println("Baralho deletado com sucesso!");
+                // System.out.println("Baralho deletado com sucesso!");
             } else {
                 System.out.println("Erro ao deletar Baralho: Baralho não encontrado.");
             }
 
-        } catch (SQLException ex) {
-            System.out.println("Erro ao deletar o Baralho " + ex.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao deletar o Baralho " + e.getMessage(), e);
         }
     }
 
+    /*
+     * Método que recupera todas as cartas que estão no BD
+     * Ele pega as cartas e através do valor de posicaoCarta coloca aonde aquela
+     * carta esava anteriormente no código
+     */
     public static void receberBaralho() {
         String sql = "SELECT * FROM carta_instancia WHERE id_game_state = ?;";
 
@@ -168,16 +231,41 @@ public class DeckCartaDao {
                         DeckCarta.getCartasDescartadas().add(carta);
                     }
                 }
-                
+
                 System.out.println("Todas as cartas já foram lidas ");
 
-            } catch (Exception e) {
-                System.out.println("Erro ao recuperar dados das cartas " + e.getMessage());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao recuperar dados das cartas " + e.getMessage(), e);
+        }
+    }
+
+    /*
+     * Método que verifica se já existe alguma carta de um determinado jogador no BD
+     */
+    public static boolean verificarExistente() {
+        String sqlSelect = "SELECT * FROM carta_instancia WHERE id_game_state = ?;";
+
+        try (Connection conexao = Conexao.conectarBD();
+                PreparedStatement stmtSelect = conexao.prepareStatement(sqlSelect);) {
+
+            stmtSelect.setInt(1, GameState.getIdGameState());
+
+            try (ResultSet rs = stmtSelect.executeQuery()) {
+                if (rs.next()) {
+                    // System.out.println("Alguma carta já existe (RECUPERANDO DADOS DAS CARTAS)!");
+                    return true;
+
+                }
             }
 
-        } catch (Exception e) {
-            System.out.println("Erro ao recuperar dados das cartas " + e.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao recuperar dados das cartas: " + e.getMessage(), e);
+
         }
+
+        // System.out.println("As cartas não foram inseridas ainda!");
+        return false;
     }
 
     /*
@@ -191,7 +279,7 @@ public class DeckCartaDao {
                 return ODV;
             }
         }
-        System.out.println("String para troca não é um valor compátivel");
+        // System.out.println("String para troca não é um valor compátivel");
         return null;
     }
 
@@ -200,38 +288,15 @@ public class DeckCartaDao {
      * banco sql
      * Trocando atavés de uma String para o Enum Naipe.
      */
-    private static Naipe strParaNaipe(String strOrdemValor) {
-        for (Naipe ODV : DeckCarta.getListanaipes()) {
-            if (strOrdemValor.equals(ODV.getNomeExibicao())) {
-                return ODV;
+    private static Naipe strParaNaipe(String strNaipe) {
+        for (Naipe naipe : DeckCarta.getListanaipes()) {
+            if (strNaipe.equals(naipe.getNomeExibicao())) {
+                return naipe;
             }
         }
 
-        System.out.println("String para troca não é um valor compátivel");
+        // System.out.println("String para troca não é um valor compátivel");
         return null;
     }
 
-    public static boolean verificarExistente() {
-        String sqlSelect = "SELECT * FROM carta_instancia WHERE id_game_state = ?;";
-
-        try (Connection conexao = Conexao.conectarBD();
-                PreparedStatement stmtSelect = conexao.prepareStatement(sqlSelect);) {
-
-            stmtSelect.setInt(1, GameState.getIdGameState());
-
-            try (ResultSet rs = stmtSelect.executeQuery()) {
-                if (rs.next()) {
-                    System.out.println("Alguma carta já existe (RECUPERANDO DADOS DAS CARTAS)!");
-                    return true;
-
-                }
-            }
-
-        } catch (SQLException ex) {
-            System.out.println("Erro ao recuperar dados das cartas: " + ex.getMessage());
-        }
-
-        System.out.println("As cartas não foram inseridas ainda!");
-        return false;
-    }
 }

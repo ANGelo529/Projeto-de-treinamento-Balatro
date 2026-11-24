@@ -11,6 +11,10 @@ import model.usuario.Usuario;
 
 public class GameStateDAO {
 
+    /*
+     * Método que insere o GameState no Banco de dados
+     * Se baseia nos dados estáticos do GameState
+     */
     public static void inserirGeral(Usuario usuario) {
         String sql = "INSERT INTO game_state ( id_usuario, tamanho_mao, qtd_mao, qtd_descarte, pontos_atuais, ante_atual, pos_blind_atual, limite_coringa, limite_consumivel, tipo_organizacao, seed ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
@@ -36,13 +40,17 @@ public class GameStateDAO {
                 }
             }
 
-            System.out.println("Dados inseridos com sucesso");
+            // System.out.println("Dados inseridos com sucesso");
 
-        } catch (SQLException ex) {
-            System.out.println("Erro ao inserir gameState " + ex.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao inserir gameState " + e.getMessage(), e);
         }
     }
 
+    /*
+     * Método que atualiza o GameState no Banco de dados
+     * Se baseia nos dados estáticos do GameState
+     */
     public static void update() {
         String sql = "UPDATE game_state SET" +
                 " tamanho_mao = ?," +
@@ -74,13 +82,16 @@ public class GameStateDAO {
 
             stmt.executeUpdate();
 
-            System.out.println("Dados atualizados com sucesso");
+            // System.out.println("Dados atualizados com sucesso");
 
-        } catch (SQLException ex) {
-            System.out.println("Erro ao atualizar gameState " + ex.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar gameState " + e.getMessage(), e);
         }
     }
 
+    /*
+     * Método que recebe os dados do GameState que estão no Banco de dados
+     */
     public static void receberDados(Usuario usuario) {
         String sql = "SELECT * FROM game_state WHERE id_usuario = ?;";
 
@@ -101,19 +112,20 @@ public class GameStateDAO {
                     GameState.setLimiteConsumiveis(rs1.getInt(10));
                     GameState.setTipoDeOrganizacao(rs1.getString(11));
                     GameState.setRandom(new Random(rs1.getString(12).hashCode()));
-                } else {
-                    System.out.println("GameState não existe no banco de dados");
-                }
+                } // else {
+                  // System.out.println("GameState não existe no banco de dados");
+                  // }
 
-            } catch (Exception e) {
-                System.out.println("Erro ao recuperar dados do gameState " + e.getMessage());
             }
 
         } catch (SQLException e) {
-            System.out.println("Erro ao recuperar dados do gameState " + e.getMessage());
+            throw new RuntimeException("Erro ao recuperar dados do gameState " + e.getMessage(), e);
         }
     }
 
+    /*
+     * Método que DELETA o gameState de um determinado usuário no BD
+     */
     public static void deletar(Usuario usuario) {
         String sqlDelete = "DELETE FROM game_state WHERE id_usuario = ?";
 
@@ -121,19 +133,22 @@ public class GameStateDAO {
                 PreparedStatement stmtDelete = conexao.prepareStatement(sqlDelete);) {
 
             stmtDelete.setInt(1, usuario.getId_Usuario());
-            int qtdAlterados = stmtDelete.executeUpdate();
+            stmtDelete.executeUpdate();
 
-            if (qtdAlterados > 0) {
-                System.out.println("gameState deletado com sucesso!");
-            } else {
-                System.out.println("Erro ao deletar gameState: Usuário não encontrado.");
-            }
+            // if (qtdAlterados > 0) {
+            // System.out.println("gameState deletado com sucesso!");
+            // } else {
+            // System.out.println("Erro ao deletar gameState: Usuário não encontrado.");
+            // }
 
-        } catch (SQLException ex) {
-            System.out.println("Erro ao deletar gameState " + ex.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao deletar gameState " + e.getMessage(), e);
         }
     }
 
+    /*
+     * Método que verifica se já existe o gameState de determinado usuário no BD
+     */
     public static boolean verificarGameStateExistente(Usuario usuario) {
         String sqlSelect = "SELECT * FROM game_state WHERE id_usuario = ?;";
 
@@ -144,16 +159,17 @@ public class GameStateDAO {
 
             try (ResultSet rs = stmtSelect.executeQuery()) {
                 if (rs.next()) {
-                    System.out.println("GameState já existe (RECUPERANDO DADOS DO GAMESTATE)!");
+                    // System.out.println("GameState já existe (RECUPERANDO DADOS DO GAMESTATE)!");
                     return true;
 
                 }
             }
 
-        } catch (SQLException ex) {
-            System.out.println("Erro ao recuperar dados do Gamestate " + ex.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao recuperar dados do Gamestate " + e.getMessage(), e);
         }
-        System.out.println("O GameState não existe!");
+
+        // System.out.println("O GameState não existe!");
         return false;
     }
 }

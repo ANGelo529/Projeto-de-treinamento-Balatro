@@ -12,6 +12,10 @@ import model.usuario.Usuario;
 
 public class UsuarioDAO {
 
+    /*
+     * Método que insere novos usuários no Banco de dados
+     * Além de inserir já encriptografa a senha do usuário
+     */
     public static void inserir(Usuario usuario) {
         String sql = "INSERT INTO usuario (nome,senha,jogo_ativo) VALUES (?,?,?);";
         String senhaHash = BCrypt.hashpw(usuario.getSenha(), BCrypt.gensalt(12));
@@ -27,13 +31,16 @@ public class UsuarioDAO {
             ResultSet rs = stmt.getGeneratedKeys();
             if (rs.next())
                 usuario.setId_Usuario(rs.getInt(1));
-            System.out.println("Usuario inserido com sucesso");
+            // System.out.println("Usuario inserido com sucesso");
 
-        } catch (SQLException ex) {
-            System.out.println("Erro ao inserir usuario " + ex.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao inserir usuario " + e.getMessage(), e);
         }
     }
 
+    /*
+     * Método que mostra todos os usuários que estão cadastrados no Banco de dados
+     */
     public static void listar() {
         String sql = "SELECT * FROM usuario;";
         ArrayList<Usuario> users = new ArrayList<>();
@@ -59,11 +66,14 @@ public class UsuarioDAO {
 
             }
 
-        } catch (SQLException ex) {
-            System.out.println("Erro ao listar usuarios " + ex.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao listar usuarios " + e.getMessage(), e);
         }
     }
 
+    /*
+     * Método que recupera os dados de um usuário específico
+     */
     public static Usuario selectUnico(String nome, String senha) {
         String sqlSelect = "SELECT * FROM usuario WHERE nome = ?;";
 
@@ -82,23 +92,29 @@ public class UsuarioDAO {
                         user.setNome(rs.getString("nome"));
                         user.setSenha(rs.getString("senha"));
                         user.setJogoAtivo(rs.getBoolean("jogo_ativo"));
-                        System.out.println("Dados do usuário recuperado com sucesso!");
+                        // System.out.println("Dados do usuário recuperado com sucesso!");
                         return user;
-                    } else {
-                        System.out.println("Erro ao recuperar dados usuário: Senha incorreta.");
-                    }
+                        // } else {
+                        // System.out.println("Erro ao recuperar dados usuário: Senha incorreta.");
+                        // }
 
-                } else {
-                    System.out.println("Erro ao recuperar dados do usuário: Usuário não encontrado.");
+                        // } else {
+                        // System.out.println("Erro ao recuperar dados do usuário: Usuário não
+                        // encontrado.");
+                        // }
+                    }
                 }
             }
 
-        } catch (SQLException ex) {
-            System.out.println("Erro ao recuperar dados do usuario " + ex.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao recuperar dados do usuario " + e.getMessage(), e);
         }
-        return new Usuario();
+        return null;
     }
 
+    /*
+     * Método que verifica se já existe um usuário com x nome e y senha no BD
+     */
     public static boolean verificarUsuarioExistente(String nome, String senha) {
         String sqlSelect = "SELECT * FROM usuario WHERE nome = ?;";
 
@@ -112,24 +128,32 @@ public class UsuarioDAO {
                     String senhaHashBanco = rs.getString("senha");
 
                     if (BCrypt.checkpw(senha, senhaHashBanco)) {
-                        System.out.println("Usuário já existe (RECUPERANDO DADOS DO USUÁRIO)!");
+                        // System.out.println("Usuário já existe (RECUPERANDO DADOS DO USUÁRIO)!");
                         return true;
-                    } else {
-                        System.out.println("Erro ao recuperar dados usuário: Senha incorreta.");
+                        // } else {
+                        // System.out.println("Erro ao recuperar dados usuário: Senha incorreta.");
+                        // }
+
+                        // } else {
+                        // System.out.println("Erro ao recuperar dados do usuário: Usuário não
+                        // encontrado.");
                     }
-
-                } else {
-                    System.out.println("Erro ao recuperar dados do usuário: Usuário não encontrado.");
                 }
-            }
 
-        } catch (SQLException ex) {
-            System.out.println("Erro ao recuperar dados do usuario " + ex.getMessage());
+            }
+            // System.out.println("O usuário não existe!");
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao recuperar dados do usuario " + e.getMessage(), e);
         }
-        System.out.println("O usuário não existe!");
         return false;
     }
 
+    /*
+     * Método que DELETA um usuário com x nome e y senha no BD
+     * Porém antes de fazer o DELETE
+     * Ele verifica se existe alguém com nome e senha iguais as dos parãmetros
+     */
     public static void deletar(String nome, String senha) {
         String sqlDelete = "DELETE FROM usuario WHERE id_usuario = ?";
         String sqlSelect = "SELECT id_usuario, senha FROM usuario WHERE nome = ?;";
@@ -148,22 +172,25 @@ public class UsuarioDAO {
                         try (PreparedStatement stmtDelete = conexao.prepareStatement(sqlDelete)) {
                             stmtDelete.setInt(1, idUsuario);
                             stmtDelete.executeUpdate();
-                            System.out.println("Usuário deletado com sucesso!");
+                            // System.out.println("Usuário deletado com sucesso!");
                         }
-                    } else {
-                        System.out.println("Erro ao deletar usuário: Senha incorreta.");
-                    }
+                    } // else {
+                      // System.out.println("Erro ao deletar usuário: Senha incorreta.");
+                      // }
 
-                } else {
-                    System.out.println("Erro ao deletar usuário: Usuário não encontrado.");
+                    // } else {
+                    // System.out.println("Erro ao deletar usuário: Usuário não encontrado.");
                 }
             }
 
-        } catch (SQLException ex) {
-            System.out.println("Erro ao deletar usuario " + ex.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao deletar usuario " + e.getMessage(), e);
         }
     }
 
+    /*
+     * Método que atualiza unicamente o Status Jogo
+     */
     public static void updateStatusJogo(Usuario usuario, Boolean novoStatusJogo) {
         String sqlUpdate = "UPDATE usuario SET jogo_ativo = ? WHERE id_usuario = ?";
 
@@ -176,20 +203,23 @@ public class UsuarioDAO {
             int linhasAfetadas = stmtUpdate.executeUpdate();
 
             if (linhasAfetadas > 0) {
-                System.out.println("Status do jogo atualizado com sucesso!");
+                // System.out.println("Status do jogo atualizado com sucesso!");
                 usuario.setJogoAtivo(novoStatusJogo);
-            } else {
-                System.out.println("Erro ao atualizar status: Usuário não encontrado.");
-            }
-            
-            stmtUpdate.executeUpdate();
-            System.out.println("Usuário atualizado com sucesso!");
+            } // else {
+              // System.out.println("Erro ao atualizar status: Usuário não encontrado.");
+              // }
 
-        } catch (SQLException ex) {
-            System.out.println("Erro ao atualizar usuario " + ex.getMessage());
+            stmtUpdate.executeUpdate();
+            // System.out.println("Usuário atualizado com sucesso!");
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar usuario " + e.getMessage(), e);
         }
     }
 
+    /*
+     * Método que atualiza unicamente a senha de um determinado usuário
+     */
     public static void updateSenha(Usuario usuario, String senhaNova) {
         String sqlUpdate = "UPDATE usuario SET senha = ? WHERE id_usuario = ?";
         String sqlSelect = "SELECT id_usuario, senha FROM usuario WHERE nome = ?;";
@@ -211,20 +241,20 @@ public class UsuarioDAO {
                             stmtUpdate.setString(1, senhaHash);
                             stmtUpdate.setInt(2, idUsuario);
                             stmtUpdate.executeUpdate();
-                            System.out.println("Usuário atualizado com sucesso!");
+                            // System.out.println("Usuário atualizado com sucesso!");
                         }
 
-                    } else {
-                        System.out.println("Erro ao atualizar usuário: Senha incorreta.");
-                    }
+                    } // else {
+                      // System.out.println("Erro ao atualizar usuário: Senha incorreta.");
+                      // }
 
-                } else {
-                    System.out.println("Erro ao atualizar usuário: Usuário não encontrado.");
-                }
+                } // else {
+                  // System.out.println("Erro ao atualizar usuário: Usuário não encontrado.");
+                  // }
             }
 
-        } catch (SQLException ex) {
-            System.out.println("Erro ao atualizar usuario " + ex.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar usuario " + e.getMessage(), e);
         }
     }
 
