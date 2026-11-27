@@ -48,18 +48,15 @@ CREATE TABLE coringa_instancia (
     CONSTRAINT fk_coringa_game_state FOREIGN KEY (id_game_state) REFERENCES game_state (id_game_state) ON DELETE CASCADE 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE TABLE boss_blind_instancia (
-    id_boss_blind INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE consumivel_instancia(
+	id_consumivel INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_game_state INT NOT NULL,
     id_ingame INT NOT NULL,
     nome VARCHAR(50) NOT NULL,
-    CONSTRAINT fk_blind_game_state FOREIGN KEY (id_game_state)
-        REFERENCES game_state (id_game_state) ON DELETE CASCADE 
-)  ENGINE=INNODB DEFAULT CHARSET=UTF8MB4;
-
+    CONSTRAINT fk_consumivel_game_state FOREIGN KEY (id_game_state) REFERENCES game_state (id_game_state) ON DELETE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 select * from usuario;
 select * from game_state;
 select * from carta_instancia;
 select * from coringa_instancia;
-select * from boss_blind_instancia

@@ -128,7 +128,7 @@ public class TesteSaida {
         if (GameStateDAO.verificarGameStateExistente(usuario)) {
             GameStateDAO.receberDados(usuario);
         } else {
-            GameState.iniciarSeed("BANANA");
+            GameState.iniciarSeed("ROBERTA");
             // TODO : colocar uma maneira de receber um import do usuário
             // principalmente usando o front end
             System.out.println(GameState.getTamanhoMao());

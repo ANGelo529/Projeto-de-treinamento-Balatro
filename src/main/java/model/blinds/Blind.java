@@ -1,6 +1,5 @@
 package model.blinds;
 
-import model.efeitos.EfeitoBlind;
 
 /**
  * Modelo de representação das metas (Small Blind, Big Blind e Boss Blind) no
@@ -11,23 +10,19 @@ import model.efeitos.EfeitoBlind;
 public class Blind {
     /* ------------------ VARIÁVEIS ------------------ */
 
-    private int idBlind;
     private String nome;
     private int dinheiroAoGanhar = 3; // Recompensa paga ao jogador caso a meta seja batida
     private long valorBlind; // Meta de pontuação necessária
     private double multiplicadorValorBase; // Multiplicador aplicado sobre a pontuação do Ante
-    private int anteMinimoAparicao = 0; // Requisito mínimo de rodada para aparecer
-    private EfeitoBlind efeitoBlind; // Efeito passivo/restrição imposta pelo Boss
+
 
     /* ------------------ CONSTRUTORES ------------------ */
 
-    public Blind(String nome, int dinheiroAoGanhar, long valorBlind, double multiplicadorValorBase,
-            int anteMinimoAparicao) {
+    public Blind(String nome, int dinheiroAoGanhar, long valorBlind, double multiplicadorValorBase) {
         this.nome = nome;
         this.dinheiroAoGanhar = dinheiroAoGanhar;
         this.valorBlind = valorBlind;
         this.multiplicadorValorBase = multiplicadorValorBase;
-        this.anteMinimoAparicao = anteMinimoAparicao;
     }
 
     public Blind(String nome, int dinheiroAoGanhar, double multiplicadorValorBase, long valorBlind) {
@@ -41,13 +36,6 @@ public class Blind {
         this.nome = nome;
         this.multiplicadorValorBase = multiplicadorValorBase;
         this.valorBlind = valorBlind;
-    }
-
-    public Blind(String nome, int dinheiroAoGanhar, int anteMinimoAparicao, EfeitoBlind efeitoBlind) {
-        this.nome = nome;
-        this.dinheiroAoGanhar = dinheiroAoGanhar;
-        this.anteMinimoAparicao = anteMinimoAparicao;
-        this.efeitoBlind = efeitoBlind;
     }
 
     public Blind() {
@@ -68,14 +56,6 @@ public class Blind {
     }
 
     /* ------------------ GETTERS & SETTERS ------------------ */
-    public int getIdBlind() {
-        return idBlind;
-    }
-
-    public void setIdBlind(int idBlind) {
-        this.idBlind = idBlind;
-    }
-
     public String getNome() {
         return nome;
     }
@@ -108,19 +88,4 @@ public class Blind {
         this.multiplicadorValorBase = multiplicadorValorBase;
     }
 
-    public int getAnteMinimoAparicao() {
-        return anteMinimoAparicao;
-    }
-
-    public void setAnteMinimoAparicao(int anteMinimoAparicao) {
-        this.anteMinimoAparicao = anteMinimoAparicao;
-    }
-
-    public EfeitoBlind getEfeitoBlind() {
-        return efeitoBlind;
-    }
-
-    public void setEfeitoBlind(EfeitoBlind efeitoBlind) {
-        this.efeitoBlind = efeitoBlind;
-    }
 }

@@ -1,0 +1,247 @@
+
+class carta {
+    constructor(numero, naipe, tipo) {
+        this.numero = numero
+        this.naipe = naipe 
+        this.tipo = tipo
+    }
+}
+function redenrizarCarta(objetoCarta) {
+    //Cria a div da carta (somente no js)
+    const visualCarta = document.createElement('div')
+    const mesa = document.getElementById('MaoCartas')
+    visualCarta.classList.add('carta')
+
+    console.log("Achou a div?", mesa) 
+
+    
+    if (objetoCarta.naipe == "espadas" || objetoCarta.naipe == "paus") {
+        visualCarta.classList.add('preto')
+    }else{''
+        visualCarta.classList.add('vermelho')
+    }
+
+    
+    if (objetoCarta.naipe == "espadas") {
+        visualCarta.classList.add('preto')
+          visualCarta.innerHTML = `
+            <span>${objetoCarta.numero}</span>
+            <span>♠</span>
+            `;
+        
+    }else if(objetoCarta.naipe == "ouros"){
+        visualCarta.classList.add('vermelho')
+          visualCarta.innerHTML = `
+            <span>${objetoCarta.numero}</span>
+            <span>♦</span>
+            `;
+        
+    }else if (objetoCarta.naipe == "paus") {
+        visualCarta.innerHTML = `
+            <span>${objetoCarta.numero}</span>
+            <span>♣</span>
+            `;
+        visualCarta.classList.add('preto')
+    }else {
+        visualCarta.classList.add('vermelho')
+         visualCarta.innerHTML = `
+            <span>${objetoCarta.numero}</span>
+            <span>♥</span>
+            `;
+    }
+
+    if (mesa) {
+        mesa.appendChild(visualCarta);
+    }
+
+    // Permite selecionar/desselecionar a carta ao clicar (máximo 5, igual no Balatro)
+    visualCarta.onclick = function() {
+        const jaSelecionada = visualCarta.classList.contains('selecionada');
+        const totalSelecionadas = document.querySelectorAll('#MaoCartas .selecionada').length;
+
+        if (jaSelecionada) {
+            visualCarta.classList.remove('selecionada');
+        } else if (totalSelecionadas < 5) {
+            visualCarta.classList.add('selecionada');
+        }
+    };
+}
+function redenrizarNoMeio(objetoCarta) {
+    const visualCarta = document.createElement('div');
+    const mesaCentral = document.getElementById('mesaCentral');
+    visualCarta.classList.add('carta');
+
+    if (objetoCarta.naipe == "espadas") {
+        visualCarta.classList.add('preto');
+        visualCarta.innerHTML = `<span>${objetoCarta.numero}</span><span>♠</span>`;
+    } else if (objetoCarta.naipe == "ouros") {
+        visualCarta.classList.add('vermelho');
+        visualCarta.innerHTML = `<span>${objetoCarta.numero}</span><span>♦</span>`;
+    } else if (objetoCarta.naipe == "paus") {
+        visualCarta.classList.add('preto');
+        visualCarta.innerHTML = `<span>${objetoCarta.numero}</span><span>♣</span>`;
+    } else {
+        visualCarta.classList.add('vermelho');
+        visualCarta.innerHTML = `<span>${objetoCarta.numero}</span><span>♥</span>`;
+    }
+
+    if (mesaCentral) {
+        mesaCentral.appendChild(visualCarta);
+    }
+}
+// --- PAUS ♣ ---
+const DoisPaus = new carta("2", "paus", "comun");
+const TresPaus = new carta("3", "paus", "comun");
+const QuatroPaus = new carta("4", "paus", "comun");
+const CincoPaus = new carta("5", "paus", "comun");
+const SeisPaus = new carta("6", "paus", "comun");
+const SetePaus = new carta("7", "paus", "comun");
+const OitoPaus = new carta("8", "paus", "comun");
+const NovePaus = new carta("9", "paus", "comun");
+const DezPaus = new carta("10", "paus", "comun");
+const JPaus = new carta("J", "paus", "comun");
+const QPaus = new carta("Q", "paus", "comun");
+const KPaus = new carta("K", "paus", "comun");
+const APaus = new carta("A", "paus", "comun");
+
+// --- OUROS ♦ ---
+const DoisOuros = new carta("2", "ouros", "comun");
+const TresOuros = new carta("3", "ouros", "comun");
+const QuatroOuros = new carta("4", "ouros", "comun");
+const CincoOuros = new carta("5", "ouros", "comun");
+const SeisOuros = new carta("6", "ouros", "comun");
+const SeteOuros = new carta("7", "ouros", "comun");
+const OitoOuros = new carta("8", "ouros", "comun");
+const NoveOuros = new carta("9", "ouros", "comun");
+const DezOuros = new carta("10", "ouros", "comun");
+const JOuros = new carta("J", "ouros", "comun");
+const QOuros = new carta("Q", "ouros", "comun");
+const KOuros = new carta("K", "ouros", "comun");
+const AOuros = new carta("A", "ouros", "comun");
+
+// --- COPAS ♥ ---
+const DoisCopas = new carta("2", "copas", "comun");
+const TresCopas = new carta("3", "copas", "comun");
+const QuatroCopas = new carta("4", "copas", "comun");
+const CincoCopas = new carta("5", "copas", "comun");
+const SeisCopas = new carta("6", "copas", "comun");
+const SeteCopas = new carta("7", "copas", "comun");
+const OitoCopas = new carta("8", "copas", "comun");
+const NoveCopas = new carta("9", "copas", "comun");
+const DezCopas = new carta("10", "copas", "comun");
+const JCopas = new carta("J", "copas", "comun");
+const QCopas = new carta("Q", "copas", "comun");
+const KCopas = new carta("K", "copas", "comun");
+const ACopas = new carta("A", "copas", "comun");
+
+// --- ESPADAS ♠ ---
+const DoisEspadas = new carta("2", "espadas", "comun");
+const TresEspadas = new carta("3", "espadas", "comun");
+const QuatroEspadas = new carta("4", "espadas", "comun");
+const CincoEspadas = new carta("5", "espadas", "comun");
+const SeisEspadas = new carta("6", "espadas", "comun");
+const SeteEspadas = new carta("7", "espadas", "comun");
+const OitoEspadas = new carta("8", "espadas", "comun");
+const NoveEspadas = new carta("9", "espadas", "comun");
+const DezEspadas = new carta("10", "espadas", "comun");
+const JEspadas = new carta("J", "espadas", "comun");
+const QEspadas = new carta("Q", "espadas", "comun");
+const KEspadas = new carta("K", "espadas", "comun");
+const AEspadas = new carta("A", "espadas", "comun");
+
+const baralho = [
+    // Paus
+    DoisPaus, TresPaus, QuatroPaus, CincoPaus, SeisPaus, SetePaus, OitoPaus, NovePaus, DezPaus, JPaus, QPaus, KPaus, APaus,
+    // Ouros
+    DoisOuros, TresOuros, QuatroOuros, CincoOuros, SeisOuros, SeteOuros, OitoOuros, NoveOuros, DezOuros, JOuros, QOuros, KOuros, AOuros,
+    // Copas
+    DoisCopas, TresCopas, QuatroCopas, CincoCopas, SeisCopas, SeteCopas, OitoCopas, NoveCopas, DezCopas, JCopas, QCopas, KCopas, ACopas,
+    // Espadas
+    DoisEspadas, TresEspadas, QuatroEspadas, CincoEspadas, SeisEspadas, SeteEspadas, OitoEspadas, NoveEspadas, DezEspadas, JEspadas, QEspadas, KEspadas, AEspadas
+];
+
+document.getElementById("botaoJogar").onclick = function(){
+    document.getElementById("telaInicial").style.display = "none"
+    document.getElementById("jogando").style.display = "block"
+    document.getElementById("infoBlind").style.display = "flex"
+}
+
+document.getElementById("botaocreditos").onclick = function(){
+    document.getElementById("telaInicial").style.display = "none"
+    document.getElementById("creditos").style.display = "block"
+}
+
+document.getElementById("botaoinstrucoes").onclick = function(){
+    document.getElementById("telaInicial").style.display = "none"
+    document.getElementById("instrucoes").style.display = "block"
+}
+document.getElementById("botaoVoltarI").onclick = function(){
+    document.getElementById("instrucoes").style.display = "none"
+    document.getElementById("telaInicial").style.display = "block"
+}
+
+document.getElementById("botaoVoltarC").onclick = function(){
+    document.getElementById("creditos").style.display = "none"
+    document.getElementById("telaInicial").style.display = "block"
+}
+
+document.getElementById("botaoVoltarJ").onclick = function(){
+    document.getElementById("jogando").style.display = "none"
+    document.getElementById("infoBlind").style.display = "none"
+    document.getElementById("telaInicial").style.display = "block"
+}
+
+// for (let key of baralho) {
+//     redenrizarCarta(key)    
+// }
+redenrizarCarta(TresPaus);
+redenrizarCarta(AOuros);
+redenrizarCarta(KCopas);
+class Coringa {
+    constructor(nome, descricao, imagem) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.imagem = imagem;
+    }
+}
+
+function redenrizarCoringa(objetoCoringa) {
+    const visualCoringa = document.createElement('div');
+    const areaCoringas = document.getElementById('coringas');
+    
+    visualCoringa.classList.add('carta', 'coringa');
+    visualCoringa.innerHTML = `
+        <img src="${objetoCoringa.imagem}" alt="${objetoCoringa.nome}" class="imgCoringa">
+        <div class="tooltipCoringa">
+        <strong class="nomeCoringa">${objetoCoringa.nome}</strong>
+        <span class="descCoringa">${objetoCoringa.descricao}</span>
+    `;
+
+    if (areaCoringas) {
+        areaCoringas.appendChild(visualCoringa);
+    }
+}
+
+// Botão JOGAR MÃO: move as cartas selecionadas para #mesaCentral
+document.getElementById("btnJogarMao").onclick = function() {
+    const selecionadas = document.querySelectorAll("#MaoCartas .selecionada");
+    const mesaCentral = document.getElementById("mesaCentral");
+
+    if (selecionadas.length === 0) return; // Não faz nada se nenhuma carta estiver selecionada
+
+    mesaCentral.innerHTML = ""; // Limpa a jogada anterior do meio
+
+    selecionadas.forEach(carta => {
+        carta.classList.remove("selecionada"); // Abaixa a carta
+        carta.onclick = null;                   // Impede clicar nela depois de jogada
+        mesaCentral.appendChild(carta);         // Move da mão direto para o meio!
+    });
+};
+
+// Botão DESCARTAR: remove as cartas selecionadas da mão
+document.getElementById("btnDescartar").onclick = function() {
+    const selecionadas = document.querySelectorAll("#MaoCartas .selecionada");
+    selecionadas.forEach(carta => carta.remove());
+};
+const coringaBasico = new Coringa("Joker", "+4 Mult", "img/joker.png");
+redenrizarCoringa(coringaBasico);

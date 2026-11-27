@@ -1,5 +1,7 @@
 package model.blinds;
 
+import model.GameState;
+
 /**
  * Gerenciador dos estágios de dificuldade do jogo (Ante).
  * Controla os multiplicadores e escalas de pontuação para o Small, Big e Boss
@@ -13,8 +15,6 @@ public class Ante {
 
     /** Tabela progressiva de pontuação base por nível de Ante */
     protected static final int[] valoresBase = { 100, 300, 800, 2000, 5000, 11000, 20000, 35000, 50000 };
-
-
 
     /* ------------------ MÉTODOS ------------------ */
 
@@ -31,23 +31,20 @@ public class Ante {
         return blind;
     }
 
+    public static void avancarAnte(){
+        GameState.setAnteAtual(GameState.getAnteAtual() + 1);
+        atualizarBlind(GameState.getAnteAtual());
+    }
+    
+    /* ------------------ GETTERS & SETTERS ------------------ */
+
     /**
-     * TODO tem que deixar automático para a lógica de criação do Boss Blind ficar
+     * Gera e calcula o valor da meta para o boss Blind (Multiplicador base 2.5x)
      * inteira na classe do BossBlind
      */
     public static BossBlind getBossBlind(int anteAtual) {
-        BossBlind blind = new BossBlind(anteAtual);
-        while (true) {
-            BossBlind aux = Blind.gerarBlindAleatorio(valoresBase, anteAtual);
-            if (aux.getAnteMinimoAparicao() <= anteAtual) {
-                blind = aux;
-                blind.setValorBlind((int) (valoresBase[anteAtual] * aux.getMultiplicadorValorBase()));
-                return blind;
-            }
-        }
+        return new BossBlind(anteAtual);
     }
-
-    /* ------------------ GETTERS & SETTERS ------------------ */
 
     /**
      * Gera e calcula o valor da meta para o Big Blind (Multiplicador base 1.5x).

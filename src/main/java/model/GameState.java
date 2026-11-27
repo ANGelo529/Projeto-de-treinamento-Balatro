@@ -9,7 +9,6 @@ import util.TesteSaida;
 import model.blinds.Ante;
 import model.cartas.DeckCarta;
 import model.contextos.ContextoMao;
-import model.coringas.DeckCoringa;
 import model.usuario.Usuario;
 import service.ValidadorPoker;
 
@@ -28,9 +27,6 @@ public class GameState {
     private static int limiteConsumiveis = 5;
     private static String tipoDeOrganizacao = "OrdemDeValor";
     private static Random random;
-    private static DeckCarta deckCarta;
-    private static DeckCoringa deckCoringa;
-    private static Ante ante;
     private static Usuario usuario;
 
     /* ------------------ MÉTODOS ------------------ */
@@ -74,6 +70,7 @@ public class GameState {
             // DeckCoringa.verificarCoringaPassivo();
             ctx.setCartasJogadas(DeckCarta.jogarCartas(TesteSaida.pegarPosicoes()));
             TesteSaida.printMaoJogador(ctx.getCartasJogadas());
+            //if(TesteSaida.printDescarteJogada())
             ctx.setPontos(ValidadorPoker.calcularJogada(ctx));
             System.out.println("Fichas: " + ctx.getFichas());
             System.out.println("Multi: " + ctx.getMulti());
@@ -86,7 +83,7 @@ public class GameState {
         }
 
         // TesteSaida.printGanhouBlind();
-        avancarAnte();
+        Ante.avancarAnte();
         resetarValores();
         // ShopState.iniciarLoja();
     }
@@ -102,8 +99,6 @@ public class GameState {
         return false;
     }
 
-    private static void avancarAnte() {
-    }
 
     public static void resetarValores() {
         DeckCarta.getBaralhoJogo().clear();
@@ -205,30 +200,6 @@ public class GameState {
 
     public static void setRandom(Random random) {
         GameState.random = random;
-    }
-
-    public static DeckCarta getDeckCarta() {
-        return deckCarta;
-    }
-
-    public static void setDeckCarta(DeckCarta deckCarta) {
-        GameState.deckCarta = deckCarta;
-    }
-
-    public static DeckCoringa getDeckCoringa() {
-        return deckCoringa;
-    }
-
-    public static void setDeckCoringa(DeckCoringa deckCoringa) {
-        GameState.deckCoringa = deckCoringa;
-    }
-
-    public static Ante getAnte() {
-        return ante;
-    }
-
-    public static void setAnte(Ante ante) {
-        GameState.ante = ante;
     }
 
     public static Usuario getUsuario() {

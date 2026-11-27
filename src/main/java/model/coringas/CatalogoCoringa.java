@@ -186,26 +186,26 @@ public enum CatalogoCoringa {
 
         /** +1x se uma carta da REALEZA é destruída(valor Acumulativo Coringa) */
         // TODO: ver como acumular valores
-        CAINO(41, "Caino", Raridade.LENDARIO, Gatilho.FINALMAO, EfeitoCoringa.TODO()),
+        CAINO(41, "Caino", Raridade.LENDARIO, Gatilho.FINALMAO,15, EfeitoCoringa.TODO()),
 
         /** K e Q jogados dão 2x mult */
-        TRIBOULET(42, "Triboulet", Raridade.LENDARIO, Gatilho.PORCARTA, EfeitoCoringa.multiplicarQK()),
+        TRIBOULET(42, "Triboulet", Raridade.LENDARIO, Gatilho.PORCARTA,15, EfeitoCoringa.multiplicarQK()),
 
         /**
          * +1x mult a cada 23 descartes após a ter essa carta(valor Acumulativo do
          * Coringa)
          */
         // TODO: ver como acumular valores
-        YORICK(43, "Yorick", Raridade.LENDARIO, Gatilho.FINALMAO, EfeitoCoringa.TODO()),
+        YORICK(43, "Yorick", Raridade.LENDARIO, Gatilho.FINALMAO,15, EfeitoCoringa.TODO()),
 
         /** Desativa o efeito do BossBlind */
-        CHICOT(44, "Chicot", Raridade.LENDARIO, Gatilho.PASSIVO, EfeitoCoringa.TODO()),
+        CHICOT(44, "Chicot", Raridade.LENDARIO, Gatilho.PASSIVO,15, EfeitoCoringa.TODO()),
 
         /**
          * Cria uma cópia negativa de um Consumível aleatório que o jogador possua
          * TODO: Fazer os consumíveis
          */
-        PERKEO(45, "Perkeo", Raridade.LENDARIO, Gatilho.PASSIVO, EfeitoCoringa.TODO());
+        PERKEO(45, "Perkeo", Raridade.LENDARIO, Gatilho.PASSIVO,15, EfeitoCoringa.TODO());
 
         /* ------------------ ATRIBUTOS DO ENUM ------------------ */
 

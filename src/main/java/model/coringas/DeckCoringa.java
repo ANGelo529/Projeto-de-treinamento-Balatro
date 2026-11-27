@@ -3,7 +3,8 @@ package model.coringas;
 import model.GameState;
 import model.cartas.Carta;
 import model.contextos.*;
-import model.enums.Gatilho;
+import service.ValidadorCoringa;
+
 import java.util.ArrayList;
 
 import factory.CoringaFactory;
@@ -25,7 +26,6 @@ public class DeckCoringa {
             maoCoringa.add(CoringaFactory.getCoringaPorId(idCorg));
             System.out.printf("Coringa %s adicionado", maoCoringa.get(maoCoringa.size() - 1).getNome());
         }
-
     }
 
     public static void delTodosCoringas() {
@@ -47,60 +47,10 @@ public class DeckCoringa {
 
         // 1º Passo: Dispara os coringas que reagem a cada carta pontuada
         // individualmente
-        verificarCoringasPorCarta(contextoMao, cartasJogadas, maoCoringa);
+        ValidadorCoringa.verificarCoringasPorCarta(contextoMao, cartasJogadas, maoCoringa);
 
         // 2º Passo: Dispara os coringas que reagem ao valor final da mão inteira
-        verificarCoringasFinalRound(contextoMao, maoCoringa);
-    }
-
-    /*
-     * TODO: terminar implementação
-     */
-    public static void verificarCoringasPassivos(ContextoMao contextoMao) {
-    }
-
-    /**
-     * Executa um loop aninhado: para cada carta jogada, percorre todos os coringas
-     * com gatilho PORCARTA.
-     */
-    private static void verificarCoringasPorCarta(ContextoMao contextoMao, ArrayList<Carta> cartasJogadas,
-            ArrayList<Coringa> maoCoringa) {
-        Gatilho tempoDeAtivicao;
-        for (int i = 0; i < cartasJogadas.size(); i++) {
-            for (int j = 0; j < maoCoringa.size(); j++) {
-                tempoDeAtivicao = maoCoringa.get(j).getTempoDeAtivicao();
-                if (maoCoringa.get(j) != null && tempoDeAtivicao.equals(Gatilho.PORCARTA)) {
-                    // Define a carta corrente que será analisada pelas lambdas em EfeitoCoringa
-                    contextoMao.setCoringaAtual(maoCoringa.get(j));
-                    contextoMao.setCartaAuxiliar(cartasJogadas.get(i));
-                    contextoMao = maoCoringa.get(j).efeitoCoringa(contextoMao);
-                }
-            }
-        }
-        contextoMao.setCartaAuxiliar(null);
-
-    }
-
-    /**
-     * Executa os coringas que reagem apenas no final do cálculo do round
-     * (Gatilho.FINALMAO).
-     * 
-     * ATENÇÃO (BUG DE ESTADO RESIDUAL): O objeto 'contextoMao' mantém a
-     * 'cartaAuxiliar'
-     * referente à última carta iterada no método anterior. Se algum coringa de
-     * FINALMAO
-     * tentar acessar 'getCartaAuxiliar()', estará avaliando uma carta residual em
-     * vez do contexto global.
-     */
-    private static void verificarCoringasFinalRound(ContextoMao contextoMao,
-            ArrayList<Coringa> maoCoringa) {
-        Gatilho tempoDeAtivicao;
-        for (int i = 0; i < maoCoringa.size(); i++) {
-            tempoDeAtivicao = maoCoringa.get(i).getTempoDeAtivicao();
-            if (maoCoringa.get(i) != null && tempoDeAtivicao.equals(Gatilho.FINALMAO)) {
-                contextoMao = maoCoringa.get(i).efeitoCoringa(contextoMao);
-            }
-        }
+        ValidadorCoringa.verificarCoringasFinalRound(contextoMao, maoCoringa);
     }
 
     /* ------------------ GETTERS & SETTERS ------------------ */

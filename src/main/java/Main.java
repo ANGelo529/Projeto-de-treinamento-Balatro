@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         Usuario usuario = TesteSaida.getUsuarioDev();
         GameState.setUsuario(usuario);
-        GameState.iniciarSeed("BANANA");
-        GameState.iniciarRodada();
+        GameState.iniciarSeed(GameState.getSeed());
+        GameState.controleJogo();
     }
 }

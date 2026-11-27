@@ -111,7 +111,8 @@ public class GameStateDAO {
                     GameState.setLimiteCoringas(rs1.getInt(9));
                     GameState.setLimiteConsumiveis(rs1.getInt(10));
                     GameState.setTipoDeOrganizacao(rs1.getString(11));
-                    GameState.setRandom(new Random(rs1.getString(12).hashCode()));
+                    GameState.setSeed(rs1.getString(12));
+                    GameState.setRandom(new Random(GameState.getSeed().hashCode()));
                 } // else {
                   // System.out.println("GameState não existe no banco de dados");
                   // }

@@ -200,6 +200,8 @@ public interface EfeitoCoringa {
         };
     }
 
+    //diahsiudhewiuhaw
+
     static EfeitoCoringa repetirCoringaEsp(int posCoringa) {
         return ctx -> {
             DeckCoringa.getMaoCoringa().get(posCoringa).efeitoCoringa(ctx);

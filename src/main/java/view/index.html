@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Balatro</title>
+</head>
+
+<body>
+
+    <div id="telaInicial">
+        <h1>Balatro</h1>
+        <button id=botaoJogar>Jogar</button>
+        <button id=botaoinstrucoes>instruções</button>
+        <button id=botaocreditos>créditos</button>
+
+    </div>
+    <div id="creditos">
+        <h1>
+            <strong>creditos:</strong> <!--Strong é pra deixa em  negrito-->
+        </h1>
+        <h3>
+            Gustavo De Meneses
+        </h3>
+        <h3>
+            Angelo Miguel Brito Vieira
+        </h3>
+        <button id=botaoVoltarC>Voltar</button>
+    </div>
+
+    <div id="instrucoes">
+        <h1>
+            Aqui sera inserido as instruções
+        </h1>
+        <button id="botaoVoltarI">Voltar</button>
+    </div>
+
+    <!-- <h4>Um jogo inspirado no balatro.</h4> -->
+
+    <div id="jogando">
+        <h1>
+
+        </h1>
+        <div id="infoBlind">
+            <div id="caixaPontuacao">
+                <span>Pontuação da rodada:</span>
+                <strong id="pontuacaoAtual">0</strong>
+            </div>
+            <div id="caixaMao">
+                <span id="nomeMao">Selecione cartas</span>
+                <div class="linhaCalculo">
+                    <strong id="valorChips">0</strong>
+                    <span>X</span>
+                    <strong id="valorMult">0</strong>
+                </div>
+            </div>
+            <div id="caixaDinheiro">
+                <span>Dinheiro:</span>
+                <strong id="valorDinheiro">$4</strong>
+            </div>
+
+            <div id = "caixaBlind">
+                 <span>Pontuação mínima:</span>
+                <strong id="metaBlind">300</strong>
+            </div>
+            <button id="Options">opções</button>
+            <div class="painelStatus">
+                <div class="caixaStatus">
+                    <span>Hands</span>
+                    <strong id="valorHands">4</strong>
+                </div>
+                <div class="caixaStatus">
+                    <span>Discards</span>
+                    <strong id="valorDiscards">3</strong>
+                </div>
+                <div class="caixaStatus">
+                    <span>Ante</span>
+                    <strong id="valorAnte">1/8</strong>
+                </div>
+                <div class="caixaStatus">
+                    <span>Round</span>
+                    <strong id="valorRound">1</strong>
+                </div>
+            </div>
+        </div>
+        <div id="coringas">
+
+        </div>
+        <div id="MaoCartas">
+
+        </div>
+        <div id="botoesAcao">
+            <button id="btnJogarMao">Jogar Mão</button>
+            <button id="btnDescartar">Descartar</button>
+        </div>
+
+        <div id="mesaCentral">
+
+        </div>
+
+        <button id="botaoVoltarJ">Voltar</button>
+    </div>
+    <script src="main.js"></script>
+</body>
+
+</html>
